@@ -1,0 +1,21 @@
+{
+    "clockinApp": {
+        "clockin" : {
+            "home": {
+                "title": "Clockins",
+                "createLabel": "Créer un nouveau Clockin",
+                "createOrEditLabel": "Créer ou éditer un Clockin"
+            },
+            "delete": {
+                "question": "Etes-vous certain de vouloir supprimer le Clockin {{ id }} ?"
+            },
+            "detail": {
+                "title": "Clockin"
+            },
+            "sequentialRegisterNumber": "SequentialRegisterNumber",
+            "dateTime": "DateTime",
+            "registryType": "RegistryType"
+        }
+    }
+}
+

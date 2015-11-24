@@ -6,6 +6,8 @@
             "home": "Accueil",
             "entities": {
                 "main": "Entités",
+                "clockin": "Clockin",
+                "employee": "Employee",
                 "additionalEntity": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
