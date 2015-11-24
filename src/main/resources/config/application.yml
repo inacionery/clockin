@@ -9,6 +9,18 @@
 # Standard Spring Boot properties.
 # Full reference is available at:
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+
+#Chave de API
+#Esta é sua chave de API
+#AIzaSyDTfqG-naljKznKC5KC1mqz7U6X1s3RzkE
+#
+#
+#Cliente OAuth
+#Este é seu ID do cliente
+#792407625725-cddge87dqb3a22v1enfmegqs9s622th4.apps.googleusercontent.com
+#Esta é sua chave secreta do cliente
+#J23gkFgJngQUeXEU93oIwvAZ
+
 # ===================================================================
 
 spring:
@@ -27,18 +39,18 @@ spring:
     social:
         # see https://developers.google.com/+/web/signin/server-side-flow#step_1_create_a_client_id_and_client_secret
         google:
-            clientId: xxx
-            clientSecret: xxx
+            clientId: 792407625725-cddge87dqb3a22v1enfmegqs9s622th4.apps.googleusercontent.com
+            clientSecret: J23gkFgJngQUeXEU93oIwvAZ
 
         # see https://developers.facebook.com/docs/facebook-login/v2.2
-        facebook:
-            clientId: xxx
-            clientSecret: xxx
+#        facebook:
+#            clientId: xxx
+#            clientSecret: xxx
 
         # see https://apps.twitter.com/app/
-        twitter:
-            clientId: xxx
-            clientSecret: xxx
+#        twitter:
+#            clientId: xxx
+#            clientSecret: xxx
 
 security:
     basic:
