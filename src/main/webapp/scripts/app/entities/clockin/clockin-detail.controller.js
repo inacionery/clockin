@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('clockinApp')
-    .controller('ClockinDetailController', function ($scope, $rootScope, $stateParams, entity, Clockin) {
+    .controller('ClockinDetailController', function ($scope, $rootScope, $stateParams, entity, Clockin, Employee) {
         $scope.clockin = entity;
         $scope.load = function (id) {
             Clockin.get({id: id}, function(result) {

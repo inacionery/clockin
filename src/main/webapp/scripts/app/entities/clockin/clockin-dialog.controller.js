@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('clockinApp').controller('ClockinDialogController',
-    ['$scope', '$stateParams', '$modalInstance', 'entity', 'Clockin',
-        function($scope, $stateParams, $modalInstance, entity, Clockin) {
+    ['$scope', '$stateParams', '$modalInstance', 'entity', 'Clockin', 'Employee',
+        function($scope, $stateParams, $modalInstance, entity, Clockin, Employee) {
 
         $scope.clockin = entity;
+        $scope.employees = Employee.query();
         $scope.load = function(id) {
             Clockin.get({id : id}, function(result) {
                 $scope.clockin = result;

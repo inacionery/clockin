@@ -7,6 +7,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 import org.clockin.domain.enumeration.RegistryType;
@@ -33,6 +35,9 @@ public class Clockin implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "registry_type")
     private RegistryType registryType;
+
+    @ManyToOne
+    private Employee employee;
 
     public Long getId() {
         return id;
@@ -64,6 +69,14 @@ public class Clockin implements Serializable {
 
     public void setRegistryType(RegistryType registryType) {
         this.registryType = registryType;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     @Override
