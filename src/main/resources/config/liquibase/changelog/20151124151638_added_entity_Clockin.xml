@@ -24,9 +24,16 @@
             <column name="sequential_register_number" type="varchar(255)"/>
             <column name="date_time" type="timestamp"/>
             <column name="registry_type" type="varchar(255)"/>
+            <column name="employee_id" type="bigint"/>
         </createTable>
         <dropDefaultValue tableName="clockin" columnName="date_time" columnDataType="datetime"/>
 
         
+        <addForeignKeyConstraint baseColumnNames="employee_id"
+                                 baseTableName="clockin"
+                                 constraintName="fk_clockin_employee_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="employee"/>
+
     </changeSet>
 </databaseChangeLog>
