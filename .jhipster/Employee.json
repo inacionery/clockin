@@ -4,8 +4,7 @@
             "relationshipId": 1,
             "relationshipName": "clockin",
             "otherEntityName": "clockin",
-            "relationshipType": "one-to-many",
-            "otherEntityRelationshipName": "employee"
+            "relationshipType": "one-to-many"
         },
         {
             "relationshipId": 2,

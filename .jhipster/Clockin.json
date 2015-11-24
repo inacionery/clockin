@@ -1,5 +1,14 @@
 {
-    "relationships": [],
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "employee",
+            "otherEntityName": "employee",
+            "relationshipType": "many-to-one",
+            "otherEntityRelationshipName": "clockins"
+        }
+
+    ],
     "fields": [
         {
             "fieldId": 1,
