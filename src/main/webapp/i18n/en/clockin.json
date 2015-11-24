@@ -17,7 +17,8 @@
             },
             "sequentialRegisterNumber": "SequentialRegisterNumber",
             "dateTime": "DateTime",
-            "registryType": "RegistryType"
+            "registryType": "RegistryType",
+            "employee": "Employee"
         }
     }
 }

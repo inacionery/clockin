@@ -34,6 +34,14 @@
                     <span class="form-control-static" translate="{{'clockinApp.RegistryType.' + clockin.registryType}}">{{clockin.registryType}}</span>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <span translate="clockinApp.clockin.employee">employee</span>
+                </td>
+                <td>
+                    <a class="form-control-static" ui-sref="employee.detail({id:clockin.employee.id})">{{clockin.employee.id}}</a>
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>

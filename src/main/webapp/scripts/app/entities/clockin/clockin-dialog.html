@@ -36,6 +36,12 @@
             </select>
         </div>
 
+        <div class="form-group">
+            <label translate="clockinApp.clockin.employee" for="field_employee">employee</label>
+            <select class="form-control" id="field_employee" name="employee" ng-model="clockin.employee" ng-options="employee as employee.id for employee in employees track by employee.id">
+                <option value=""></option>
+            </select>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
