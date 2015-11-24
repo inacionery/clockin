@@ -1,0 +1,33 @@
+{
+    "relationships": [
+        {
+            "relationshipId": 1,
+            "relationshipName": "clockin",
+            "otherEntityName": "clockin",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "employee"
+        },
+        {
+            "relationshipId": 2,
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "one-to-one",
+            "ownerSide": false
+        }
+    ],
+    "fields": [
+        {
+            "fieldId": 1,
+            "fieldName": "socialIdentificationNumber",
+            "fieldType": "String"
+        },
+        {
+            "fieldId": 2,
+            "fieldName": "plannedDailyHours",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20151124152507",
+    "dto": "no",
+    "pagination": "pagination"
+}
