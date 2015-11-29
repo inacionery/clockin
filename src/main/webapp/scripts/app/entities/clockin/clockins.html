@@ -24,7 +24,6 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th translate="global.field.id">ID</th>
                     <th translate="clockinApp.clockin.sequentialRegisterNumber">SequentialRegisterNumber</th>
                     <th translate="clockinApp.clockin.dateTime">DateTime</th>
                     <th translate="clockinApp.clockin.registryType">RegistryType</th>
@@ -34,7 +33,6 @@
             </thead>
             <tbody>
                 <tr ng-repeat="clockin in clockins track by clockin.id">
-                    <td><a ui-sref="clockin.detail({id:clockin.id})">{{clockin.id}}</a></td>
                     <td>{{clockin.sequentialRegisterNumber}}</td>
                     <td>{{clockin.dateTime | date:'medium'}}</td>
                     <td translate="{{'clockinApp.RegistryType.' + clockin.registryType}}">{{clockin.registryType}}</td>
@@ -42,11 +40,6 @@
                         <a ui-sref="employee.detail({id:clockin.employee.id})">{{clockin.employee.id}}</a>
                     </td>
                     <td>
-                        <button type="submit"
-                                ui-sref="clockin.detail({id:clockin.id})"
-                                class="btn btn-info btn-sm">
-                            <span class="glyphicon glyphicon-eye-open"></span>&nbsp;<span translate="entity.action.view"> View</span>
-                        </button>
                         <button type="submit"
                                 ui-sref="clockin.edit({id:clockin.id})"
                                 class="btn btn-primary btn-sm">
