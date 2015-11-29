@@ -23,7 +23,16 @@
             </column>
             <column name="social_identification_number" type="varchar(255)"/>
             <column name="planned_daily_hours" type="integer"/>
+            <column name="user_id" type="bigint"/>
         </createTable>
-        
+
+             <addForeignKeyConstraint baseColumnNames="user_id"
+                               baseTableName="employee"
+                               constraintName="FK_mpps3d3r9pdvyjx3iqixi96fi"
+                               deferrable="false"
+                               initiallyDeferred="false"
+                               referencedColumnNames="id"
+                               referencedTableName="jhi_user"/>
+
     </changeSet>
 </databaseChangeLog>
