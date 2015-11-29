@@ -16,22 +16,6 @@ angular.module('clockinApp')
         };
         $scope.loadAll();
 
-        $scope.delete = function (id) {
-            Clockin.get({id: id}, function(result) {
-                $scope.clockin = result;
-                $('#deleteClockinConfirmation').modal('show');
-            });
-        };
-
-        $scope.confirmDelete = function (id) {
-            Clockin.delete({id: id},
-                function () {
-                    $scope.loadAll();
-                    $('#deleteClockinConfirmation').modal('hide');
-                    $scope.clear();
-                });
-        };
-
         $scope.search = function () {
             ClockinSearch.query({query: $scope.searchQuery}, function(result) {
                 $scope.clockins = result;
