@@ -39,7 +39,7 @@ public class Employee implements Serializable {
     @Column(name = "planned_daily_hours")
     private Integer plannedDailyHours;
 
-    @OneToMany(mappedBy = "employee")
+	@OneToMany(mappedBy = "employee")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Clockin> clockins = new HashSet<>();
