@@ -20,13 +20,14 @@
         <link rel="stylesheet" href="assets/styles/main.css">
         <!-- endbuild -->
     </head>
-    <body ng-app="clockinApp" ng-class="{'red-dark': !sigin}">
+    <body ng-app="clockinApp" ng-class="{'bg-dark': !sigin}">
          
         <!--[if lt IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <!-- <div ng-show="{{ENV === 'dev'}}" class="development" ng-cloak=""></div> -->
         <div ui-view="navbar" ng-if="sigin" ng-cloak=""></div>
+
         <div class="container-fluid">
             <div ui-view="content"></div>
         </div>
