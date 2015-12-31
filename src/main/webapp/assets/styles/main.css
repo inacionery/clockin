@@ -70,7 +70,7 @@ body.red-dark footer a {
 .box form > button {
     width: 50%;
     border-radius: 0;
-    height: 4em;
+    height: 3em;
     margin: 0;
     margin-top: 2em;
     box-shadow: none!important;
@@ -78,7 +78,7 @@ body.red-dark footer a {
 
 .box button button,.box button button:hover,.box button button:focus,.box button button:active {
     background: transparent;
-    font-size: 1.39em;
+    font-size: 1.19em;
     box-shadow: none!important;
     outline: none!important;
     border: none;
@@ -96,6 +96,8 @@ h3 {
 h4 {
     margin-top: 0;
     font-size: 0.9em;
+    font-size: 0.8em;
+    color: #A2A2A2;
 }
 
 /* ==========================================================================
