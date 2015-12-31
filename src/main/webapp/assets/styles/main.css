@@ -59,11 +59,11 @@ body.red-dark footer a {
     justify-content:center;
 }
 
-.box h1 {
-    height: 1.3em;
-    font-size: 7em;
+.box h1 {    
+    height: 1.5em;
+    font-size: 5em;
     background: #FF5722;
-    line-height: 1.3em;
+    line-height: 1.5em;
     color: #fff;
 }
 
