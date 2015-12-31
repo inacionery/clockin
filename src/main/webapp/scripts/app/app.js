@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('clockinApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'pascalprecht.translate', 
+angular.module('clockinApp', ['LocalStorageModule', 'ngMaterial', 'tmh.dynamicLocale', 'pascalprecht.translate', 
                'ui.bootstrap', // for modal dialogs
     'ngResource', 'ui.router', 'ngCookies', 'ngAria', 'ngCacheBuster', 'ngFileUpload', 'infinite-scroll'])
 
@@ -34,6 +34,12 @@ angular.module('clockinApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'pascal
               $rootScope.previousStateParams = fromParams;
             }
 
+            if(Principal.isAuthenticated()){
+               $rootScope.sigin = true; 
+            }else {
+               $rootScope.sigin = false; 
+            }
+
             // Set the page title key to the one configured in state or use default one
             if (toState.data.pageTitle) {
                 titleKey = toState.data.pageTitle;
@@ -64,7 +70,7 @@ angular.module('clockinApp', ['LocalStorageModule', 'tmh.dynamicLocale', 'pascal
         //Cache everything except rest api requests
         httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*api.*/, /.*protected.*/], true);
 
-        $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('login');
         $stateProvider.state('site', {
             'abstract': true,
             views: {
