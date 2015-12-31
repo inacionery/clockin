@@ -7,6 +7,7 @@ body {
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     font-size: 2em;
     color: #333;
+    overflow-x:hidden;
 }
 
 body.bg-dark, .bg-dark {
@@ -15,6 +16,131 @@ body.bg-dark, .bg-dark {
 
 body.bg-dark footer {
     font-size: 0.8em;
+}
+
+.clockins .layout-row div {
+    text-align: center;
+    color: #fff;
+    padding: 0.5em;
+}
+
+.clockins .md-button {
+    border-radius: 0;
+    margin: 0;
+}
+
+.day {
+    font-weight: 300;
+    font-family: 'Roboto';
+    border-bottom: solid 3px #7EAF45;
+}
+
+.day.red, .settings.red {
+    border-bottom-color: #C54131;
+}
+
+.day p {
+    text-align: center;
+    color: #fff;
+    line-height: 2.4em;
+    margin: 0.5em;
+}
+
+.day span {
+    display: block;    
+    font-size: 3em;
+    font-weight: 600;
+}
+
+.clocks, .clocks button, .clocks .layout-row {
+    padding: 0!important;
+}
+
+.clocks {
+    background: #f5f5f5;
+}
+
+.clocks .layout-row button {
+    box-sizing: border-box;
+    height: 5.4em;
+    display: block;
+    border-bottom: solid 3px rgba(0,0,0,0.1);
+}
+
+.title-month {
+    padding: 1em 0.4em;
+    font-size: 2.6em;
+    margin: 0;
+    color: #6D6D6D;
+}
+
+.title-month span {
+    float: right;
+}
+
+.clocks {
+    color: #fff;
+}
+
+.clocks .layout-row button:first-child {
+    background: #80d8ff;
+}
+
+.clocks .layout-row button:nth-child(2) {
+    background: #8c9eff;
+}
+
+.clocks .layout-row button:nth-child(3) {
+    background: #b388ff;
+}
+
+.clocks .layout-row button:nth-child(4) {
+    background: #ff80ab;
+}
+
+.clocks p {
+    display: inline-block;
+    font-size: 1.5em;
+    font-weight: 400;
+    margin: auto;
+}
+
+.clockins .fa-cog {
+    display: block;
+    font-size: 4em;
+    color: #6D6D6D;
+}
+
+.clockins .md-button span {
+    font-family: 'Roboto';
+    font-size: 1.2em;
+    color: #6D6D6D;
+}
+
+.gray {
+  background: #f5f5f5; 
+    border-bottom: solid 3px rgba(0,0,0,0.1);
+}
+.green {
+  background: #8bc34a; }
+.yellow {
+  background: #ffff8d; }
+.blue {
+  background: #03A9F4; }
+.darkBlue {
+  background: #80d8ff; }
+.deepBlue {
+  background: #448aff; }
+.purple {
+  background: #b388ff; }
+.lightPurple {
+  background: #8c9eff; }
+.red {
+  background: #DD4B39; }
+.pink {
+  background: #ff80ab; }
+
+.navbar-brand i, body.bg-dark footer {
     color: #fff;
 }
 
@@ -44,7 +170,7 @@ a {
 }
 
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
-    background: rgb(0, 174, 216);
+    background: rgba(0, 174, 216, 0.32);
 }
 
 .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
@@ -60,9 +186,9 @@ a {
 }
 
 .dropdown-menu {
-    background: #00AED8;
+    background: #00BAE8;
     border: none;
-    border-top: solid 1px #00AED8;
+    border-top: solid 1px #00BAE8;
     box-shadow: none;
 }
 
@@ -381,7 +507,7 @@ Social Buttons
     }
 
     .navbar-nav .open .dropdown-menu {
-        background: rgb(0, 174, 216);
+        background: rgba(0, 174, 216, 0.32);
     }
 
     .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
