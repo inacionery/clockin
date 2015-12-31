@@ -1,12 +1,12 @@
-<div>
-    <div class="row">
-        <div class="col-md-4 col-md-offset-4">
-            <div class="alert alert-danger" ng-show="authenticationError" translate="login.messages.error.authentication">
-                <strong>Failed to sign in!</strong> Please check your credentials and try again.
-            </div>
-        </div>
-        <div class="col-md-4 col-md-offset-2">
-			<jh-social ng-provider="google"></jh-social>
-        </div>
+<article class="box center-txt ">
+	<h1 class="logo"><i class="fa fa-clock-o"></i></h1>
+
+    <h3>Clockin</h3>
+    <h4>Para acompanhar suas horas, entre com:</h4>
+	<jh-social ng-provider="google"></jh-social>
+
+    <div class="alert alert-danger" ng-show="authenticationError" translate="login.messages.error.authentication">
+        <strong>Falha ao efetuar login</strong> Por favor verificar suas credênciais.
     </div>
-</div>
+</article>
+

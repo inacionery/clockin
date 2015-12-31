@@ -5,7 +5,7 @@ angular.module('clockinApp')
         $stateProvider
             .state('home', {
                 parent: 'site',
-                url: '/',
+                url: '/home',
                 data: {
                     authorities: []
                 },
