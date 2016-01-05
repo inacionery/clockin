@@ -82,6 +82,10 @@ body.bg-dark footer {
     color: #fff;
 }
 
+.clock-row {
+    margin-bottom: 0.3em;
+}
+
 .clocks .layout-row button:first-child {
     background: #80d8ff;
 }
