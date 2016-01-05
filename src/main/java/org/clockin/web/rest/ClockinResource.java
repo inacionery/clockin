@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import org.clockin.domain.Clockin;
 import org.clockin.repository.ClockinRepository;
 import org.clockin.repository.search.ClockinSearchRepository;
+import org.clockin.web.rest.dto.WorkDayDTO;
 import org.clockin.web.rest.util.HeaderUtil;
 import org.clockin.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -91,6 +93,29 @@ public class ClockinResource {
         Page<Clockin> page = clockinRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/clockins");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/workdays",
+    				method = RequestMethod.GET,
+    				produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<WorkDayDTO> getAllWorkDays()
+    				throws URISyntaxException {
+    	List<Clockin> clockins = clockinRepository.findAll();
+    	List<WorkDayDTO> workDays = new ArrayList<>();
+
+    	WorkDayDTO workDayDTO = null;
+    	for (Clockin clockin : clockins) {
+
+    		if (workDayDTO == null || !workDayDTO.getDate().isEqual(clockin.getDate())) {
+    			workDayDTO = new WorkDayDTO(clockin.getDate());
+    			workDays.add(workDayDTO);
+			}
+
+    		workDayDTO.addClockinValues(clockin);
+		}
+
+    	return workDays;
     }
 
     /**
