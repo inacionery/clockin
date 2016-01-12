@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -95,6 +96,9 @@ public class ClockinResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
+    /**
+     * GET /workdays -> get all workdays.
+     */
     @RequestMapping(value = "/workdays",
     				method = RequestMethod.GET,
     				produces = MediaType.APPLICATION_JSON_VALUE)
@@ -117,6 +121,37 @@ public class ClockinResource {
 
     	return workDays;
     }
+
+    /**
+     * GET /workdays/employee/:id -> get all workdays based on employee id.
+     */
+    @RequestMapping(value = "/workdays/employee/{id}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<WorkDayDTO> getAllWorkDays(@PathVariable Long id)
+        throws URISyntaxException {
+
+        List<Clockin> clockins = clockinRepository.findAll();
+        List<WorkDayDTO> workDays = new ArrayList<>();
+
+        WorkDayDTO workDayDTO = null;
+        for (Clockin clockin : clockins) {
+
+            if ((workDayDTO == null || !workDayDTO.getDate().isEqual(clockin.getDate()) ) && clockin.getEmployee().getId() == id ) {
+                workDayDTO = new WorkDayDTO(clockin.getDate());
+                workDays.add(workDayDTO);
+            }
+
+            if(clockin.getEmployee().getId() == id ) {
+                workDayDTO.addClockinValues(clockin);
+            }
+
+        }
+
+        return workDays;
+    }
+
 
     /**
      * GET  /clockins/:id -> get the "id" clockin.
@@ -162,3 +197,4 @@ public class ClockinResource {
             .collect(Collectors.toList());
     }
 }
+

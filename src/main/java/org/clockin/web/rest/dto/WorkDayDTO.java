@@ -18,6 +18,7 @@ public class WorkDayDTO {
 	private LocalDate date;
 	private List<Clockin> clockins;
 
+
 	public WorkDayDTO(LocalDate date) {
 		super();
 		this.date = date;
@@ -32,6 +33,8 @@ public class WorkDayDTO {
 			}
 		}
 	}
+
+
 
 	public LocalDate getDate() {
 
