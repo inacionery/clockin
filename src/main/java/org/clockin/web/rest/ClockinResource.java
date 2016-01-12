@@ -2,7 +2,9 @@ package org.clockin.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import org.clockin.domain.Clockin;
+import org.clockin.domain.Employee;
 import org.clockin.repository.ClockinRepository;
+import org.clockin.repository.EmployeeRepository;
 import org.clockin.repository.search.ClockinSearchRepository;
 import org.clockin.web.rest.dto.WorkDayDTO;
 import org.clockin.web.rest.util.HeaderUtil;
@@ -42,6 +44,9 @@ public class ClockinResource {
 
     @Inject
     private ClockinSearchRepository clockinSearchRepository;
+
+    @Inject
+    private EmployeeRepository employeeRepository;
 
     /**
      * POST  /clockins -> Create a new clockin.
@@ -133,12 +138,13 @@ public class ClockinResource {
 
         List<Clockin> clockins = clockinRepository.findAll();
         List<WorkDayDTO> workDays = new ArrayList<>();
+        Employee employee = employeeRepository.findOne(id);
 
         WorkDayDTO workDayDTO = null;
         for (Clockin clockin : clockins) {
 
             if ((workDayDTO == null || !workDayDTO.getDate().isEqual(clockin.getDate()) ) && clockin.getEmployee().getId() == id ) {
-                workDayDTO = new WorkDayDTO(clockin.getDate());
+                workDayDTO = new WorkDayDTO(clockin.getDate(),employee);
                 workDays.add(workDayDTO);
             }
 
