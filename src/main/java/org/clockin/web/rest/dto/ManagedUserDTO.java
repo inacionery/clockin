@@ -28,7 +28,7 @@ public class ManagedUserDTO extends UserDTO {
         this.lastModifiedDate = user.getLastModifiedDate();
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
