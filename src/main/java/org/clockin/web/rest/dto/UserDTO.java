@@ -1,13 +1,18 @@
 package org.clockin.web.rest.dto;
 
 import org.clockin.domain.Authority;
+import org.clockin.domain.Employee;
 import org.clockin.domain.User;
 
+import org.clockin.repository.EmployeeRepository;
+import org.clockin.repository.UserRepository;
 import org.hibernate.validator.constraints.Email;
 
+import javax.inject.Inject;
 import javax.validation.constraints.*;
 import java.util.Set;
 import java.util.stream.Collectors;
+
 /**
  * A DTO representing a user, with his authorities.
  */
@@ -42,18 +47,30 @@ public class UserDTO {
 
     private Set<String> authorities;
 
+    private long id;
+
     public UserDTO() {
+    }
+
+    public UserDTO(User user, UserRepository userRepository, EmployeeRepository employeeRepository) {
+        this(user.getLogin(), null, user.getFirstName(), user.getLastName(),
+            user.getEmail(), user.getActivated(), user.getLangKey(),
+            user.getAuthorities().stream().map(Authority::getName)
+                .collect(Collectors.toSet()), user.getId());
+
+        this.employeeRepository = employeeRepository;
+        this.userRepository = userRepository;
     }
 
     public UserDTO(User user) {
         this(user.getLogin(), null, user.getFirstName(), user.getLastName(),
             user.getEmail(), user.getActivated(), user.getLangKey(),
             user.getAuthorities().stream().map(Authority::getName)
-                .collect(Collectors.toSet()));
+                .collect(Collectors.toSet()), user.getId());
     }
 
     public UserDTO(String login, String password, String firstName, String lastName,
-        String email, boolean activated, String langKey, Set<String> authorities) {
+                   String email, boolean activated, String langKey, Set<String> authorities, long id) {
 
         this.login = login;
         this.password = password;
@@ -63,6 +80,7 @@ public class UserDTO {
         this.activated = activated;
         this.langKey = langKey;
         this.authorities = authorities;
+        this.id = id;
     }
 
     public String getPassword() {
@@ -97,6 +115,17 @@ public class UserDTO {
         return authorities;
     }
 
+    public long getId() {
+        return id;
+    }
+
+
+    @Inject
+    private EmployeeRepository employeeRepository;
+
+    public Employee getEmployee() { return employeeRepository.findByUserId(id); }
+
+
     @Override
     public String toString() {
         return "UserDTO{" +
@@ -108,6 +137,7 @@ public class UserDTO {
             ", activated=" + activated +
             ", langKey='" + langKey + '\'' +
             ", authorities=" + authorities +
+            ", id=" + id +
             "}";
     }
 }

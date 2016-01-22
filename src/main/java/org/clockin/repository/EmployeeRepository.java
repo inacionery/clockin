@@ -2,6 +2,7 @@ package org.clockin.repository;
 
 import org.clockin.domain.Employee;
 
+import org.clockin.domain.User;
 import org.springframework.data.jpa.repository.*;
 
 import java.util.List;
@@ -11,4 +12,6 @@ import java.util.List;
  */
 public interface EmployeeRepository extends JpaRepository<Employee,Long> {
 
+    Employee findByUser(User user);
+    Employee findByUserId(long userId);
 }
