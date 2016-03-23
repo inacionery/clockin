@@ -1,0 +1,499 @@
+﻿{
+"SELECT `Nome`, `Cargo`,PIS
+FROM `Funcionario`": [
+	{
+		"Nome" : "BRUNO GONÇALVES BASTO DE ALBUQUERQUE",
+		"Cargo" : "ENGENHEIRO DE SOFTWARE",
+		"PIS" : "20465091851",
+		"emails" [
+			"bruno.basto@liferay.com",
+			"4964375@liferay.com"
+		]
+	},
+	{
+		"Nome" : "CLEYDYR BEZERRA DE ALBUQUERQUE",
+		"Cargo" : "ENGENHEIRO DE SUPORTE",
+		"PIS" : "14004698452",
+		"emails" [
+			"cleydyr.albuquerque@liferay.com",
+			"12899830@liferay.com"
+		]
+	},
+	{
+		"Nome" : "ADAM VICTOR NAZARETH BRANDIZZI",
+		"Cargo" : "ENGENHEIRO DE SOFTWARE",
+		"PIS" : "19018417036",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "SILVIO GUSTAVO DE OLIVEIRA SANTOS",
+		"Cargo" : "ENGENHEIRO DE SOFTWARE",
+		"PIS" : "13872950451",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "LEYLA KARLA FERREIRA DO NASCIMENTO SILVA",
+		"Cargo" : "ANALISTA DE RH",
+		"PIS" : "13999524455",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "ROSINETE MARIA DO NASCIMENTO",
+		"Cargo" : "ASSISTENTE SERVIÇO GERAL",
+		"PIS" : "16585841736",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "VITOR GUIMARAES FERNANDES",
+		"Cargo" : "DESIGNER",
+		"PIS" : "13969729458",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "MIGUEL ANGELO CALDAS GALLINDO",
+		"Cargo" : "ENGENHEIRO DE SOFTWARE",
+		"PIS" : "19012418715",
+		"emails" [
+			"27859746@liferay.com",
+			"miguel.angelo@liferay.com"
+		]
+	},
+	{
+		"Nome" : "THIAGO PEREIRA ROCHA",
+		"Cargo" : "ENGENHEIRO DE SOFTWARE",
+		"PIS" : "14765409984",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "ANDRE RICARDO BARRETO DE OLIVEIRA",
+		"Cargo" : "ENGENHEIRO DE SOFTWARE",
+		"PIS" : "12489326122",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "PABLO CARVALHO PINHEIRO",
+		"Cargo" : "ENGENHEIRO DE SOFTWARE",
+		"PIS" : "13846692939",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "RODRIGO DE MIER MARTINEZ",
+		"Cargo" : "ENGENHEIRO DE SUPORTE",
+		"PIS" : "13153579430",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "HENRIQUE VICENTE DE OLIVEIRA  PINTO",
+		"Cargo" : "ENGENHEIRO DE SOFTWARE",
+		"PIS" : "20034361620",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "MAÍRA TAVARES ARAÚJO BELLO",
+		"Cargo" : "ENGENHEIRA DE SOFTWARE",
+		"PIS" : "14298929759",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "BRUNO COELHO SANTIAGO",
+		"Cargo" : "ENGENHEIRO DE SOFTWARE",
+		"PIS" : "13918449814",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "HELOISA MACIEL DE ANDRADE",
+		"Cargo" : "ASSISTENTE ADMINISTRATIVO",
+		"PIS" : "13565401930",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "GUSTAVO HENRIQUE LUCENA DE VASCONCELOS",
+		"Cargo" : "ENGENHEIRO DE SUPORTE",
+		"PIS" : "20310551662",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "JADSON DANTAS DOS SANTOS",
+		"Cargo" : "DESIGNER",
+		"PIS" : "20025351162",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "CARINA FERREIRA LUNA DE ARAUJO",
+		"Cargo" : "ASSISTENTE DE VENDAS",
+		"PIS" : "14712380000",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "RAISSA BORGES VASCONCELOS",
+		"Cargo" : "ASSISTENTE DE MARKETING",
+		"PIS" : "14402904656",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "FELIPE RODRIGUES DE PAULA",
+		"Cargo" : "ENGENHEIRO DE SOFTWARE",
+		"PIS" : "13500711455",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "RENATO CESAR BEZERRA DO REGO",
+		"Cargo" : "ENGENHEIRO DE SOFTWARE",
+		"PIS" : "13931041459",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "IGOR DE OLIVEIRA LIMA DE SOUZA",
+		"Cargo" : "ENGENHEIRO DE SOFTWARE",
+		"PIS" : "13941205454",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "ARTUR RIBEIRO DE AQUINO",
+		"Cargo" : "ENGENHEIRO DE SOFTWARE",
+		"PIS" : "13842524454",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "ADRIANA PEREIRA DE LIMA",
+		"Cargo" : "AUXILIAR DE SERVIÇOS GERAIS",
+		"PIS" : "11694089945",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "CARLOS EDUARDO MARTIN HERRERA ZAGAZETA",
+		"Cargo" : "Especialista Relam. Clientes",
+		"PIS" : "21287638076",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "FILIPE MATINS DE MELO",
+		"Cargo" : "ENGENHEIRO DE SOFTWARE",
+		"PIS" : "14444395016",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "LINO ALVES DE OLIVEIRA JÚNIOR",
+		"Cargo" : "Engenheiro de Suporte",
+		"PIS" : "13415267457",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "LAIS SOUSA ANDRADE",
+		"Cargo" : "ENGENHEIRA DE SOFTWARE",
+		"PIS" : "15625040277",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "GUILHERME BARRETO DE MENDONÇA",
+		"Cargo" : "ESP. EM ATEN. AO CLIENTE",
+		"PIS" : "16884160021",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "WALBER NUNES DO AMARAL",
+		"Cargo" : "Eng. Suporte ao Cliente",
+		"PIS" : "13441486411",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "MARIA EDUARDA MARQUES PEREIRA",
+		"Cargo" : "ASSISTENTE FINANCEIRO",
+		"PIS" : "13074793979",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "LEONARDO AMORIM DE BARROS",
+		"Cargo" : "ENGENHEIRO DE SOFTWARE",
+		"PIS" : "13007153459",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "LEYLISE KELLY DE ASSIS SILVA OLIVEIRA",
+		"Cargo" : "Assistente Administrativo",
+		"PIS" : "13397062453",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "Rafael Praxedes Gomes",
+		"Cargo" : "Engenheiro de Software",
+		"PIS" : "20904175817",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "ANTONIO FERNANDO DE SOUZA FILHO",
+		"Cargo" : "ENGENHEIRO DE SOFTWARE",
+		"PIS" : "20064431503",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "ANA LUCIA DA CRUZ",
+		"Cargo" : "AUXILIAR DE SERVIÇOS GERAIS",
+		"PIS" : "21244501958",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "LUCIANA MARIA DE ARAUJO SILVA",
+		"Cargo" : null,
+		"PIS" : "13174831457",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "RAFAEL MATOS DE SÁ PEREIRA COSTA",
+		"Cargo" : null,
+		"PIS" : "13687626457",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "JOSE ALBINO DA SILVA NETO",
+		"Cargo" : "CONSULTOR",
+		"PIS" : "20310952608",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "DIOGO CAVALCANTI PEIXOTO",
+		"Cargo" : "CONSULTOR",
+		"PIS" : "13948911451",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "FELIPE AURELIO PIRES DE SOUZA",
+		"Cargo" : "DESIGNER",
+		"PIS" : "13528176457",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "JOSE INACIO NERY DA FONSECA NETO",
+		"Cargo" : "ENGENHEIRO DE SOFTWARE",
+		"PIS" : "19036968529",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "ANDRE RIBEIRO BANDEIRA",
+		"Cargo" : "ESTAGIÁRIO",
+		"PIS" : "15053573984",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "CALINA ARMSTRONG SOARES",
+		"Cargo" : "ESTAGIÁRIA",
+		"PIS" : "13975370458",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "CASSIA OLIVEIRA DA SILVA",
+		"Cargo" : "ESTAGIÁRIA",
+		"PIS" : "20337810219",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "CLARISSA IVENS OLIVEIRA B DE CARVALHO",
+		"Cargo" : "ESTAGIÁRIA",
+		"PIS" : "21039712640",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "IGOR MATOS DE SÁ PEREIRA COSTA",
+		"Cargo" : "ESTAGIÁRIO",
+		"PIS" : "20465090456",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "LAIO FONSECA MARINHO ALCANTARA",
+		"Cargo" : "85",
+		"PIS" : "26771047294",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "LUISA FERREIRA NOBREGA",
+		"Cargo" : "ESTAGIÁRIO",
+		"PIS" : "13182772480",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "PRISCYLLA KARLA CALADO CAVALCANTI",
+		"Cargo" : "ESTAGIÁRIA",
+		"PIS" : "13435520026",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "MARINA ALBUQUERQUE LIMA E SILVA",
+		"Cargo" : "88",
+		"PIS" : "13840062151",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "VICTOR FREDERICO BARBOSA DE ANDRADE",
+		"Cargo" : "ESTAGIARIO",
+		"PIS" : "20905636524",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "PEDRO HENRIQUE DE QUEIROZ SANTOS",
+		"Cargo" : "ESTAGIÁRIO",
+		"PIS" : "26726985507",
+		"emails" [
+			"",
+			""
+		]
+	},
+	{
+		"Nome" : "CLOVIS DA SILVA NETO",
+		"Cargo" : "CONSULTOR FRONTEND",
+		"PIS" : "16505994379",
+		"emails" [
+			"",
+			""
+		]
+	}
+]}
