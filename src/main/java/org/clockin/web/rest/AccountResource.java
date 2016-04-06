@@ -4,7 +4,6 @@ import com.codahale.metrics.annotation.Timed;
 import org.clockin.domain.Authority;
 import org.clockin.domain.PersistentToken;
 import org.clockin.domain.User;
-import org.clockin.repository.EmployeeRepository;
 import org.clockin.repository.PersistentTokenRepository;
 import org.clockin.repository.UserRepository;
 import org.clockin.security.SecurityUtils;
@@ -48,9 +47,6 @@ public class AccountResource {
 
     @Inject
     private MailService mailService;
-
-    @Inject
-    private EmployeeRepository employeeRepository;
 
     /**
      * POST  /register -> register the user.
@@ -114,7 +110,7 @@ public class AccountResource {
     @Timed
     public ResponseEntity<UserDTO> getAccount() {
         return Optional.ofNullable(userService.getUserWithAuthorities())
-            .map(user -> new ResponseEntity<>(new UserDTO(user, userRepository, employeeRepository), HttpStatus.OK))
+            .map(user -> new ResponseEntity<>(new UserDTO(user), HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
