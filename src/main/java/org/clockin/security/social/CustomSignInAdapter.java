@@ -2,6 +2,10 @@ package org.clockin.security.social;
 
 import org.clockin.config.JHipsterProperties;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,11 +19,14 @@ import javax.inject.Inject;
 
 public class CustomSignInAdapter implements SignInAdapter {
 
+    private final Logger log = LoggerFactory.getLogger(CustomSignInAdapter.class);
+
     @Inject
     private UserDetailsService userDetailsService;
 
     @Inject
     private JHipsterProperties jHipsterProperties;
+
 
     @Override
     public String signIn(String userId, Connection<?> connection, NativeWebRequest request) {

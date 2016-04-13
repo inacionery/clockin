@@ -1,24 +1,15 @@
 package org.clockin.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Objects;
 
 /**
  * A Employee.
@@ -29,9 +20,14 @@ import org.springframework.data.elasticsearch.annotations.Document;
 @Document(indexName = "employee")
 public class Employee implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "social_identification_number")
     private String socialIdentificationNumber;
@@ -39,14 +35,10 @@ public class Employee implements Serializable {
     @Column(name = "planned_daily_hours")
     private Integer plannedDailyHours;
 
-	@OneToMany(mappedBy = "employee")
+    @OneToMany(mappedBy = "employee")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Clockin> clockins = new HashSet<>();
-
-	@OneToOne
-    @JsonIgnore
-    private User user;
 
     public Long getId() {
         return id;
@@ -54,6 +46,14 @@ public class Employee implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getSocialIdentificationNumber() {
@@ -80,14 +80,6 @@ public class Employee implements Serializable {
         this.clockins = clockins;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -96,12 +88,11 @@ public class Employee implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
         Employee employee = (Employee) o;
-
-        if ( ! Objects.equals(id, employee.id)) return false;
-
-        return true;
+        if(employee.id == null || id == null) {
+            return false;
+        }
+        return Objects.equals(id, employee.id);
     }
 
     @Override
@@ -113,6 +104,7 @@ public class Employee implements Serializable {
     public String toString() {
         return "Employee{" +
             "id=" + id +
+            ", email='" + email + "'" +
             ", socialIdentificationNumber='" + socialIdentificationNumber + "'" +
             ", plannedDailyHours='" + plannedDailyHours + "'" +
             '}';

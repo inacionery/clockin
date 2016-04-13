@@ -1,27 +1,24 @@
 {
     "relationships": [
         {
-            "relationshipId": 1,
             "relationshipName": "employee",
             "otherEntityName": "employee",
             "relationshipType": "many-to-one",
-            "otherEntityRelationshipName": "clockins"
+            "otherEntityRelationshipName": "clockins",	
+            "otherEntityField": "id"
         }
 
     ],
     "fields": [
         {
-            "fieldId": 1,
             "fieldName": "sequentialRegisterNumber",
             "fieldType": "String"
         },
         {
-            "fieldId": 2,
             "fieldName": "dateTime",
             "fieldType": "ZonedDateTime"
         },
         {
-            "fieldId": 3,
             "fieldName": "registryType",
             "fieldType": "RegistryType",
             "fieldValues": "TYPE_1,TYPE_2,TYPE_3,TYPE_4,TYPE_5"
@@ -29,5 +26,7 @@
     ],
     "changelogDate": "20151124151638",
     "dto": "no",
+	"service": "serviceImpl",	
+    "entityTableName": "clockin",
     "pagination": "pagination"
 }

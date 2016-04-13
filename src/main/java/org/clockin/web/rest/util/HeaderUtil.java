@@ -3,7 +3,7 @@ package org.clockin.web.rest.util;
 import org.springframework.http.HttpHeaders;
 
 /**
- * Utility class for http header creation.
+ * Utility class for HTTP headers creation.
  *
  */
 public class HeaderUtil {
@@ -25,5 +25,12 @@ public class HeaderUtil {
 
     public static HttpHeaders createEntityDeletionAlert(String entityName, String param) {
         return createAlert("clockinApp." + entityName + ".deleted", param);
+    }
+
+    public static HttpHeaders createFailureAlert(String entityName, String errorKey, String defaultMessage) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("X-clockinApp-error", "error." + errorKey);
+        headers.add("X-clockinApp-params", entityName);
+        return headers;
     }
 }

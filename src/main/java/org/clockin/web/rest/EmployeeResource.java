@@ -2,8 +2,7 @@ package org.clockin.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import org.clockin.domain.Employee;
-import org.clockin.repository.EmployeeRepository;
-import org.clockin.repository.search.EmployeeSearchRepository;
+import org.clockin.service.EmployeeService;
 import org.clockin.web.rest.util.HeaderUtil;
 import org.clockin.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -34,15 +33,16 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class EmployeeResource {
 
     private final Logger log = LoggerFactory.getLogger(EmployeeResource.class);
-
+        
     @Inject
-    private EmployeeRepository employeeRepository;
-
-    @Inject
-    private EmployeeSearchRepository employeeSearchRepository;
-
+    private EmployeeService employeeService;
+    
     /**
-     * POST  /employees -> Create a new employee.
+     * POST  /employees : Create a new employee.
+     *
+     * @param employee the employee to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new employee, or with status 400 (Bad Request) if the employee has already an ID
+     * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @RequestMapping(value = "/employees",
         method = RequestMethod.POST,
@@ -51,17 +51,22 @@ public class EmployeeResource {
     public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) throws URISyntaxException {
         log.debug("REST request to save Employee : {}", employee);
         if (employee.getId() != null) {
-            return ResponseEntity.badRequest().header("Failure", "A new employee cannot already have an ID").body(null);
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("employee", "idexists", "A new employee cannot already have an ID")).body(null);
         }
-        Employee result = employeeRepository.save(employee);
-        employeeSearchRepository.save(result);
+        Employee result = employeeService.save(employee);
         return ResponseEntity.created(new URI("/api/employees/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("employee", result.getId().toString()))
             .body(result);
     }
 
     /**
-     * PUT  /employees -> Updates an existing employee.
+     * PUT  /employees : Updates an existing employee.
+     *
+     * @param employee the employee to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated employee,
+     * or with status 400 (Bad Request) if the employee is not valid,
+     * or with status 500 (Internal Server Error) if the employee couldnt be updated
+     * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @RequestMapping(value = "/employees",
         method = RequestMethod.PUT,
@@ -72,37 +77,36 @@ public class EmployeeResource {
         if (employee.getId() == null) {
             return createEmployee(employee);
         }
-        Employee result = employeeRepository.save(employee);
-        employeeSearchRepository.save(employee);
+        Employee result = employeeService.save(employee);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("employee", employee.getId().toString()))
             .body(result);
     }
 
     /**
-     * GET  /employees -> get all the employees.
+     * GET  /employees : get all the employees.
+     *
+     * @param pageable the pagination information
+     * @return the ResponseEntity with status 200 (OK) and the list of employees in body
+     * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
     @RequestMapping(value = "/employees",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Employee>> getAllEmployees(Pageable pageable, @RequestParam(required = false) String filter)
+    public ResponseEntity<List<Employee>> getAllEmployees(Pageable pageable)
         throws URISyntaxException {
-        if ("user-is-null".equals(filter)) {
-            log.debug("REST request to get all Employees where user is null");
-            return new ResponseEntity<>(StreamSupport
-                .stream(employeeRepository.findAll().spliterator(), false)
-                .filter(employee -> employee.getUser() == null)
-                .collect(Collectors.toList()), HttpStatus.OK);
-        }
-        
-        Page<Employee> page = employeeRepository.findAll(pageable);
+        log.debug("REST request to get a page of Employees");
+        Page<Employee> page = employeeService.findAll(pageable); 
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/employees");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     /**
-     * GET  /employees/:id -> get the "id" employee.
+     * GET  /employees/:id : get the "id" employee.
+     *
+     * @param id the id of the employee to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the employee, or with status 404 (Not Found)
      */
     @RequestMapping(value = "/employees/{id}",
         method = RequestMethod.GET,
@@ -110,15 +114,19 @@ public class EmployeeResource {
     @Timed
     public ResponseEntity<Employee> getEmployee(@PathVariable Long id) {
         log.debug("REST request to get Employee : {}", id);
-        return Optional.ofNullable(employeeRepository.findOne(id))
-            .map(employee -> new ResponseEntity<>(
-                employee,
+        Employee employee = employeeService.findOne(id);
+        return Optional.ofNullable(employee)
+            .map(result -> new ResponseEntity<>(
+                result,
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     /**
-     * DELETE  /employees/:id -> delete the "id" employee.
+     * DELETE  /employees/:id : delete the "id" employee.
+     *
+     * @param id the id of the employee to delete
+     * @return the ResponseEntity with status 200 (OK)
      */
     @RequestMapping(value = "/employees/{id}",
         method = RequestMethod.DELETE,
@@ -126,22 +134,27 @@ public class EmployeeResource {
     @Timed
     public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
         log.debug("REST request to delete Employee : {}", id);
-        employeeRepository.delete(id);
-        employeeSearchRepository.delete(id);
+        employeeService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("employee", id.toString())).build();
     }
 
     /**
-     * SEARCH  /_search/employees/:query -> search for the employee corresponding
+     * SEARCH  /_search/employees?query=:query : search for the employee corresponding
      * to the query.
+     *
+     * @param query the query of the employee search
+     * @return the result of the search
      */
-    @RequestMapping(value = "/_search/employees/{query}",
+    @RequestMapping(value = "/_search/employees",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<Employee> searchEmployees(@PathVariable String query) {
-        return StreamSupport
-            .stream(employeeSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
+    public ResponseEntity<List<Employee>> searchEmployees(@RequestParam String query, Pageable pageable)
+        throws URISyntaxException {
+        log.debug("REST request to search for a page of Employees for query {}", query);
+        Page<Employee> page = employeeService.search(query, pageable);
+        HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/employees");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
+
 }

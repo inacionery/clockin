@@ -10,20 +10,24 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
+
 spring:
-    profiles:
-        active: dev
     devtools:
         restart:
             enabled: true
         livereload:
-            enabled: false # we use Grunt + BrowserSync for livereload
+            enabled: false # we use gulp + BrowserSync for livereload
     datasource:
-        driver-class-name: com.mysql.jdbc.jdbc2.optional.MysqlDataSource
-        url: jdbc:mysql://localhost:3306/clockin?useUnicode=true&characterEncoding=utf8
+        url: jdbc:mysql://localhost:3306/clockin?useUnicode=true&characterEncoding=utf8&useSSL=false
         name:
         username: root
         password:
+        hikari:
+            data-source-properties:
+                cachePrepStmts: true
+                prepStmtCacheSize: 250
+                prepStmtCacheSqlLimit: 2048
+                useServerPrepStmts: true
     jpa:
         database-platform: org.hibernate.dialect.MySQLInnoDBDialect
         database: MYSQL
@@ -52,18 +56,13 @@ liquibase:
     contexts: dev
 
 server:
-    port: 8181
+    port: 8080
 
 # ===================================================================
 # JHipster specific properties
 # ===================================================================
 
 jhipster:
-    datasource: # JHipster-specific configuration, in addition to the standard spring.datasource properties
-        cachePrepStmts: true
-        prepStmtCacheSize: 250
-        prepStmtCacheSqlLimit: 2048
-        useServerPrepStmts: true
     cache: # Hibernate 2nd level cache, used by CacheConfiguration
         timeToLiveSeconds: 3600
         ehcache:
@@ -81,3 +80,12 @@ jhipster:
             host: localhost
             port: 2003
             prefix: clockin
+        logs: # report metrics in the logs
+            enabled: false
+            reportFrequency: 60 # in seconds
+    logging:
+        logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
+            enabled: false
+            host: localhost
+            port: 5000
+            queueSize: 512

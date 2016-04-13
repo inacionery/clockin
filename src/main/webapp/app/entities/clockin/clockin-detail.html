@@ -1,0 +1,33 @@
+
+<div>
+    <h2><span translate="clockinApp.clockin.detail.title">Clockin</span> {{vm.clockin.id}}</h2>
+    <hr>
+    <dl class="dl-horizontal">
+        <dt><span translate="clockinApp.clockin.sequentialRegisterNumber">SequentialRegisterNumber</dt></dt>
+        <dd>
+            <span>{{vm.clockin.sequentialRegisterNumber}}<span>
+        </dd>
+        <hr>
+        <dt><span translate="clockinApp.clockin.dateTime">DateTime</dt></dt>
+        <dd>
+            <span>{{vm.clockin.dateTime | date:'medium'}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="clockinApp.clockin.registryType">RegistryType</dt></dt>
+        <dd>
+            <span translate="{{'clockinApp.RegistryType.' + vm.clockin.registryType}}">{{vm.clockin.registryType}}</span>
+        </dd>
+        <hr>
+        <dt><span translate="clockinApp.clockin.employee">employee</span></dt>
+        <dd>
+            <a ui-sref="employee-detail({id:vm.clockin.employee.id})">{{vm.clockin.employee.id}}</a>
+        </dd>
+        <hr>
+    </dl>
+
+    <button type="submit"
+            onclick="window.history.back()"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+    </button>
+</div>

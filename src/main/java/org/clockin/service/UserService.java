@@ -9,6 +9,7 @@ import org.clockin.repository.UserRepository;
 import org.clockin.repository.search.UserSearchRepository;
 import org.clockin.security.SecurityUtils;
 import org.clockin.service.util.RandomUtil;
+import org.clockin.web.rest.dto.ManagedUserDTO;
 import java.time.ZonedDateTime;
 import java.time.LocalDate;
 import org.slf4j.Logger;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
 import javax.inject.Inject;
 import java.util.*;
 
@@ -31,6 +33,9 @@ public class UserService {
     private final Logger log = LoggerFactory.getLogger(UserService.class);
 
     @Inject
+    private SocialService socialService;
+
+    @Inject
     private PasswordEncoder passwordEncoder;
 
     @Inject
@@ -38,6 +43,7 @@ public class UserService {
 
     @Inject
     private UserSearchRepository userSearchRepository;
+
 
     @Inject
     private PersistentTokenRepository persistentTokenRepository;
@@ -47,7 +53,7 @@ public class UserService {
 
     public Optional<User> activateRegistration(String key) {
         log.debug("Activating user for activation key {}", key);
-        userRepository.findOneByActivationKey(key)
+        return userRepository.findOneByActivationKey(key)
             .map(user -> {
                 // activate given user for the registration key.
                 user.setActivated(true);
@@ -57,7 +63,6 @@ public class UserService {
                 log.debug("Activated user: {}", user);
                 return user;
             });
-        return Optional.empty();
     }
 
     public Optional<User> completePasswordReset(String newPassword, String key) {
@@ -79,7 +84,7 @@ public class UserService {
 
     public Optional<User> requestPasswordReset(String mail) {
         return userRepository.findOneByEmail(mail)
-            .filter(user -> user.getActivated())
+            .filter(User::getActivated)
             .map(user -> {
                 user.setResetKey(RandomUtil.generateResetKey());
                 user.setResetDate(ZonedDateTime.now());
@@ -114,6 +119,35 @@ public class UserService {
         return newUser;
     }
 
+    public User createUser(ManagedUserDTO managedUserDTO) {
+        User user = new User();
+        user.setLogin(managedUserDTO.getLogin());
+        user.setFirstName(managedUserDTO.getFirstName());
+        user.setLastName(managedUserDTO.getLastName());
+        user.setEmail(managedUserDTO.getEmail());
+        if (managedUserDTO.getLangKey() == null) {
+            user.setLangKey("en"); // default language
+        } else {
+            user.setLangKey(managedUserDTO.getLangKey());
+        }
+        if (managedUserDTO.getAuthorities() != null) {
+            Set<Authority> authorities = new HashSet<>();
+            managedUserDTO.getAuthorities().stream().forEach(
+                authority -> authorities.add(authorityRepository.findOne(authority))
+            );
+            user.setAuthorities(authorities);
+        }
+        String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
+        user.setPassword(encryptedPassword);
+        user.setResetKey(RandomUtil.generateResetKey());
+        user.setResetDate(ZonedDateTime.now());
+        user.setActivated(true);
+        userRepository.save(user);
+        userSearchRepository.save(user);
+        log.debug("Created Information for User: {}", user);
+        return user;
+    }
+
     public void updateUserInformation(String firstName, String lastName, String email, String langKey) {
         userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).ifPresent(u -> {
             u.setFirstName(firstName);
@@ -126,8 +160,17 @@ public class UserService {
         });
     }
 
+    public void deleteUserInformation(String login) {
+        userRepository.findOneByLogin(login).ifPresent(u -> {
+            socialService.deleteUserSocialConnection(u.getLogin());
+            userRepository.delete(u);
+            userSearchRepository.delete(u);
+            log.debug("Deleted User: {}", u);
+        });
+    }
+
     public void changePassword(String password) {
-        userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).ifPresent(u-> {
+        userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).ifPresent(u -> {
             String encryptedPassword = passwordEncoder.encode(password);
             u.setPassword(encryptedPassword);
             userRepository.save(u);
@@ -160,7 +203,6 @@ public class UserService {
     /**
      * Persistent Token are used for providing automatic authentication, they should be automatically deleted after
      * 30 days.
-     * <p/>
      * <p>
      * This is scheduled to get fired everyday, at midnight.
      * </p>
@@ -178,7 +220,6 @@ public class UserService {
 
     /**
      * Not activated users should be automatically deleted after 3 days.
-     * <p/>
      * <p>
      * This is scheduled to get fired everyday, at 01:00 (am).
      * </p>

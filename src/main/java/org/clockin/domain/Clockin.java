@@ -1,25 +1,16 @@
 package org.clockin.domain;
 
-import org.clockin.domain.enumeration.RegistryType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
 
+import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import org.clockin.domain.enumeration.RegistryType;
+
 /**
  * A Clockin.
  */
@@ -28,6 +19,8 @@ import javax.persistence.Table;
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Document(indexName = "clockin")
 public class Clockin implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -86,16 +79,6 @@ public class Clockin implements Serializable {
         this.employee = employee;
     }
 
-	public LocalDate getDate() {
-
-		return dateTime.toLocalDate();
-	}
-
-	public LocalTime getTime() {
-
-		return dateTime.toLocalTime();
-	}
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -104,12 +87,11 @@ public class Clockin implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
         Clockin clockin = (Clockin) o;
-
-        if ( ! Objects.equals(id, clockin.id)) return false;
-
-        return true;
+        if(clockin.id == null || id == null) {
+            return false;
+        }
+        return Objects.equals(id, clockin.id);
     }
 
     @Override

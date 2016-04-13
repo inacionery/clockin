@@ -1,42 +1,44 @@
 'use strict';
 
-describe('Employee Detail Controller', function() {
-    var $scope, $rootScope;
-    var MockEntity, MockEmployee, MockClockin, MockUser;
-    var createController;
+describe('Controller Tests', function() {
 
-    beforeEach(inject(function($injector) {
-        $rootScope = $injector.get('$rootScope');
-        $scope = $rootScope.$new();
-        MockEntity = jasmine.createSpy('MockEntity');
-        MockEmployee = jasmine.createSpy('MockEmployee');
-        MockClockin = jasmine.createSpy('MockClockin');
-        MockUser = jasmine.createSpy('MockUser');
-        
+    describe('Employee Management Detail Controller', function() {
+        var $scope, $rootScope;
+        var MockEntity, MockEmployee, MockClockin;
+        var createController;
 
-        var locals = {
-            '$scope': $scope,
-            '$rootScope': $rootScope,
-            'entity': MockEntity ,
-            'Employee': MockEmployee,
-            'Clockin': MockClockin,
-            'User': MockUser
-        };
-        createController = function() {
-            $injector.get('$controller')("EmployeeDetailController", locals);
-        };
-    }));
+        beforeEach(inject(function($injector) {
+            $rootScope = $injector.get('$rootScope');
+            $scope = $rootScope.$new();
+            MockEntity = jasmine.createSpy('MockEntity');
+            MockEmployee = jasmine.createSpy('MockEmployee');
+            MockClockin = jasmine.createSpy('MockClockin');
+            
+
+            var locals = {
+                '$scope': $scope,
+                '$rootScope': $rootScope,
+                'entity': MockEntity ,
+                'Employee': MockEmployee,
+                'Clockin': MockClockin
+            };
+            createController = function() {
+                $injector.get('$controller')("EmployeeDetailController", locals);
+            };
+        }));
 
 
-    describe('Root Scope Listening', function() {
-        it('Unregisters root scope listener upon scope destruction', function() {
-            var eventType = 'clockinApp:employeeUpdate';
+        describe('Root Scope Listening', function() {
+            it('Unregisters root scope listener upon scope destruction', function() {
+                var eventType = 'clockinApp:employeeUpdate';
 
-            createController();
-            expect($rootScope.$$listenerCount[eventType]).toEqual(1);
+                createController();
+                expect($rootScope.$$listenerCount[eventType]).toEqual(1);
 
-            $scope.$destroy();
-            expect($rootScope.$$listenerCount[eventType]).toBeUndefined();
+                $scope.$destroy();
+                expect($rootScope.$$listenerCount[eventType]).toBeUndefined();
+            });
         });
     });
+
 });
