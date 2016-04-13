@@ -7,4 +7,4 @@ RUN sh -c 'touch /app.war'
 VOLUME /tmp
 CMD ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.war"]
 
-EXPOSE 8080
+EXPOSE 8181

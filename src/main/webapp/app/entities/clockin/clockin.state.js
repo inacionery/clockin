@@ -131,30 +131,6 @@
                     $state.go('^');
                 });
             }]
-        })
-        .state('clockin.delete', {
-            parent: 'clockin',
-            url: '/{id}/delete',
-            data: {
-                authorities: ['ROLE_USER']
-            },
-            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
-                $uibModal.open({
-                    templateUrl: 'app/entities/clockin/clockin-delete-dialog.html',
-                    controller: 'ClockinDeleteController',
-                    controllerAs: 'vm',
-                    size: 'md',
-                    resolve: {
-                        entity: ['Clockin', function(Clockin) {
-                            return Clockin.get({id : $stateParams.id});
-                        }]
-                    }
-                }).result.then(function() {
-                    $state.go('clockin', null, { reload: true });
-                }, function() {
-                    $state.go('^');
-                });
-            }]
         });
     }
 

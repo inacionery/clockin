@@ -22,6 +22,13 @@ public interface ClockinService {
     /**
      *  Get all the clockins.
      *  
+     *  @return the list of entities
+     */
+    List<Clockin> findAll();
+    
+    /**
+     *  Get all the clockins.
+     *  
      *  @param pageable the pagination information
      *  @return the list of entities
      */

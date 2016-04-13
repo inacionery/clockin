@@ -6,6 +6,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.util.Objects;
 
@@ -77,6 +79,14 @@ public class Clockin implements Serializable {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+    
+    public LocalDate getDate() {
+        return dateTime.toLocalDate();
+    }
+
+    public LocalTime getTime() {
+        return dateTime.toLocalTime();
     }
 
     @Override

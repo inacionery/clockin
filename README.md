@@ -42,7 +42,7 @@ To ensure everything worked, run:
 
     java -jar target/*.war --spring.profiles.active=prod
 
-Then navigate to [http://localhost:8080](http://localhost:8080) in your browser.
+Then navigate to [http://localhost:8181](http://localhost:8181) in your browser.
 
 ## Testing
 

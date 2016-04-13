@@ -2,7 +2,10 @@ package org.clockin.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import org.clockin.domain.Clockin;
+import org.clockin.domain.Employee;
 import org.clockin.service.ClockinService;
+import org.clockin.service.EmployeeService;
+import org.clockin.web.rest.dto.WorkDayDTO;
 import org.clockin.web.rest.util.HeaderUtil;
 import org.clockin.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -36,6 +40,10 @@ public class ClockinResource {
         
     @Inject
     private ClockinService clockinService;
+    
+    @Inject
+    private EmployeeService employeeService;
+
     
     /**
      * POST  /clockins : Create a new clockin.
@@ -103,6 +111,65 @@ public class ClockinResource {
     }
 
     /**
+     * GET /workdays -> get all workdays.
+     */
+    @RequestMapping(value = "/workdays",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<WorkDayDTO> getAllWorkDays() 
+    	throws URISyntaxException {
+
+        List<Clockin> clockins = clockinService.findAll();
+        List<WorkDayDTO> workDays = new ArrayList<>();
+
+        WorkDayDTO workDayDTO = null;
+        for (Clockin clockin : clockins) {
+
+            if (workDayDTO == null || !workDayDTO.getDate().isEqual(clockin.getDate())) {
+                workDayDTO = new WorkDayDTO(clockin.getDate());
+                workDays.add(workDayDTO);
+            }
+
+            workDayDTO.addClockinValues(clockin);
+        }
+
+        return workDays;
+    }
+
+    /**      
+     * GET /workdays/employee/:id -> get all workdays based on employee id.
+     */
+     @RequestMapping(value = "/workdays/employee/{id}",
+         method = RequestMethod.GET,
+         produces = MediaType.APPLICATION_JSON_VALUE)
+     @Timed
+     public List<WorkDayDTO> getAllWorkDays(@PathVariable Long id)
+         throws URISyntaxException {
+
+         List<Clockin> clockins = clockinService.findAll();
+         List<WorkDayDTO> workDays = new ArrayList<>();
+         Employee employee = employeeService.findOne(id);
+
+         WorkDayDTO workDayDTO = null;
+         for (Clockin clockin : clockins) {
+
+             if ((workDayDTO == null || !workDayDTO.getDate().isEqual(clockin.getDate()) ) && clockin.getEmployee().getId() == id ) {
+                 workDayDTO = new WorkDayDTO(clockin.getDate(), employee);
+                 workDays.add(workDayDTO);
+             }
+
+             if(clockin.getEmployee().getId() == id ) {
+                 workDayDTO.addClockinValues(clockin);
+             }
+
+         }
+
+         return workDays;
+     }
+
+
+     /**
      * GET  /clockins/:id : get the "id" clockin.
      *
      * @param id the id of the clockin to retrieve

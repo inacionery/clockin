@@ -49,14 +49,26 @@ public class ClockinServiceImpl implements ClockinService{
     /**
      *  Get all the clockins.
      *  
+     *  @return the list of entities
+     */
+    @Transactional(readOnly = true) 
+    public List<Clockin> findAll() {
+        log.debug("Request to get all Clockins");
+        List<Clockin> result = clockinRepository.findAll(); 
+        return result;
+    }
+    
+    /**
+     *  Get all the clockins.
+     *  
      *  @param pageable the pagination information
      *  @return the list of entities
      */
     @Transactional(readOnly = true) 
     public Page<Clockin> findAll(Pageable pageable) {
-        log.debug("Request to get all Clockins");
-        Page<Clockin> result = clockinRepository.findAll(pageable); 
-        return result;
+    	log.debug("Request to get all Clockins");
+    	Page<Clockin> result = clockinRepository.findAll(pageable); 
+    	return result;
     }
 
     /**

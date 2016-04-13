@@ -1,41 +1,231 @@
-<div>
-    <h2 translate="clockinApp.clockin.home.title">Clockins</h2>
-    <jhi-alert></jhi-alert>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-xs-4 no-padding-left">
-                <button class="btn btn-primary" ui-sref="clockin.new" >
-                    <span class="glyphicon glyphicon-plus"></span>
-                    <span class="hidden-xs"  translate="clockinApp.clockin.home.createLabel">
-                        Create new Clockin
-                    </span>
-                </button>
-            </div>
-            <div class="col-xs-8 no-padding-right">
-                <form name="searchForm" class="form-inline">
-                    <div class="input-group pull-right" >
-                        <input type="text" class="form-control" ng-model="vm.searchQuery" id="searchQuery" placeholder="{{ 'clockinApp.clockin.home.search' | translate }}">
-                        <span  class="input-group-btn width-min" >
-                            <button class="btn btn-info" ng-click="vm.search(vm.searchQuery)">
-                                <span class="glyphicon glyphicon-search"></span>
-                            </button>
-                        </span>
-                        <span class="input-group-btn width-min" ng-if="vm.currentSearch">
-                            <button class="btn btn-info" ng-click="vm.clear()">
-                                <span class="glyphicon glyphicon-trash"></span>
-                            </button>
-                        </span>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    <br/>
+<h5 class="title-month">Dezembro <span>2015</span></h5>
+
+<div class="clockins">
+ <div layout-gt-sm="row" layout="column" class="clock-row">
+     <div flex="100" class="green day" flex-gt-sm="20">
+       <p>
+           TER
+           <span>01</span>
+       </p>
+     </div>
+     <div flex="60" class="clocks">
+       <div layout="row">
+         <md-button flex>
+           <p>08:00</p>
+         </md-button>
+         <md-button flex>
+           <p>13:00</p>
+         </md-button>
+         <md-button flex>
+           <p>15:00</p>
+         </md-button>
+         <md-button flex>
+           <p>17:00</p>
+         </md-button>
+       </div>
+       <div layout="row">
+         <md-button flex>
+           <p>12:00</p>
+         </md-button>
+         <md-button flex>
+           <p>14:00</p>
+         </md-button>
+         <md-button flex>
+           <p>15:40</p>
+         </md-button>
+         <md-button flex>
+           <p>18:00</p>
+         </md-button>
+       </div>
+     </div>
+       <md-button class="gray" flex="20">
+           <i class="fa fa-cog"></i>
+           Saldo / Horas Trabalhadas
+       </md-button>
+   </div>
+
+
+
+<div layout-gt-sm="row" layout="column" class="clock-row">
+     <div flex="100" class="red day" flex-gt-sm="20">
+       <p>
+           TER
+           <span>02</span>
+       </p>
+     </div>
+     <div flex="60" class="clocks">
+       <div layout="row">
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+       </div>
+       <div layout="row">
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+       </div>
+     </div>
+       <md-button class="gray" flex="20">
+           <i class="fa fa-cog"></i>
+           Saldo / Horas Trabalhadas
+       </md-button>
+   </div>
+
+
+    <div layout-gt-sm="row" layout="column" class="clock-row">
+     <div flex="100" class="green day" flex-gt-sm="20">
+       <p>
+           TER
+           <span>03</span>
+       </p>
+     </div>
+     <div flex="60" class="clocks">
+       <div layout="row">
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+       </div>
+       <div layout="row">
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+       </div>
+     </div>
+       <md-button class="gray" flex="20">
+           <i class="fa fa-cog"></i>
+           Saldo / Horas Trabalhadas
+       </md-button>
+   </div>
+
+
+<div layout-gt-sm="row" layout="column" class="clock-row">
+     <div flex="100" class="green day" flex-gt-sm="20">
+       <p>
+           TER
+           <span>04</span>
+       </p>
+     </div>
+     <div flex="60" class="clocks">
+       <div layout="row">
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+       </div>
+       <div layout="row">
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+       </div>
+     </div>
+       <md-button class="gray" flex="20">
+           <i class="fa fa-cog"></i>
+           Saldo / Horas Trabalhadas
+       </md-button>
+   </div>
+
+
+
+<div layout-gt-sm="row" layout="column" class="clock-row">
+     <div flex="100" class="green day" flex-gt-sm="20">
+       <p>
+           TER
+           <span>05</span>
+       </p>
+     </div>
+     <div flex="60" class="clocks">
+       <div layout="row">
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+       </div>
+       <div layout="row">
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+         <md-button flex>
+           <p>10:00</p>
+         </md-button>
+           </div>
+     </div>
+       <md-button class="gray" flex="20">
+           <i class="fa fa-cog"></i>
+           Saldo / Horas Trabalhadas
+       </md-button>
+       </div>
+
     <div class="table-responsive">
         <table class="jh-table table table-striped">
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
-                    <th jh-sort-by="id"><span translate="global.field.id">ID</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="sequentialRegisterNumber"><span translate="clockinApp.clockin.sequentialRegisterNumber">SequentialRegisterNumber</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="dateTime"><span translate="clockinApp.clockin.dateTime">DateTime</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="registryType"><span translate="clockinApp.clockin.registryType">RegistryType</span> <span class="glyphicon glyphicon-sort"></span></th>
@@ -45,32 +235,19 @@
             </thead>
             <tbody>
                 <tr ng-repeat="clockin in vm.clockins track by clockin.id">
-                    <td><a ui-sref="clockin-detail({id:clockin.id})">{{clockin.id}}</a></td>
                     <td>{{clockin.sequentialRegisterNumber}}</td>
                     <td>{{clockin.dateTime | date:'medium'}}</td>
-                    <td translate="{{'clockinApp.RegistryType.' + clockin.registryType}}">{{clockin.registryType}}</td>
+                    <td translate="{{'clockinApp.RegistryType.'clockin.registryType}}">{{clockin.registryType}}</td>
                     <td>
                         <a ui-sref="employee-detail({id:clockin.employee.id})">{{clockin.employee.id}}</a>
                     </td>
                     <td class="text-right">
-                        <div class="btn-group flex-btn-group-container">
-                            <button type="submit"
-                                    ui-sref="clockin-detail({id:clockin.id})"
-                                    class="btn btn-info btn-sm">
-                                <span class="glyphicon glyphicon-eye-open"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
-                            </button>
+                        <div class="btn-group flex-btn-group-container">                     
                             <button type="submit"
                                     ui-sref="clockin.edit({id:clockin.id})"
                                     class="btn btn-primary btn-sm">
                                 <span class="glyphicon glyphicon-pencil"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="clockin.delete({id:clockin.id})"
-                                    class="btn btn-danger btn-sm">
-                                <span class="glyphicon glyphicon-remove-circle"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
                             </button>
                         </div>
                     </td>
@@ -82,4 +259,137 @@
         <jhi-item-count page="vm.page" total="vm.queryCount"></jhi-item-count>
         <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
     </div>
+</div>
+
+
+ <div layout-gt-sm="row" layout="column" class="clock-row">
+      <div flex="100" class="green day" flex-gt-sm="20">
+        <p>
+            TER
+            <span>06</span>
+        </p>
+      </div>
+      <div flex="60" class="clocks">
+        <div layout="row">
+          <md-button flex>
+            <p>10:00</p>
+          </md-button>
+          <md-button flex>
+            <p>10:00</p>
+          </md-button>
+          <md-button flex>
+            <p>10:00</p>
+          </md-button>
+          <md-button flex>
+            <p>10:00</p>
+          </md-button>
+        </div>
+        <div layout="row">
+          <md-button flex>
+            <p>10:00</p>
+          </md-button>
+          <md-button flex>
+            <p>10:00</p>
+          </md-button>
+          <md-button flex>
+            <p>10:00</p>
+          </md-button>
+          <md-button flex>
+            <p>10:00</p>
+          </md-button>
+        </div>
+      </div>
+        <md-button class="gray" flex="20">
+            <i class="fa fa-cog"></i>
+            Saldo / Horas Trabalhadas
+        </md-button>
+       </div>
+ <div layout-gt-sm="row" layout="column" class="clock-row">
+      <div flex="100" class="red day" flex-gt-sm="20">
+        <p>
+            TER
+            <span>07</span>
+        </p>
+      </div>
+      <div flex="60" class="clocks">
+        <div layout="row">
+          <md-button flex>
+            <p>10:00</p>
+          </md-button>
+          <md-button flex>
+            <p>10:00</p>
+          </md-button>
+          <md-button flex>
+            <p>10:00</p>
+          </md-button>
+          <md-button flex>
+            <p>10:00</p>
+          </md-button>
+        </div>
+        <div layout="row">
+          <md-button flex>
+            <p>10:00</p>
+          </md-button>
+          <md-button flex>
+            <p>10:00</p>
+          </md-button>
+          <md-button flex>
+            <p>10:00</p>
+          </md-button>
+          <md-button flex>
+            <p>10:00</p>
+          </md-button>
+        </div>
+      </div>
+        <md-button class="gray" flex="20">
+            <i class="fa fa-cog"></i>
+            Saldo / Horas Trabalhadas
+        </md-button>
+    </div>
+
+
+
+ <div layout-gt-sm="row" layout="column" class="clock-row">
+      <div flex="100" class="green day" flex-gt-sm="20">
+        <p>
+            TER
+            <span>08</span>
+        </p>
+      </div>
+      <div flex="60" class="clocks">
+        <div layout="row">
+          <md-button flex>
+            <p>10:00</p>
+          </md-button>
+          <md-button flex>
+            <p>10:00</p>
+          </md-button>
+          <md-button flex>
+            <p>10:00</p>
+          </md-button>
+          <md-button flex>
+            <p>10:00</p>
+          </md-button>
+        </div>
+        <div layout="row">
+          <md-button flex>
+            <p>10:00</p>
+          </md-button>
+          <md-button flex>
+            <p>10:00</p>
+          </md-button>
+          <md-button flex>
+            <p>10:00</p>
+          </md-button>
+          <md-button flex>
+            <p>10:00</p>
+          </md-button>
+        </div>
+      </div>
+        <md-button class="gray" flex="20">
+            <i class="fa fa-cog"></i>
+            Saldo / Horas Trabalhadas
+        </md-button>
+    </div>
+
 </div>

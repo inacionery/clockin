@@ -10,7 +10,7 @@ services:
             - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/clockin?useUnicode=true&characterEncoding=utf8&useSSL=false
             - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=elasticsearch:9300
         ports:
-            - 8080:8080
+            - 8181:8181
     clockin-mysql:
         extends:
             file: mysql.yml

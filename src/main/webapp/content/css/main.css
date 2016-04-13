@@ -1,7 +1,294 @@
+html {
+    background: transparent;
+}
+
 body {
     background: #fafafa;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+    font-size: 2em;
     color: #333;
+    overflow-x:hidden;    
+}
+
+body.bg-dark, .bg-dark {
+    background: #009FC5;    
+}
+
+body.bg-dark footer {
+    font-size: 0.8em;
+}
+
+.clockins .layout-row div {
+    text-align: center;
+    color: #fff;
+    padding: 0.5em;
+}
+
+.clockins .md-button {
+    border-radius: 0;
+    margin: 0;
+}
+
+.day {
+    font-weight: 300;
+    font-family: 'Roboto';
+    border-bottom: solid 3px #7EAF45;
+}
+
+.day.red, .settings.red {
+    border-bottom-color: #C54131;
+}
+
+.day p {
+    text-align: center;
+    color: #fff;
+    line-height: 2.4em;
+    margin: 0.5em;
+}
+
+.day span {
+    display: block;    
+    font-size: 3em;
+    font-weight: 600;
+}
+
+.clocks, .clocks button, .clocks .layout-row {
+    padding: 0!important;
+}
+
+.clocks {
+    background: #f5f5f5;
+}
+
+.clocks .layout-row button {
+    box-sizing: border-box;
+    height: 5.4em;
+    display: block;
+    border-bottom: solid 3px rgba(0,0,0,0.1);
+}
+
+.title-month {
+    padding: 1em 0.4em;
+    font-size: 2.6em;
+    margin: 0;
+    color: #6D6D6D;
+}
+
+.title-month span {
+    float: right;
+}
+
+.clocks {
+    color: #fff;
+}
+
+.clock-row {
+    margin-bottom: 0.3em;
+}
+
+.clocks .layout-row button:first-child {
+    background: #80d8ff;
+}
+
+.clocks .layout-row button:nth-child(2) {
+    background: #8c9eff;
+}
+
+.clocks .layout-row button:nth-child(3) {
+    background: #b388ff;
+}
+
+.clocks .layout-row button:nth-child(4) {
+    background: #ff80ab;
+}
+
+.clocks p {
+    display: inline-block;
+    font-size: 1.5em;
+    font-weight: 400;
+    margin: auto;
+}
+
+.clockins .fa-cog {
+    display: block;
+    font-size: 4em;
+    color: #6D6D6D;
+}
+
+.clockins .md-button span {
+    font-family: 'Roboto';
+    font-size: 1.2em;
+    color: #6D6D6D;
+}
+
+.gray {
+  background: #f5f5f5; 
+    border-bottom: solid 3px rgba(0,0,0,0.1);
+}
+.green {
+  background: #8bc34a; }
+.yellow {
+  background: #ffff8d; }
+.blue {
+  background: #03A9F4; }
+.darkBlue {
+  background: #80d8ff; }
+.deepBlue {
+  background: #448aff; }
+.purple {
+  background: #b388ff; }
+.lightPurple {
+  background: #8c9eff; }
+.red {
+  background: #DD4B39; }
+.pink {
+  background: #ff80ab; }
+
+.navbar-brand i, body.bg-dark footer {    
+    color: #fff;
+}
+
+a {
+    color: #00CEFF;
+}
+
+.navbar {
+    border: none;
+    border-radius: 0;
+}
+
+.navbar, .bg-light {
+    background: #00c0ef;
+}
+
+.navbar .navbar-brand span {
+    color: #fff;
+}
+
+.center-txt {
+    text-align: center;
+}
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
+    background: #009FC5;
+}
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+    background: rgba(0, 174, 216, 0.32);
+}
+
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+    background: #009FC5;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    background: rgba(0, 192, 239, 0.49);
+}
+
+.navbar-right span, .dropdown-menu > li > a,  .dropdown-menu > li > a:hover {
+    color: #fff;
+}
+
+.dropdown-menu {
+    background: #00BAE8;
+    border: none;
+    border-top: solid 1px #00BAE8;
+    box-shadow: none;
+}
+
+.hidden-sm {
+    display: none;
+}
+
+md-toolbar.md-default-theme.md-menu-toolbar md-toolbar-filler, md-toolbar.md-menu-toolbar md-toolbar-filler {
+    background:#FF5722
+}
+
+.flex {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox; 
+  display: -webkit-flex;
+  display: flex;
+}
+
+.column-flex-flow {
+    -webkit-flex-flow: column;
+    -moz-flex-flow: column;
+    -ms-flex-flow: column;
+    -o-flex-flow: column;
+    flex-flow: column;
+}
+
+.box {
+    max-width: 24em;
+    margin: 23vh auto 2em;
+    border-radius:0.2em;
+    background: #fff;
+    overflow: hidden;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.09);
+    padding-bottom: 2em;
+    justify-content:center;
+}
+
+.box h1 {    
+    height: 1.5em;
+    font-size: 5em;
+    margin-top: 0;
+    background: #00c0ef;
+    line-height: 1.5em;
+    color: #fff;
+}
+
+.box h3 {
+    padding: 1em 1.2em 0;
+    font-weight: 400;
+}
+
+.box form > button {
+    width: 50%;
+    border-radius: 0;
+    height: 3em;
+    margin: 0;
+    margin-top: 2em;
+    box-shadow: none!important;
+}
+
+.box button button,.box button button:hover,.box button button:focus,.box button button:active {
+    background: transparent;
+    font-size: 1.19em;
+    box-shadow: none!important;
+    outline: none!important;
+    border: none;
+}
+
+h3 {
+    font-weight: 600;
+    margin-top: 0;
+}
+
+
+h4 {
+    margin-top: 0;
+    font-size: 0.9em;
+    font-size: 0.8em;
+    color: #A2A2A2;    
+}
+
+.navbar-default .navbar-toggle, .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
+    background: transparent;
+    border: none;
+}
+
+.navbar-default .navbar-toggle span, .navbar-default .navbar-toggle:hover span, .navbar-default .navbar-toggle:focus  span {
+    background-color:#fff!important;
+}
+
+footer {
+    text-align: center;
+    padding: 3em 0 1em;
+    line-height: 0.9em;
+    font-size: 0.7em;
 }
 
 /* ==========================================================================
@@ -310,3 +597,42 @@ Social Buttons
 /* jhipster-needle-scss-add-main JHipster will add new css style */
 
 /* jhipster-needle-css-add-main JHipster will add new css style */
+
+@media only screen and (max-width: 764px) {
+    .navbar-collapse {
+        border: none;
+    }
+
+    .navbar-collapse  * {
+        color: #fff!important;
+    }
+
+    .navbar-collapse  .hidden-sm {
+        display: inline-block;
+        font-size: 0.9em
+    }
+
+    .navbar-nav .open .dropdown-menu {
+        background: rgba(0, 174, 216, 0.32);        
+    }
+
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, 
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
+        background: transparent;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .box form > button {
+        width: 60%;
+    }
+
+    h4 {
+        font-size: 0.8em;
+    }
+    
+    .box {
+        margin-top: 7vh;
+    }
+}

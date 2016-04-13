@@ -4,6 +4,7 @@
     angular
         .module('clockinApp', [
             'ngStorage', 
+            'ngMaterial',
             'tmh.dynamicLocale',
             'pascalprecht.translate', 
             'ngResource',

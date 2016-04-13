@@ -46,6 +46,12 @@
                     $rootScope.previousStateName = fromState.name;
                     $rootScope.previousStateParams = fromParams;
                 }
+                
+                if (Principal.isAuthenticated()) {
+                    $rootScope.sigin = true;
+                } else {
+                    $rootScope.sigin = false;
+                }
 
                 // Set the page title key to the one configured in state or use default one
                 if (toState.data.pageTitle) {
