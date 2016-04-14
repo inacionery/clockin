@@ -16,10 +16,11 @@
             "detail": {
                 "title": "Employee"
             },
-            "email": "Email",
-            "socialIdentificationNumber": "SocialIdentificationNumber",
-            "plannedDailyHours": "PlannedDailyHours",
-            "clockin": "Clockin"
+            "email": "E-mail",
+            "socialIdentificationNumber": "PIS",
+            "plannedDailyHours": "Working hours",
+            "clockin": "Clockin",
+            "user": "Employee"
         }
     }
 }

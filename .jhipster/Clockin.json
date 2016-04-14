@@ -7,7 +7,6 @@
             "otherEntityRelationshipName": "clockins",	
             "otherEntityField": "id"
         }
-
     ],
     "fields": [
         {

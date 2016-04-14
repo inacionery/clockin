@@ -43,8 +43,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @IntegrationTest
 public class EmployeeResourceIntTest {
 
-    private static final String DEFAULT_EMAIL = "AAAAA";
-    private static final String UPDATED_EMAIL = "BBBBB";
     private static final String DEFAULT_SOCIAL_IDENTIFICATION_NUMBER = "AAAAA";
     private static final String UPDATED_SOCIAL_IDENTIFICATION_NUMBER = "BBBBB";
 
@@ -84,7 +82,6 @@ public class EmployeeResourceIntTest {
     public void initTest() {
         employeeSearchRepository.deleteAll();
         employee = new Employee();
-        employee.setEmail(DEFAULT_EMAIL);
         employee.setSocialIdentificationNumber(DEFAULT_SOCIAL_IDENTIFICATION_NUMBER);
         employee.setPlannedDailyHours(DEFAULT_PLANNED_DAILY_HOURS);
     }
@@ -105,7 +102,6 @@ public class EmployeeResourceIntTest {
         List<Employee> employees = employeeRepository.findAll();
         assertThat(employees).hasSize(databaseSizeBeforeCreate + 1);
         Employee testEmployee = employees.get(employees.size() - 1);
-        assertThat(testEmployee.getEmail()).isEqualTo(DEFAULT_EMAIL);
         assertThat(testEmployee.getSocialIdentificationNumber()).isEqualTo(DEFAULT_SOCIAL_IDENTIFICATION_NUMBER);
         assertThat(testEmployee.getPlannedDailyHours()).isEqualTo(DEFAULT_PLANNED_DAILY_HOURS);
 
@@ -125,7 +121,6 @@ public class EmployeeResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(employee.getId().intValue())))
-                .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
                 .andExpect(jsonPath("$.[*].socialIdentificationNumber").value(hasItem(DEFAULT_SOCIAL_IDENTIFICATION_NUMBER.toString())))
                 .andExpect(jsonPath("$.[*].plannedDailyHours").value(hasItem(DEFAULT_PLANNED_DAILY_HOURS)));
     }
@@ -141,7 +136,6 @@ public class EmployeeResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(employee.getId().intValue()))
-            .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL.toString()))
             .andExpect(jsonPath("$.socialIdentificationNumber").value(DEFAULT_SOCIAL_IDENTIFICATION_NUMBER.toString()))
             .andExpect(jsonPath("$.plannedDailyHours").value(DEFAULT_PLANNED_DAILY_HOURS));
     }
@@ -165,7 +159,6 @@ public class EmployeeResourceIntTest {
         // Update the employee
         Employee updatedEmployee = new Employee();
         updatedEmployee.setId(employee.getId());
-        updatedEmployee.setEmail(UPDATED_EMAIL);
         updatedEmployee.setSocialIdentificationNumber(UPDATED_SOCIAL_IDENTIFICATION_NUMBER);
         updatedEmployee.setPlannedDailyHours(UPDATED_PLANNED_DAILY_HOURS);
 
@@ -178,7 +171,6 @@ public class EmployeeResourceIntTest {
         List<Employee> employees = employeeRepository.findAll();
         assertThat(employees).hasSize(databaseSizeBeforeUpdate);
         Employee testEmployee = employees.get(employees.size() - 1);
-        assertThat(testEmployee.getEmail()).isEqualTo(UPDATED_EMAIL);
         assertThat(testEmployee.getSocialIdentificationNumber()).isEqualTo(UPDATED_SOCIAL_IDENTIFICATION_NUMBER);
         assertThat(testEmployee.getPlannedDailyHours()).isEqualTo(UPDATED_PLANNED_DAILY_HOURS);
 
@@ -220,7 +212,6 @@ public class EmployeeResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.[*].id").value(hasItem(employee.getId().intValue())))
-            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
             .andExpect(jsonPath("$.[*].socialIdentificationNumber").value(hasItem(DEFAULT_SOCIAL_IDENTIFICATION_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].plannedDailyHours").value(hasItem(DEFAULT_PLANNED_DAILY_HOURS)));
     }

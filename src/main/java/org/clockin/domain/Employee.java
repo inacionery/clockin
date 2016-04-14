@@ -26,9 +26,6 @@ public class Employee implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "email")
-    private String email;
-
     @Column(name = "social_identification_number")
     private String socialIdentificationNumber;
 
@@ -40,20 +37,16 @@ public class Employee implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Clockin> clockins = new HashSet<>();
 
+    @OneToOne
+    @JoinColumn(unique = true)
+    private User user;
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getSocialIdentificationNumber() {
@@ -80,6 +73,14 @@ public class Employee implements Serializable {
         this.clockins = clockins;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -104,7 +105,6 @@ public class Employee implements Serializable {
     public String toString() {
         return "Employee{" +
             "id=" + id +
-            ", email='" + email + "'" +
             ", socialIdentificationNumber='" + socialIdentificationNumber + "'" +
             ", plannedDailyHours='" + plannedDailyHours + "'" +
             '}';

@@ -5,9 +5,9 @@
         .module('clockinApp')
         .controller('EmployeeDetailController', EmployeeDetailController);
 
-    EmployeeDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'Employee', 'Clockin'];
+    EmployeeDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'Employee', 'Clockin', 'User'];
 
-    function EmployeeDetailController($scope, $rootScope, $stateParams, entity, Employee, Clockin) {
+    function EmployeeDetailController($scope, $rootScope, $stateParams, entity, Employee, Clockin, User) {
         var vm = this;
         vm.employee = entity;
         vm.load = function (id) {

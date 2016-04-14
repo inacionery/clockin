@@ -3,16 +3,20 @@
         {
             "relationshipName": "clockin",
             "otherEntityName": "clockin",
-            "relationshipType": "one-to-many",			
+            "relationshipType": "one-to-many",
             "otherEntityRelationshipName": "employee",
             "otherEntityField": "id"
-        }       
+        },
+        {
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "one-to-one",
+            "otherEntityField": "email",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "employee"
+        }
     ],
     "fields": [
-		{
-            "fieldName": "email",
-            "fieldType": "String"
-        },
         {
             "fieldName": "socialIdentificationNumber",
             "fieldType": "String"

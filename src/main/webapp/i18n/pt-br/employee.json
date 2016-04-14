@@ -2,24 +2,25 @@
     "clockinApp": {
         "employee" : {
             "home": {
-                "title": "Employees",
-                "createLabel": "Create a new Employee",
-                "createOrEditLabel": "Create or edit a Employee",
-                "search": "Search for Employee"
+                "title": "Funcionários",
+                "createLabel": "Cadastrar um novo funcionário",
+                "createOrEditLabel": "Cadastrar ou editar um funcionário",
+                "search": "Buscar por um funcionário"
             },
-            "created": "A new Employee is created with identifier {{ param }}",
-            "updated": "A Employee is updated with identifier {{ param }}",
-            "deleted": "A Employee is deleted with identifier {{ param }}",
+            "created": "Um novo funcionário foi criado com o identificador {{ param }}",
+            "updated": "Um funcionário foi atualizado com o identificador {{ param }}",
+            "deleted": "Um funcionário foi apagado com o identificador {{ param }}",
             "delete": {
-                "question": "Are you sure you want to delete Employee {{ id }}?"
+                "question": "Você tem certeza que deseja apagar o funcionário {{ id }}?"
             },
             "detail": {
-                "title": "Employee"
+                "title": "Funcionário"
             },
-            "email": "Email",
-            "socialIdentificationNumber": "SocialIdentificationNumber",
-            "plannedDailyHours": "PlannedDailyHours",
-            "clockin": "Clockin"
+            "email": "E-mail",
+            "socialIdentificationNumber": "PIS",
+            "plannedDailyHours": "Jornada",
+            "clockin": "Clockin",
+            "user": "Funcionário"
         }
     }
 }

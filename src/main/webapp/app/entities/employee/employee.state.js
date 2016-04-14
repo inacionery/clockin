@@ -13,7 +13,7 @@
             parent: 'entity',
             url: '/employee?page&sort&search',
             data: {
-                authorities: ['ROLE_USER'],
+                authorities: ['ROLE_ADMIN'],
                 pageTitle: 'clockinApp.employee.home.title'
             },
             views: {
@@ -29,7 +29,7 @@
                     squash: true
                 },
                 sort: {
-                    value: 'id,asc',
+                    value: 'socialIdentificationNumber,asc',
                     squash: true
                 },
                 search: null
@@ -55,7 +55,7 @@
             parent: 'entity',
             url: '/employee/{id}',
             data: {
-                authorities: ['ROLE_USER'],
+                authorities: ['ROLE_ADMIN'],
                 pageTitle: 'clockinApp.employee.detail.title'
             },
             views: {
@@ -79,7 +79,7 @@
             parent: 'employee',
             url: '/new',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['ROLE_ADMIN']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
@@ -91,7 +91,6 @@
                     resolve: {
                         entity: function () {
                             return {
-                                email: null,
                                 socialIdentificationNumber: null,
                                 plannedDailyHours: null,
                                 id: null
@@ -109,7 +108,7 @@
             parent: 'employee',
             url: '/{id}/edit',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['ROLE_ADMIN']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({
@@ -134,7 +133,7 @@
             parent: 'employee',
             url: '/{id}/delete',
             data: {
-                authorities: ['ROLE_USER']
+                authorities: ['ROLE_ADMIN']
             },
             onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
                 $uibModal.open({

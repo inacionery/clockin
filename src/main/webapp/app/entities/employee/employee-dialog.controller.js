@@ -5,12 +5,13 @@
         .module('clockinApp')
         .controller('EmployeeDialogController', EmployeeDialogController);
 
-    EmployeeDialogController.$inject = ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'Employee', 'Clockin'];
+    EmployeeDialogController.$inject = ['$scope', '$stateParams', '$uibModalInstance', '$q', 'entity', 'Employee', 'Clockin', 'User'];
 
-    function EmployeeDialogController ($scope, $stateParams, $uibModalInstance, entity, Employee, Clockin) {
+    function EmployeeDialogController ($scope, $stateParams, $uibModalInstance, $q, entity, Employee, Clockin, User) {
         var vm = this;
         vm.employee = entity;
         vm.clockins = Clockin.query();
+        vm.users = User.query();
         vm.load = function(id) {
             Employee.get({id : id}, function(result) {
                 vm.employee = result;
