@@ -222,46 +222,6 @@
        </md-button>
        </div>
 
-    <div class="table-responsive">
-        <table class="jh-table table table-striped">
-            <thead>
-                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
-                    <th jh-sort-by="sequentialRegisterNumber"><span translate="clockinApp.clockin.sequentialRegisterNumber">SequentialRegisterNumber</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="dateTime"><span translate="clockinApp.clockin.dateTime">DateTime</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="registryType"><span translate="clockinApp.clockin.registryType">RegistryType</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="employee.id"><span translate="clockinApp.clockin.employee">employee</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="clockin in vm.clockins track by clockin.id">
-                    <td>{{clockin.sequentialRegisterNumber}}</td>
-                    <td>{{clockin.dateTime | date:'medium'}}</td>
-                    <td translate="{{'clockinApp.RegistryType.'clockin.registryType}}">{{clockin.registryType}}</td>
-                    <td>
-                        <a ui-sref="employee-detail({id:clockin.employee.id})">{{clockin.employee.id}}</a>
-                    </td>
-                    <td class="text-right">
-                        <div class="btn-group flex-btn-group-container">                     
-                            <button type="submit"
-                                    ui-sref="clockin.edit({id:clockin.id})"
-                                    class="btn btn-primary btn-sm">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="text-center">
-        <jhi-item-count page="vm.page" total="vm.queryCount"></jhi-item-count>
-        <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
-    </div>
-</div>
-
-
  <div layout-gt-sm="row" layout="column" class="clock-row">
       <div flex="100" class="green day" flex-gt-sm="20">
         <p>
