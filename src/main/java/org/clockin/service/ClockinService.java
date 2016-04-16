@@ -1,8 +1,6 @@
 package org.clockin.service;
 
 import org.clockin.domain.Clockin;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -25,14 +23,6 @@ public interface ClockinService {
      *  @return the list of entities
      */
     List<Clockin> findAll();
-    
-    /**
-     *  Get all the clockins.
-     *  
-     *  @param pageable the pagination information
-     *  @return the list of entities
-     */
-    Page<Clockin> findAll(Pageable pageable);
 
     /**
      *  Get the "id" clockin.
@@ -55,5 +45,5 @@ public interface ClockinService {
      *  @param query the query of the search
      *  @return the list of entities
      */
-    Page<Clockin> search(String query, Pageable pageable);
+    List<Clockin> search(String query);
 }

@@ -6,8 +6,6 @@ import org.clockin.repository.ClockinRepository;
 import org.clockin.repository.search.ClockinSearchRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -54,21 +52,8 @@ public class ClockinServiceImpl implements ClockinService{
     @Transactional(readOnly = true) 
     public List<Clockin> findAll() {
         log.debug("Request to get all Clockins");
-        List<Clockin> result = clockinRepository.findAll(); 
+        List<Clockin> result = clockinRepository.findAll();
         return result;
-    }
-    
-    /**
-     *  Get all the clockins.
-     *  
-     *  @param pageable the pagination information
-     *  @return the list of entities
-     */
-    @Transactional(readOnly = true) 
-    public Page<Clockin> findAll(Pageable pageable) {
-    	log.debug("Request to get all Clockins");
-    	Page<Clockin> result = clockinRepository.findAll(pageable); 
-    	return result;
     }
 
     /**
@@ -102,8 +87,10 @@ public class ClockinServiceImpl implements ClockinService{
      *  @return the list of entities
      */
     @Transactional(readOnly = true)
-    public Page<Clockin> search(String query, Pageable pageable) {
-        log.debug("Request to search for a page of Clockins for query {}", query);
-        return clockinSearchRepository.search(queryStringQuery(query), pageable);
+    public List<Clockin> search(String query) {
+        log.debug("Request to search Clockins for query {}", query);
+        return StreamSupport
+            .stream(clockinSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .collect(Collectors.toList());
     }
 }

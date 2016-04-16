@@ -27,5 +27,5 @@
     "dto": "no",
 	"service": "serviceImpl",	
     "entityTableName": "clockin",
-    "pagination": "pagination"
+    "pagination": "no"
 }
