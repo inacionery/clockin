@@ -13,13 +13,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 @Configuration
-public class LocaleConfiguration extends WebMvcConfigurerAdapter implements EnvironmentAware {
+public class LocaleConfiguration extends WebMvcConfigurerAdapter
+    implements EnvironmentAware {
 
     private RelaxedPropertyResolver propertyResolver;
 
     @Override
     public void setEnvironment(Environment environment) {
-        this.propertyResolver = new RelaxedPropertyResolver(environment, "spring.messages.");
+        this.propertyResolver = new RelaxedPropertyResolver(environment,
+            "spring.messages.");
     }
 
     @Bean(name = "localeResolver")

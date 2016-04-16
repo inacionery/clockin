@@ -15,19 +15,23 @@ public class HeaderUtil {
         return headers;
     }
 
-    public static HttpHeaders createEntityCreationAlert(String entityName, String param) {
+    public static HttpHeaders createEntityCreationAlert(String entityName,
+        String param) {
         return createAlert("clockinApp." + entityName + ".created", param);
     }
 
-    public static HttpHeaders createEntityUpdateAlert(String entityName, String param) {
+    public static HttpHeaders createEntityUpdateAlert(String entityName,
+        String param) {
         return createAlert("clockinApp." + entityName + ".updated", param);
     }
 
-    public static HttpHeaders createEntityDeletionAlert(String entityName, String param) {
+    public static HttpHeaders createEntityDeletionAlert(String entityName,
+        String param) {
         return createAlert("clockinApp." + entityName + ".deleted", param);
     }
 
-    public static HttpHeaders createFailureAlert(String entityName, String errorKey, String defaultMessage) {
+    public static HttpHeaders createFailureAlert(String entityName,
+        String errorKey, String defaultMessage) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-clockinApp-error", "error." + errorKey);
         headers.add("X-clockinApp-params", entityName);

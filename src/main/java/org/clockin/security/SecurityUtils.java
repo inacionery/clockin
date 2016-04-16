@@ -28,9 +28,11 @@ public final class SecurityUtils {
         String userName = null;
         if (authentication != null) {
             if (authentication.getPrincipal() instanceof UserDetails) {
-                UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
+                UserDetails springSecurityUser = (UserDetails) authentication
+                    .getPrincipal();
                 userName = springSecurityUser.getUsername();
-            } else if (authentication.getPrincipal() instanceof String) {
+            }
+            else if (authentication.getPrincipal() instanceof String) {
                 userName = (String) authentication.getPrincipal();
             }
         }
@@ -44,10 +46,12 @@ public final class SecurityUtils {
      */
     public static boolean isAuthenticated() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
-        Collection<? extends GrantedAuthority> authorities = securityContext.getAuthentication().getAuthorities();
+        Collection<? extends GrantedAuthority> authorities = securityContext
+            .getAuthentication().getAuthorities();
         if (authorities != null) {
             for (GrantedAuthority authority : authorities) {
-                if (authority.getAuthority().equals(AuthoritiesConstants.ANONYMOUS)) {
+                if (authority.getAuthority()
+                    .equals(AuthoritiesConstants.ANONYMOUS)) {
                     return false;
                 }
             }
@@ -68,8 +72,10 @@ public final class SecurityUtils {
         Authentication authentication = securityContext.getAuthentication();
         if (authentication != null) {
             if (authentication.getPrincipal() instanceof UserDetails) {
-                UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
-                return springSecurityUser.getAuthorities().contains(new SimpleGrantedAuthority(authority));
+                UserDetails springSecurityUser = (UserDetails) authentication
+                    .getPrincipal();
+                return springSecurityUser.getAuthorities()
+                    .contains(new SimpleGrantedAuthority(authority));
             }
         }
         return false;

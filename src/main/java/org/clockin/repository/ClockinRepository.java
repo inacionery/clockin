@@ -2,13 +2,11 @@ package org.clockin.repository;
 
 import org.clockin.domain.Clockin;
 
-import org.springframework.data.jpa.repository.*;
-
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Spring Data JPA repository for the Clockin entity.
  */
-public interface ClockinRepository extends JpaRepository<Clockin,Long> {
+public interface ClockinRepository extends JpaRepository<Clockin, Long> {
 
 }

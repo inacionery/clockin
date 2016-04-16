@@ -1,7 +1,5 @@
 package org.clockin.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import org.clockin.domain.Authority;
 import org.clockin.domain.PersistentToken;
 import org.clockin.domain.User;
 import org.clockin.repository.PersistentTokenRepository;
@@ -13,6 +11,8 @@ import org.clockin.web.rest.dto.KeyAndPasswordDTO;
 import org.clockin.web.rest.dto.UserDTO;
 import org.clockin.web.rest.util.HeaderUtil;
 
+import com.codahale.metrics.annotation.Timed;
+
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,14 +20,21 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * REST controller for managing the current user's account.
@@ -58,33 +65,38 @@ public class AccountResource {
      * @return the ResponseEntity with status 201 (Created) if the user is registred or 400 (Bad Request) if the login or e-mail is already in use
      */
     @RequestMapping(value = "/register",
-                    method = RequestMethod.POST,
-                    produces={MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
+        method = RequestMethod.POST,
+        produces = { MediaType.APPLICATION_JSON_VALUE,
+            MediaType.TEXT_PLAIN_VALUE })
     @Timed
-    public ResponseEntity<?> registerAccount(@Valid @RequestBody UserDTO userDTO, HttpServletRequest request) {
+    public ResponseEntity<?> registerAccount(
+        @Valid @RequestBody UserDTO userDTO, HttpServletRequest request) {
 
         HttpHeaders textPlainHeaders = new HttpHeaders();
         textPlainHeaders.setContentType(MediaType.TEXT_PLAIN);
 
         return userRepository.findOneByLogin(userDTO.getLogin())
-            .map(user -> new ResponseEntity<>("login already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
+            .map(user -> new ResponseEntity<>("login already in use",
+                textPlainHeaders, HttpStatus.BAD_REQUEST))
             .orElseGet(() -> userRepository.findOneByEmail(userDTO.getEmail())
-                .map(user -> new ResponseEntity<>("e-mail address already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
+                .map(user -> new ResponseEntity<>(
+                    "e-mail address already in use", textPlainHeaders,
+                    HttpStatus.BAD_REQUEST))
                 .orElseGet(() -> {
-                    User user = userService.createUserInformation(userDTO.getLogin(), userDTO.getPassword(),
-                    userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail().toLowerCase(),
-                    userDTO.getLangKey());
+                    User user = userService.createUserInformation(
+                        userDTO.getLogin(), userDTO.getPassword(),
+                        userDTO.getFirstName(), userDTO.getLastName(),
+                        userDTO.getEmail().toLowerCase(), userDTO.getLangKey());
                     String baseUrl = request.getScheme() + // "http"
-                    "://" +                                // "://"
-                    request.getServerName() +              // "myhost"
-                    ":" +                                  // ":"
-                    request.getServerPort() +              // "80"
-                    request.getContextPath();              // "/myContextPath" or "" if deployed in root context
+                    "://" + // "://"
+                    request.getServerName() + // "myhost"
+                    ":" + // ":"
+                    request.getServerPort() + // "80"
+                    request.getContextPath(); // "/myContextPath" or "" if deployed in root context
 
                     mailService.sendActivationEmail(user, baseUrl);
                     return new ResponseEntity<>(HttpStatus.CREATED);
-                })
-        );
+                }));
     }
 
     /**
@@ -97,7 +109,8 @@ public class AccountResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<String> activateAccount(@RequestParam(value = "key") String key) {
+    public ResponseEntity<String> activateAccount(
+        @RequestParam(value = "key") String key) {
         return userService.activateRegistration(key)
             .map(user -> new ResponseEntity<String>(HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
@@ -144,18 +157,23 @@ public class AccountResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<String> saveAccount(@RequestBody UserDTO userDTO) {
-        Optional<User> existingUser = userRepository.findOneByEmail(userDTO.getEmail());
-        if (existingUser.isPresent() && (!existingUser.get().getLogin().equalsIgnoreCase(userDTO.getLogin()))) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("user-management", "emailexists", "Email already in use")).body(null);
+        Optional<User> existingUser = userRepository
+            .findOneByEmail(userDTO.getEmail());
+        if (existingUser.isPresent() && (!existingUser.get().getLogin()
+            .equalsIgnoreCase(userDTO.getLogin()))) {
+            return ResponseEntity.badRequest()
+                .headers(HeaderUtil.createFailureAlert("user-management",
+                    "emailexists", "Email already in use"))
+                .body(null);
         }
         return userRepository
-            .findOneByLogin(SecurityUtils.getCurrentUserLogin())
-            .map(u -> {
-                userService.updateUserInformation(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(),
+            .findOneByLogin(SecurityUtils.getCurrentUserLogin()).map(u -> {
+                userService.updateUserInformation(userDTO.getFirstName(),
+                    userDTO.getLastName(), userDTO.getEmail(),
                     userDTO.getLangKey());
                 return new ResponseEntity<String>(HttpStatus.OK);
-            })
-            .orElseGet(() -> new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+            }).orElseGet(
+                () -> new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
     /**
@@ -170,7 +188,8 @@ public class AccountResource {
     @Timed
     public ResponseEntity<?> changePassword(@RequestBody String password) {
         if (!checkPasswordLength(password)) {
-            return new ResponseEntity<>("Incorrect password", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Incorrect password",
+                HttpStatus.BAD_REQUEST);
         }
         userService.changePassword(password);
         return new ResponseEntity<>(HttpStatus.OK);
@@ -187,10 +206,10 @@ public class AccountResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<List<PersistentToken>> getCurrentSessions() {
-        return userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin())
+        return userRepository
+            .findOneByLogin(SecurityUtils.getCurrentUserLogin())
             .map(user -> new ResponseEntity<>(
-                persistentTokenRepository.findByUser(user),
-                HttpStatus.OK))
+                persistentTokenRepository.findByUser(user), HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
@@ -213,13 +232,17 @@ public class AccountResource {
     @RequestMapping(value = "/account/sessions/{series}",
         method = RequestMethod.DELETE)
     @Timed
-    public void invalidateSession(@PathVariable String series) throws UnsupportedEncodingException {
+    public void invalidateSession(@PathVariable String series)
+        throws UnsupportedEncodingException {
         String decodedSeries = URLDecoder.decode(series, "UTF-8");
-        userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).ifPresent(u -> {
-            persistentTokenRepository.findByUser(u).stream()
-                .filter(persistentToken -> StringUtils.equals(persistentToken.getSeries(), decodedSeries))
-                .findAny().ifPresent(t -> persistentTokenRepository.delete(decodedSeries));
-        });
+        userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin())
+            .ifPresent(u -> {
+                persistentTokenRepository.findByUser(u).stream()
+                    .filter(persistentToken -> StringUtils
+                        .equals(persistentToken.getSeries(), decodedSeries))
+                    .findAny().ifPresent(
+                        t -> persistentTokenRepository.delete(decodedSeries));
+            });
     }
 
     /**
@@ -233,18 +256,16 @@ public class AccountResource {
         method = RequestMethod.POST,
         produces = MediaType.TEXT_PLAIN_VALUE)
     @Timed
-    public ResponseEntity<?> requestPasswordReset(@RequestBody String mail, HttpServletRequest request) {
-        return userService.requestPasswordReset(mail)
-            .map(user -> {
-                String baseUrl = request.getScheme() +
-                    "://" +
-                    request.getServerName() +
-                    ":" +
-                    request.getServerPort() +
-                    request.getContextPath();
-                mailService.sendPasswordResetMail(user, baseUrl);
-                return new ResponseEntity<>("e-mail was sent", HttpStatus.OK);
-            }).orElse(new ResponseEntity<>("e-mail address not registered", HttpStatus.BAD_REQUEST));
+    public ResponseEntity<?> requestPasswordReset(@RequestBody String mail,
+        HttpServletRequest request) {
+        return userService.requestPasswordReset(mail).map(user -> {
+            String baseUrl = request.getScheme() + "://"
+                + request.getServerName() + ":" + request.getServerPort()
+                + request.getContextPath();
+            mailService.sendPasswordResetMail(user, baseUrl);
+            return new ResponseEntity<>("e-mail was sent", HttpStatus.OK);
+        }).orElse(new ResponseEntity<>("e-mail address not registered",
+            HttpStatus.BAD_REQUEST));
     }
 
     /**
@@ -258,18 +279,22 @@ public class AccountResource {
         method = RequestMethod.POST,
         produces = MediaType.TEXT_PLAIN_VALUE)
     @Timed
-    public ResponseEntity<String> finishPasswordReset(@RequestBody KeyAndPasswordDTO keyAndPassword) {
+    public ResponseEntity<String> finishPasswordReset(
+        @RequestBody KeyAndPasswordDTO keyAndPassword) {
         if (!checkPasswordLength(keyAndPassword.getNewPassword())) {
-            return new ResponseEntity<>("Incorrect password", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Incorrect password",
+                HttpStatus.BAD_REQUEST);
         }
-        return userService.completePasswordReset(keyAndPassword.getNewPassword(), keyAndPassword.getKey())
-              .map(user -> new ResponseEntity<String>(HttpStatus.OK))
-              .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+        return userService
+            .completePasswordReset(keyAndPassword.getNewPassword(),
+                keyAndPassword.getKey())
+            .map(user -> new ResponseEntity<String>(HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
     private boolean checkPasswordLength(String password) {
-        return (!StringUtils.isEmpty(password) &&
-            password.length() >= UserDTO.PASSWORD_MIN_LENGTH &&
-            password.length() <= UserDTO.PASSWORD_MAX_LENGTH);
+        return (!StringUtils.isEmpty(password)
+            && password.length() >= UserDTO.PASSWORD_MIN_LENGTH
+            && password.length() <= UserDTO.PASSWORD_MAX_LENGTH);
     }
 }

@@ -2,13 +2,15 @@ package org.clockin.config;
 
 import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.ehcache.InstrumentedEhcache;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.annotation.*;
 import org.springframework.cache.ehcache.EhCacheCacheManager;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.util.Assert;
 
 import javax.annotation.PreDestroy;
@@ -16,15 +18,18 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.metamodel.EntityType;
+
 import java.util.Set;
 import java.util.SortedSet;
 
 @Configuration
 @EnableCaching
-@AutoConfigureAfter(value = { MetricsConfiguration.class, DatabaseConfiguration.class })
+@AutoConfigureAfter(
+    value = { MetricsConfiguration.class, DatabaseConfiguration.class })
 public class CacheConfiguration {
 
-    private final Logger log = LoggerFactory.getLogger(CacheConfiguration.class);
+    private final Logger log = LoggerFactory
+        .getLogger(CacheConfiguration.class);
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -47,9 +52,11 @@ public class CacheConfiguration {
     public CacheManager cacheManager(JHipsterProperties jHipsterProperties) {
         log.debug("Starting Ehcache");
         cacheManager = net.sf.ehcache.CacheManager.create();
-        cacheManager.getConfiguration().setMaxBytesLocalHeap(jHipsterProperties.getCache().getEhcache().getMaxBytesLocalHeap());
+        cacheManager.getConfiguration().setMaxBytesLocalHeap(
+            jHipsterProperties.getCache().getEhcache().getMaxBytesLocalHeap());
         log.debug("Registering Ehcache Metrics gauges");
-        Set<EntityType<?>> entities = entityManager.getMetamodel().getEntities();
+        Set<EntityType<?>> entities = entityManager.getMetamodel()
+            .getEntities();
         for (EntityType<?> entity : entities) {
 
             String name = entity.getName();
@@ -60,9 +67,12 @@ public class CacheConfiguration {
 
             net.sf.ehcache.Cache cache = cacheManager.getCache(name);
             if (cache != null) {
-                cache.getCacheConfiguration().setTimeToLiveSeconds(jHipsterProperties.getCache().getTimeToLiveSeconds());
-                net.sf.ehcache.Ehcache decoratedCache = InstrumentedEhcache.instrument(metricRegistry, cache);
-                cacheManager.replaceCacheWithDecoratedCache(cache, decoratedCache);
+                cache.getCacheConfiguration().setTimeToLiveSeconds(
+                    jHipsterProperties.getCache().getTimeToLiveSeconds());
+                net.sf.ehcache.Ehcache decoratedCache = InstrumentedEhcache
+                    .instrument(metricRegistry, cache);
+                cacheManager.replaceCacheWithDecoratedCache(cache,
+                    decoratedCache);
             }
         }
         EhCacheCacheManager ehCacheManager = new EhCacheCacheManager();

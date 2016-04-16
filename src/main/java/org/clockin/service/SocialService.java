@@ -17,6 +17,7 @@ import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -41,11 +42,13 @@ public class SocialService {
     private MailService mailService;
 
     public void deleteUserSocialConnection(String login) {
-        ConnectionRepository connectionRepository = usersConnectionRepository.createConnectionRepository(login);
+        ConnectionRepository connectionRepository = usersConnectionRepository
+            .createConnectionRepository(login);
         connectionRepository.findAllConnections().keySet().stream()
             .forEach(providerId -> {
                 connectionRepository.removeConnections(providerId);
-                log.debug("Delete user social connection providerId: {}", providerId);
+                log.debug("Delete user social connection providerId: {}",
+                    providerId);
             });
     }
 
@@ -61,25 +64,34 @@ public class SocialService {
         mailService.sendSocialRegistrationValidationEmail(user, providerId);
     }
 
-    private User createUserIfNotExist(UserProfile userProfile, String langKey, String providerId) {
+    private User createUserIfNotExist(UserProfile userProfile, String langKey,
+        String providerId) {
         String email = userProfile.getEmail();
         String userName = userProfile.getUsername();
         if (StringUtils.isBlank(email) && StringUtils.isBlank(userName)) {
-            log.error("Cannot create social user because email and login are null");
-            throw new IllegalArgumentException("Email and login cannot be null");
+            log.error(
+                "Cannot create social user because email and login are null");
+            throw new IllegalArgumentException(
+                "Email and login cannot be null");
         }
-        if (StringUtils.isBlank(email) && userRepository.findOneByLogin(userName).isPresent()) {
-            log.error("Cannot create social user because email is null and login already exist, login -> {}", userName);
-            throw new IllegalArgumentException("Email cannot be null with an existing login");
+        if (StringUtils.isBlank(email)
+            && userRepository.findOneByLogin(userName).isPresent()) {
+            log.error(
+                "Cannot create social user because email is null and login already exist, login -> {}",
+                userName);
+            throw new IllegalArgumentException(
+                "Email cannot be null with an existing login");
         }
         Optional<User> user = userRepository.findOneByEmail(email);
         if (user.isPresent()) {
-            log.info("User already exist associate the connection to this account");
+            log.info(
+                "User already exist associate the connection to this account");
             return user.get();
         }
 
         String login = getLoginDependingOnProviderId(userProfile, providerId);
-        String encryptedPassword = passwordEncoder.encode(RandomStringUtils.random(10));
+        String encryptedPassword = passwordEncoder
+            .encode(RandomStringUtils.random(10));
         Set<Authority> authorities = new HashSet<>(1);
         authorities.add(authorityRepository.findOne("ROLE_USER"));
 
@@ -100,7 +112,8 @@ public class SocialService {
      * @return login if provider manage a login like Twitter or Github otherwise email address.
      *         Because provider like Google or Facebook didn't provide login or login like "12099388847393"
      */
-    private String getLoginDependingOnProviderId(UserProfile userProfile, String providerId) {
+    private String getLoginDependingOnProviderId(UserProfile userProfile,
+        String providerId) {
         switch (providerId) {
             case "twitter":
                 return userProfile.getUsername().toLowerCase();
@@ -109,8 +122,10 @@ public class SocialService {
         }
     }
 
-    private void createSocialConnection(String login, Connection<?> connection) {
-        ConnectionRepository connectionRepository = usersConnectionRepository.createConnectionRepository(login);
+    private void createSocialConnection(String login,
+        Connection<?> connection) {
+        ConnectionRepository connectionRepository = usersConnectionRepository
+            .createConnectionRepository(login);
         connectionRepository.addConnection(connection);
     }
 }

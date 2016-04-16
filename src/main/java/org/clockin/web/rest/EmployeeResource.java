@@ -1,10 +1,12 @@
 package org.clockin.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
 import org.clockin.domain.Employee;
 import org.clockin.service.EmployeeService;
 import org.clockin.web.rest.util.HeaderUtil;
 import org.clockin.web.rest.util.PaginationUtil;
+
+import com.codahale.metrics.annotation.Timed;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -13,17 +15,19 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Employee.
@@ -33,10 +37,10 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class EmployeeResource {
 
     private final Logger log = LoggerFactory.getLogger(EmployeeResource.class);
-        
+
     @Inject
     private EmployeeService employeeService;
-    
+
     /**
      * POST  /employees : Create a new employee.
      *
@@ -48,14 +52,20 @@ public class EmployeeResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Employee> createEmployee(@RequestBody Employee employee) throws URISyntaxException {
+    public ResponseEntity<Employee> createEmployee(
+        @RequestBody Employee employee) throws URISyntaxException {
         log.debug("REST request to save Employee : {}", employee);
         if (employee.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("employee", "idexists", "A new employee cannot already have an ID")).body(null);
+            return ResponseEntity
+                .badRequest().headers(HeaderUtil.createFailureAlert("employee",
+                    "idexists", "A new employee cannot already have an ID"))
+                .body(null);
         }
         Employee result = employeeService.save(employee);
-        return ResponseEntity.created(new URI("/api/employees/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("employee", result.getId().toString()))
+        return ResponseEntity
+            .created(new URI("/api/employees/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert("employee",
+                result.getId().toString()))
             .body(result);
     }
 
@@ -72,14 +82,15 @@ public class EmployeeResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Employee> updateEmployee(@RequestBody Employee employee) throws URISyntaxException {
+    public ResponseEntity<Employee> updateEmployee(
+        @RequestBody Employee employee) throws URISyntaxException {
         log.debug("REST request to update Employee : {}", employee);
         if (employee.getId() == null) {
             return createEmployee(employee);
         }
         Employee result = employeeService.save(employee);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert("employee", employee.getId().toString()))
+        return ResponseEntity.ok().headers(HeaderUtil
+            .createEntityUpdateAlert("employee", employee.getId().toString()))
             .body(result);
     }
 
@@ -97,8 +108,9 @@ public class EmployeeResource {
     public ResponseEntity<List<Employee>> getAllEmployees(Pageable pageable)
         throws URISyntaxException {
         log.debug("REST request to get a page of Employees");
-        Page<Employee> page = employeeService.findAll(pageable); 
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/employees");
+        Page<Employee> page = employeeService.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page,
+            "/api/employees");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
@@ -116,9 +128,7 @@ public class EmployeeResource {
         log.debug("REST request to get Employee : {}", id);
         Employee employee = employeeService.findOne(id);
         return Optional.ofNullable(employee)
-            .map(result -> new ResponseEntity<>(
-                result,
-                HttpStatus.OK))
+            .map(result -> new ResponseEntity<>(result, HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -135,7 +145,10 @@ public class EmployeeResource {
     public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
         log.debug("REST request to delete Employee : {}", id);
         employeeService.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("employee", id.toString())).build();
+        return ResponseEntity.ok()
+            .headers(
+                HeaderUtil.createEntityDeletionAlert("employee", id.toString()))
+            .build();
     }
 
     /**
@@ -149,11 +162,15 @@ public class EmployeeResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Employee>> searchEmployees(@RequestParam String query, Pageable pageable)
+    public ResponseEntity<List<Employee>> searchEmployees(
+        @RequestParam String query, Pageable pageable)
         throws URISyntaxException {
-        log.debug("REST request to search for a page of Employees for query {}", query);
+        log.debug("REST request to search for a page of Employees for query {}",
+            query);
         Page<Employee> page = employeeService.search(query, pageable);
-        HttpHeaders headers = PaginationUtil.generateSearchPaginationHttpHeaders(query, page, "/api/_search/employees");
+        HttpHeaders headers = PaginationUtil
+            .generateSearchPaginationHttpHeaders(query, page,
+                "/api/_search/employees");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 

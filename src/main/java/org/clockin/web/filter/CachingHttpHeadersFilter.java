@@ -2,8 +2,14 @@ package org.clockin.web.filter;
 
 import org.clockin.config.JHipsterProperties;
 
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
@@ -25,7 +31,8 @@ public class CachingHttpHeadersFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        CACHE_TIME_TO_LIVE = TimeUnit.DAYS.toMillis(jHipsterProperties.getHttp().getCache().getTimeToLiveInDays());
+        CACHE_TIME_TO_LIVE = TimeUnit.DAYS.toMillis(
+            jHipsterProperties.getHttp().getCache().getTimeToLiveInDays());
     }
 
     @Override
@@ -34,16 +41,18 @@ public class CachingHttpHeadersFilter implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-        throws IOException, ServletException {
+    public void doFilter(ServletRequest request, ServletResponse response,
+        FilterChain chain) throws IOException, ServletException {
 
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-        httpResponse.setHeader("Cache-Control", "max-age=" + CACHE_TIME_TO_LIVE + ", public");
+        httpResponse.setHeader("Cache-Control",
+            "max-age=" + CACHE_TIME_TO_LIVE + ", public");
         httpResponse.setHeader("Pragma", "cache");
 
         // Setting Expires header, for proxy caching
-        httpResponse.setDateHeader("Expires", CACHE_TIME_TO_LIVE + System.currentTimeMillis());
+        httpResponse.setDateHeader("Expires",
+            CACHE_TIME_TO_LIVE + System.currentTimeMillis());
 
         // Setting the Last-Modified header, for browser caching
         httpResponse.setDateHeader("Last-Modified", LAST_MODIFIED);

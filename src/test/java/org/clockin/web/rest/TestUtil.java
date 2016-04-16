@@ -2,9 +2,11 @@ package org.clockin.web.rest;
 
 import org.clockin.domain.util.JSR310DateTimeSerializer;
 import org.clockin.domain.util.JSR310LocalDateDeserializer;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import org.springframework.http.MediaType;
 
 import java.io.IOException;
@@ -22,8 +24,8 @@ public class TestUtil {
 
     /** MediaType for JSON UTF8 */
     public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(
-            MediaType.APPLICATION_JSON.getType(),
-            MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
+        MediaType.APPLICATION_JSON.getType(),
+        MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
 
     /**
      * Convert an object to JSON byte array.
@@ -34,16 +36,20 @@ public class TestUtil {
      * @throws IOException
      */
     public static byte[] convertObjectToJsonBytes(Object object)
-            throws IOException {
+        throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         JavaTimeModule module = new JavaTimeModule();
-        module.addSerializer(OffsetDateTime.class, JSR310DateTimeSerializer.INSTANCE);
-        module.addSerializer(ZonedDateTime.class, JSR310DateTimeSerializer.INSTANCE);
-        module.addSerializer(LocalDateTime.class, JSR310DateTimeSerializer.INSTANCE);
+        module.addSerializer(OffsetDateTime.class,
+            JSR310DateTimeSerializer.INSTANCE);
+        module.addSerializer(ZonedDateTime.class,
+            JSR310DateTimeSerializer.INSTANCE);
+        module.addSerializer(LocalDateTime.class,
+            JSR310DateTimeSerializer.INSTANCE);
         module.addSerializer(Instant.class, JSR310DateTimeSerializer.INSTANCE);
-        module.addDeserializer(LocalDate.class, JSR310LocalDateDeserializer.INSTANCE);
+        module.addDeserializer(LocalDate.class,
+            JSR310LocalDateDeserializer.INSTANCE);
         mapper.registerModule(module);
 
         return mapper.writeValueAsBytes(object);

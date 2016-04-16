@@ -1,7 +1,8 @@
 package org.clockin.web.rest.dto;
 
-import ch.qos.logback.classic.Logger;
 import com.fasterxml.jackson.annotation.JsonCreator;
+
+import ch.qos.logback.classic.Logger;
 
 public class LoggerDTO {
 
@@ -36,9 +37,7 @@ public class LoggerDTO {
 
     @Override
     public String toString() {
-        return "LoggerDTO{" +
-            "name='" + name + '\'' +
-            ", level='" + level + '\'' +
-            '}';
+        return "LoggerDTO{" + "name='" + name + '\'' + ", level='" + level
+            + '\'' + '}';
     }
 }

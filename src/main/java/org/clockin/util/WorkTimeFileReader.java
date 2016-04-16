@@ -18,30 +18,28 @@ import java.util.stream.Stream;
  */
 public class WorkTimeFileReader {
 
-//	public static void main(String[] args) throws IOException {
-//
-//		WorkTimeFileReader workTimeFileReader = new WorkTimeFileReader();
-//
-//		workTimeFileReader.readStreamOfLinesUsingFilesWithTryBlock();
-//	}
+    //	public static void main(String[] args) throws IOException {
+    //
+    //		WorkTimeFileReader workTimeFileReader = new WorkTimeFileReader();
+    //
+    //		workTimeFileReader.readStreamOfLinesUsingFilesWithTryBlock();
+    //	}
 
-	public void readStreamOfLinesUsingFilesWithTryBlock()
-		throws IOException {
+    public void readStreamOfLinesUsingFilesWithTryBlock() throws IOException {
 
-		String path = "/Users/miguelangelo/Liferay/ide/mars/eclipse/workspace_gs_queiroz_galvao/decryptMDB/temp.txt";
+        String path = "/Users/miguelangelo/Liferay/ide/mars/eclipse/workspace_gs_queiroz_galvao/decryptMDB/temp.txt";
 
-		List<ClockRecord> clockRecords = null;
+        List<ClockRecord> clockRecords = null;
 
-		try (Stream<String> stream = Files.lines(Paths.get(path))) {
-			clockRecords = stream
-		        .filter(line -> line.matches(RECORD_FORMAT))
-		        .map(line -> new ClockRecord(line))
-		        .collect(Collectors.toList());
-		}
+        try (Stream<String> stream = Files.lines(Paths.get(path))) {
+            clockRecords = stream.filter(line -> line.matches(RECORD_FORMAT))
+                .map(line -> new ClockRecord(line))
+                .collect(Collectors.toList());
+        }
 
-		for (ClockRecord clockRecord : clockRecords) {
-			System.out.println(clockRecord.getOriginalRecord());
-		}
-	}
+        for (ClockRecord clockRecord : clockRecords) {
+            System.out.println(clockRecord.getOriginalRecord());
+        }
+    }
 
 }

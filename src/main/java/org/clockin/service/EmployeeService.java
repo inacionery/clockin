@@ -1,10 +1,9 @@
 package org.clockin.service;
 
 import org.clockin.domain.Employee;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.util.List;
 
 /**
  * Service Interface for managing Employee.

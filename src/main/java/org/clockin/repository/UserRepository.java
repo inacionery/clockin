@@ -2,10 +2,9 @@ package org.clockin.repository;
 
 import org.clockin.domain.User;
 
-import java.time.ZonedDateTime;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +15,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findOneByActivationKey(String activationKey);
 
-    List<User> findAllByActivatedIsFalseAndCreatedDateBefore(ZonedDateTime dateTime);
+    List<User> findAllByActivatedIsFalseAndCreatedDateBefore(
+        ZonedDateTime dateTime);
 
     Optional<User> findOneByResetKey(String resetKey);
 

@@ -1,6 +1,6 @@
 package org.clockin.config.liquibase;
 
-import javax.inject.Inject;
+import org.clockin.config.Constants;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +9,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.util.StopWatch;
 
-import org.clockin.config.Constants;
+import javax.inject.Inject;
+
 import liquibase.exception.LiquibaseException;
 import liquibase.integration.spring.SpringLiquibase;
 
@@ -30,7 +31,8 @@ import liquibase.integration.spring.SpringLiquibase;
  */
 public class AsyncSpringLiquibase extends SpringLiquibase {
 
-    private final Logger log = LoggerFactory.getLogger(AsyncSpringLiquibase.class);
+    private final Logger log = LoggerFactory
+        .getLogger(AsyncSpringLiquibase.class);
 
     @Inject
     @Qualifier("taskExecutor")
@@ -42,20 +44,27 @@ public class AsyncSpringLiquibase extends SpringLiquibase {
     @Override
     public void afterPropertiesSet() throws LiquibaseException {
         if (!env.acceptsProfiles(Constants.SPRING_PROFILE_NO_LIQUIBASE)) {
-            if (env.acceptsProfiles(Constants.SPRING_PROFILE_DEVELOPMENT, Constants.SPRING_PROFILE_HEROKU)) {
+            if (env.acceptsProfiles(Constants.SPRING_PROFILE_DEVELOPMENT,
+                Constants.SPRING_PROFILE_HEROKU)) {
                 taskExecutor.execute(() -> {
                     try {
-                        log.warn("Starting Liquibase asynchronously, your database might not be ready at startup!");
+                        log.warn(
+                            "Starting Liquibase asynchronously, your database might not be ready at startup!");
                         initDb();
-                    } catch (LiquibaseException e) {
-                        log.error("Liquibase could not start correctly, your database is NOT ready: {}", e.getMessage(), e);
+                    }
+                    catch (LiquibaseException e) {
+                        log.error(
+                            "Liquibase could not start correctly, your database is NOT ready: {}",
+                            e.getMessage(), e);
                     }
                 });
-            } else {
+            }
+            else {
                 log.debug("Starting Liquibase synchronously");
                 initDb();
             }
-        } else {
+        }
+        else {
             log.debug("Liquibase is disabled");
         }
     }

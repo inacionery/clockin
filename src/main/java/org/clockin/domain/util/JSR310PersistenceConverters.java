@@ -1,19 +1,26 @@
 package org.clockin.domain.util;
 
-import org.clockin.domain.util.JSR310DateConverters.*;
-
-import java.time.*;
-import java.util.Date;
+import org.clockin.domain.util.JSR310DateConverters.DateToLocalDateTimeConverter;
+import org.clockin.domain.util.JSR310DateConverters.DateToZonedDateTimeConverter;
+import org.clockin.domain.util.JSR310DateConverters.LocalDateTimeToDateConverter;
+import org.clockin.domain.util.JSR310DateConverters.ZonedDateTimeToDateConverter;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.util.Date;
+
 public final class JSR310PersistenceConverters {
 
-    private JSR310PersistenceConverters() {}
+    private JSR310PersistenceConverters() {
+    }
 
     @Converter(autoApply = true)
-    public static class LocalDateConverter implements AttributeConverter<LocalDate, java.sql.Date> {
+    public static class LocalDateConverter
+        implements AttributeConverter<LocalDate, java.sql.Date> {
 
         @Override
         public java.sql.Date convertToDatabaseColumn(LocalDate date) {
@@ -27,7 +34,8 @@ public final class JSR310PersistenceConverters {
     }
 
     @Converter(autoApply = true)
-    public static class ZonedDateTimeConverter implements AttributeConverter<ZonedDateTime, Date> {
+    public static class ZonedDateTimeConverter
+        implements AttributeConverter<ZonedDateTime, Date> {
 
         @Override
         public Date convertToDatabaseColumn(ZonedDateTime zonedDateTime) {
@@ -41,7 +49,8 @@ public final class JSR310PersistenceConverters {
     }
 
     @Converter(autoApply = true)
-    public static class LocalDateTimeConverter implements AttributeConverter<LocalDateTime, Date> {
+    public static class LocalDateTimeConverter
+        implements AttributeConverter<LocalDateTime, Date> {
 
         @Override
         public Date convertToDatabaseColumn(LocalDateTime localDateTime) {

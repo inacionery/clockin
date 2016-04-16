@@ -1,15 +1,25 @@
 package org.clockin.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A Employee.
@@ -53,7 +63,8 @@ public class Employee implements Serializable {
         return socialIdentificationNumber;
     }
 
-    public void setSocialIdentificationNumber(String socialIdentificationNumber) {
+    public void setSocialIdentificationNumber(
+        String socialIdentificationNumber) {
         this.socialIdentificationNumber = socialIdentificationNumber;
     }
 
@@ -90,7 +101,7 @@ public class Employee implements Serializable {
             return false;
         }
         Employee employee = (Employee) o;
-        if(employee.id == null || id == null) {
+        if (employee.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, employee.id);
@@ -103,10 +114,8 @@ public class Employee implements Serializable {
 
     @Override
     public String toString() {
-        return "Employee{" +
-            "id=" + id +
-            ", socialIdentificationNumber='" + socialIdentificationNumber + "'" +
-            ", plannedDailyHours='" + plannedDailyHours + "'" +
-            '}';
+        return "Employee{" + "id=" + id + ", socialIdentificationNumber='"
+            + socialIdentificationNumber + "'" + ", plannedDailyHours='"
+            + plannedDailyHours + "'" + '}';
     }
 }

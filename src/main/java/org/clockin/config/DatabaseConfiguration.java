@@ -5,7 +5,7 @@ import org.clockin.config.liquibase.AsyncSpringLiquibase;
 import com.codahale.metrics.MetricRegistry;
 import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 import com.zaxxer.hikari.HikariDataSource;
-import liquibase.integration.spring.SpringLiquibase;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.ApplicationContextException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
@@ -26,7 +25,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
+
 import java.util.Arrays;
+
+import liquibase.integration.spring.SpringLiquibase;
 
 @Configuration
 @EnableJpaRepositories("org.clockin.repository")
@@ -35,7 +37,8 @@ import java.util.Arrays;
 @EnableElasticsearchRepositories("org.clockin.repository.search")
 public class DatabaseConfiguration {
 
-    private final Logger log = LoggerFactory.getLogger(DatabaseConfiguration.class);
+    private final Logger log = LoggerFactory
+        .getLogger(DatabaseConfiguration.class);
 
     @Inject
     private Environment env;
@@ -44,33 +47,39 @@ public class DatabaseConfiguration {
     private MetricRegistry metricRegistry;
 
     @Bean(destroyMethod = "close")
-    @ConditionalOnExpression("#{!environment.acceptsProfiles('" + Constants.SPRING_PROFILE_CLOUD + "') && !environment.acceptsProfiles('" + Constants.SPRING_PROFILE_HEROKU + "')}")
+    @ConditionalOnExpression("#{!environment.acceptsProfiles('"
+        + Constants.SPRING_PROFILE_CLOUD
+        + "') && !environment.acceptsProfiles('"
+        + Constants.SPRING_PROFILE_HEROKU + "')}")
     @ConfigurationProperties(prefix = "spring.datasource.hikari")
     public DataSource dataSource(DataSourceProperties dataSourceProperties) {
         log.debug("Configuring Datasource");
         if (dataSourceProperties.getUrl() == null) {
-            log.error("Your database connection pool configuration is incorrect! The application" +
-                    " cannot start. Please check your Spring profile, current profiles are: {}",
+            log.error(
+                "Your database connection pool configuration is incorrect! The application"
+                    + " cannot start. Please check your Spring profile, current profiles are: {}",
                 Arrays.toString(env.getActiveProfiles()));
 
-            throw new ApplicationContextException("Database connection pool is not configured correctly");
+            throw new ApplicationContextException(
+                "Database connection pool is not configured correctly");
         }
-        HikariDataSource hikariDataSource =  (HikariDataSource) DataSourceBuilder
-                .create(dataSourceProperties.getClassLoader())
-                .type(HikariDataSource.class)
-                .driverClassName(dataSourceProperties.getDriverClassName())
-                .url(dataSourceProperties.getUrl())
-                .username(dataSourceProperties.getUsername())
-                .password(dataSourceProperties.getPassword())
-                .build();
+        HikariDataSource hikariDataSource = (HikariDataSource) DataSourceBuilder
+            .create(dataSourceProperties.getClassLoader())
+            .type(HikariDataSource.class)
+            .driverClassName(dataSourceProperties.getDriverClassName())
+            .url(dataSourceProperties.getUrl())
+            .username(dataSourceProperties.getUsername())
+            .password(dataSourceProperties.getPassword()).build();
 
         if (metricRegistry != null) {
             hikariDataSource.setMetricRegistry(metricRegistry);
         }
         return hikariDataSource;
     }
+
     @Bean
-    public SpringLiquibase liquibase(DataSource dataSource, DataSourceProperties dataSourceProperties,
+    public SpringLiquibase liquibase(DataSource dataSource,
+        DataSourceProperties dataSourceProperties,
         LiquibaseProperties liquibaseProperties) {
 
         // Use liquibase.integration.spring.SpringLiquibase if you don't want Liquibase to start asynchronously
@@ -82,7 +91,8 @@ public class DatabaseConfiguration {
         liquibase.setDropFirst(liquibaseProperties.isDropFirst());
         if (env.acceptsProfiles(Constants.SPRING_PROFILE_NO_LIQUIBASE)) {
             liquibase.setShouldRun(false);
-        } else {
+        }
+        else {
             liquibase.setShouldRun(liquibaseProperties.isEnabled());
             log.debug("Configuring Liquibase");
         }

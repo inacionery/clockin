@@ -1,17 +1,26 @@
 package org.clockin.domain;
 
+import org.clockin.domain.enumeration.RegistryType;
+
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.data.elasticsearch.annotations.Document;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZonedDateTime;
 import java.util.Objects;
-
-import org.clockin.domain.enumeration.RegistryType;
 
 /**
  * A Clockin.
@@ -80,7 +89,7 @@ public class Clockin implements Serializable {
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }
-    
+
     public LocalDate getDate() {
         return dateTime.toLocalDate();
     }
@@ -98,7 +107,7 @@ public class Clockin implements Serializable {
             return false;
         }
         Clockin clockin = (Clockin) o;
-        if(clockin.id == null || id == null) {
+        if (clockin.id == null || id == null) {
             return false;
         }
         return Objects.equals(id, clockin.id);
@@ -111,11 +120,8 @@ public class Clockin implements Serializable {
 
     @Override
     public String toString() {
-        return "Clockin{" +
-            "id=" + id +
-            ", sequentialRegisterNumber='" + sequentialRegisterNumber + "'" +
-            ", dateTime='" + dateTime + "'" +
-            ", registryType='" + registryType + "'" +
-            '}';
+        return "Clockin{" + "id=" + id + ", sequentialRegisterNumber='"
+            + sequentialRegisterNumber + "'" + ", dateTime='" + dateTime + "'"
+            + ", registryType='" + registryType + "'" + '}';
     }
 }

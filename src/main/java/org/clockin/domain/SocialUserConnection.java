@@ -3,8 +3,14 @@ package org.clockin.domain;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -23,55 +29,62 @@ public class SocialUserConnection implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "user_id", length = 255, nullable = false)
+    @Column(name = "user_id",
+        length = 255,
+        nullable = false)
     private String userId;
 
     @NotNull
-    @Column(name = "provider_id", length = 255, nullable = false)
+    @Column(name = "provider_id",
+        length = 255,
+        nullable = false)
     private String providerId;
 
     @NotNull
-    @Column(name = "provider_user_id", length = 255, nullable = false)
+    @Column(name = "provider_user_id",
+        length = 255,
+        nullable = false)
     private String providerUserId;
 
     @NotNull
     @Column(nullable = false)
     private Long rank;
 
-    @Column(name = "display_name", length = 255)
+    @Column(name = "display_name",
+        length = 255)
     private String displayName;
 
-    @Column(name = "profile_url", length = 255)
+    @Column(name = "profile_url",
+        length = 255)
     private String profileURL;
 
-    @Column(name = "image_url", length = 255)
+    @Column(name = "image_url",
+        length = 255)
     private String imageURL;
 
     @NotNull
-    @Column(name = "access_token", length = 255, nullable = false)
+    @Column(name = "access_token",
+        length = 255,
+        nullable = false)
     private String accessToken;
 
     @Column(length = 255)
     private String secret;
 
-    @Column(name = "refresh_token", length = 255)
+    @Column(name = "refresh_token",
+        length = 255)
     private String refreshToken;
 
     @Column(name = "expire_time")
     private Long expireTime;
 
-    public SocialUserConnection() {}
-    public SocialUserConnection(String userId,
-                                String providerId,
-                                String providerUserId,
-                                Long rank,
-                                String displayName,
-                                String profileURL,
-                                String imageURL,
-                                String accessToken,
-                                String secret,
-                                String refreshToken,
-                                Long expireTime) {
+    public SocialUserConnection() {
+    }
+
+    public SocialUserConnection(String userId, String providerId,
+        String providerUserId, Long rank, String displayName, String profileURL,
+        String imageURL, String accessToken, String secret, String refreshToken,
+        Long expireTime) {
         this.userId = userId;
         this.providerId = providerId;
         this.providerUserId = providerUserId;
@@ -206,19 +219,12 @@ public class SocialUserConnection implements Serializable {
 
     @Override
     public String toString() {
-        return "SocialUserConnection{" +
-            "id=" + id +
-            ", userId=" + userId +
-            ", providerId='" + providerId + '\'' +
-            ", providerUserId='" + providerUserId + '\'' +
-            ", rank=" + rank +
-            ", displayName='" + displayName + '\'' +
-            ", profileURL='" + profileURL + '\'' +
-            ", imageURL='" + imageURL + '\'' +
-            ", accessToken='" + accessToken + '\'' +
-            ", secret='" + secret + '\'' +
-            ", refreshToken='" + refreshToken + '\'' +
-            ", expireTime=" + expireTime +
-            '}';
+        return "SocialUserConnection{" + "id=" + id + ", userId=" + userId
+            + ", providerId='" + providerId + '\'' + ", providerUserId='"
+            + providerUserId + '\'' + ", rank=" + rank + ", displayName='"
+            + displayName + '\'' + ", profileURL='" + profileURL + '\''
+            + ", imageURL='" + imageURL + '\'' + ", accessToken='" + accessToken
+            + '\'' + ", secret='" + secret + '\'' + ", refreshToken='"
+            + refreshToken + '\'' + ", expireTime=" + expireTime + '}';
     }
 }

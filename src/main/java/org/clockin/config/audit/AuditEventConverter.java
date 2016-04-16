@@ -8,7 +8,12 @@ import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Component
 public class AuditEventConverter {
@@ -19,7 +24,8 @@ public class AuditEventConverter {
      * @param persistentAuditEvents the list to convert
      * @return the converted list.
      */
-    public List<AuditEvent> convertToAuditEvent(Iterable<PersistentAuditEvent> persistentAuditEvents) {
+    public List<AuditEvent> convertToAuditEvent(
+        Iterable<PersistentAuditEvent> persistentAuditEvents) {
         if (persistentAuditEvents == null) {
             return Collections.emptyList();
         }
@@ -36,10 +42,14 @@ public class AuditEventConverter {
      * @param persistentAuditEvent the event to convert
      * @return the converted list.
      */
-    public AuditEvent convertToAuditEvent(PersistentAuditEvent persistentAuditEvent) {
-        Instant instant = persistentAuditEvent.getAuditEventDate().atZone(ZoneId.systemDefault()).toInstant();
-        return new AuditEvent(Date.from(instant), persistentAuditEvent.getPrincipal(),
-            persistentAuditEvent.getAuditEventType(), convertDataToObjects(persistentAuditEvent.getData()));
+    public AuditEvent convertToAuditEvent(
+        PersistentAuditEvent persistentAuditEvent) {
+        Instant instant = persistentAuditEvent.getAuditEventDate()
+            .atZone(ZoneId.systemDefault()).toInstant();
+        return new AuditEvent(Date.from(instant),
+            persistentAuditEvent.getPrincipal(),
+            persistentAuditEvent.getAuditEventType(),
+            convertDataToObjects(persistentAuditEvent.getData()));
     }
 
     /**
@@ -76,11 +86,15 @@ public class AuditEventConverter {
                 // Extract the data that will be saved.
                 if (object instanceof WebAuthenticationDetails) {
                     WebAuthenticationDetails authenticationDetails = (WebAuthenticationDetails) object;
-                    results.put("remoteAddress", authenticationDetails.getRemoteAddress());
-                    results.put("sessionId", authenticationDetails.getSessionId());
-                } else if (object != null) {
+                    results.put("remoteAddress",
+                        authenticationDetails.getRemoteAddress());
+                    results.put("sessionId",
+                        authenticationDetails.getSessionId());
+                }
+                else if (object != null) {
                     results.put(key, object.toString());
-                } else {
+                }
+                else {
                     results.put(key, "null");
                 }
             }

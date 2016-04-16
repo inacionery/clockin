@@ -4,8 +4,6 @@ import org.clockin.config.JHipsterProperties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,7 +17,8 @@ import javax.inject.Inject;
 
 public class CustomSignInAdapter implements SignInAdapter {
 
-    private final Logger log = LoggerFactory.getLogger(CustomSignInAdapter.class);
+    private final Logger log = LoggerFactory
+        .getLogger(CustomSignInAdapter.class);
 
     @Inject
     private UserDetailsService userDetailsService;
@@ -27,14 +26,12 @@ public class CustomSignInAdapter implements SignInAdapter {
     @Inject
     private JHipsterProperties jHipsterProperties;
 
-
     @Override
-    public String signIn(String userId, Connection<?> connection, NativeWebRequest request) {
+    public String signIn(String userId, Connection<?> connection,
+        NativeWebRequest request) {
         UserDetails user = userDetailsService.loadUserByUsername(userId);
-        Authentication newAuth = new UsernamePasswordAuthenticationToken(
-            user,
-            null,
-            user.getAuthorities());
+        Authentication newAuth = new UsernamePasswordAuthenticationToken(user,
+            null, user.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(newAuth);
         return jHipsterProperties.getSocial().getRedirectAfterSignIn();
     }

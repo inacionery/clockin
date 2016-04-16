@@ -1,30 +1,33 @@
 package org.clockin.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
 import org.clockin.domain.Clockin;
 import org.clockin.domain.Employee;
 import org.clockin.service.ClockinService;
 import org.clockin.service.EmployeeService;
 import org.clockin.web.rest.dto.WorkDayDTO;
 import org.clockin.web.rest.util.HeaderUtil;
+
+import com.codahale.metrics.annotation.Timed;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Clockin.
@@ -34,14 +37,13 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class ClockinResource {
 
     private final Logger log = LoggerFactory.getLogger(ClockinResource.class);
-        
+
     @Inject
     private ClockinService clockinService;
-    
+
     @Inject
     private EmployeeService employeeService;
 
-    
     /**
      * POST  /clockins : Create a new clockin.
      *
@@ -53,14 +55,20 @@ public class ClockinResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Clockin> createClockin(@RequestBody Clockin clockin) throws URISyntaxException {
+    public ResponseEntity<Clockin> createClockin(@RequestBody Clockin clockin)
+        throws URISyntaxException {
         log.debug("REST request to save Clockin : {}", clockin);
         if (clockin.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("clockin", "idexists", "A new clockin cannot already have an ID")).body(null);
+            return ResponseEntity
+                .badRequest().headers(HeaderUtil.createFailureAlert("clockin",
+                    "idexists", "A new clockin cannot already have an ID"))
+                .body(null);
         }
         Clockin result = clockinService.save(clockin);
-        return ResponseEntity.created(new URI("/api/clockins/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("clockin", result.getId().toString()))
+        return ResponseEntity
+            .created(new URI("/api/clockins/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert("clockin",
+                result.getId().toString()))
             .body(result);
     }
 
@@ -77,14 +85,15 @@ public class ClockinResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Clockin> updateClockin(@RequestBody Clockin clockin) throws URISyntaxException {
+    public ResponseEntity<Clockin> updateClockin(@RequestBody Clockin clockin)
+        throws URISyntaxException {
         log.debug("REST request to update Clockin : {}", clockin);
         if (clockin.getId() == null) {
             return createClockin(clockin);
         }
         Clockin result = clockinService.save(clockin);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert("clockin", clockin.getId().toString()))
+        return ResponseEntity.ok().headers(HeaderUtil
+            .createEntityUpdateAlert("clockin", clockin.getId().toString()))
             .body(result);
     }
 
@@ -109,8 +118,7 @@ public class ClockinResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<WorkDayDTO> getAllWorkDays() 
-    	throws URISyntaxException {
+    public List<WorkDayDTO> getAllWorkDays() throws URISyntaxException {
 
         List<Clockin> clockins = clockinService.findAll();
         List<WorkDayDTO> workDays = new ArrayList<>();
@@ -118,7 +126,8 @@ public class ClockinResource {
         WorkDayDTO workDayDTO = null;
         for (Clockin clockin : clockins) {
 
-            if (workDayDTO == null || !workDayDTO.getDate().isEqual(clockin.getDate())) {
+            if (workDayDTO == null
+                || !workDayDTO.getDate().isEqual(clockin.getDate())) {
                 workDayDTO = new WorkDayDTO(clockin.getDate());
                 workDays.add(workDayDTO);
             }
@@ -129,44 +138,45 @@ public class ClockinResource {
         return workDays;
     }
 
-    /**      
+    /**
      * GET /workdays/employee/:id -> get all workdays based on employee id.
      */
-     @RequestMapping(value = "/workdays/employee/{id}",
-         method = RequestMethod.GET,
-         produces = MediaType.APPLICATION_JSON_VALUE)
-     @Timed
-     public List<WorkDayDTO> getAllWorkDays(@PathVariable Long id)
-         throws URISyntaxException {
+    @RequestMapping(value = "/workdays/employee/{id}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<WorkDayDTO> getAllWorkDays(@PathVariable Long id)
+        throws URISyntaxException {
 
-         List<Clockin> clockins = clockinService.findAll();
-         List<WorkDayDTO> workDays = new ArrayList<>();
-         Employee employee = employeeService.findOne(id);
+        List<Clockin> clockins = clockinService.findAll();
+        List<WorkDayDTO> workDays = new ArrayList<>();
+        Employee employee = employeeService.findOne(id);
 
-         WorkDayDTO workDayDTO = null;
-         for (Clockin clockin : clockins) {
+        WorkDayDTO workDayDTO = null;
+        for (Clockin clockin : clockins) {
 
-             if ((workDayDTO == null || !workDayDTO.getDate().isEqual(clockin.getDate()) ) && clockin.getEmployee().getId() == id ) {
-                 workDayDTO = new WorkDayDTO(clockin.getDate(), employee);
-                 workDays.add(workDayDTO);
-             }
+            if ((workDayDTO == null
+                || !workDayDTO.getDate().isEqual(clockin.getDate()))
+                && clockin.getEmployee().getId() == id) {
+                workDayDTO = new WorkDayDTO(clockin.getDate(), employee);
+                workDays.add(workDayDTO);
+            }
 
-             if(clockin.getEmployee().getId() == id ) {
-                 workDayDTO.addClockinValues(clockin);
-             }
+            if (clockin.getEmployee().getId() == id) {
+                workDayDTO.addClockinValues(clockin);
+            }
 
-         }
+        }
 
-         return workDays;
-     }
+        return workDays;
+    }
 
-
-     /**
-     * GET  /clockins/:id : get the "id" clockin.
-     *
-     * @param id the id of the clockin to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the clockin, or with status 404 (Not Found)
-     */
+    /**
+    * GET  /clockins/:id : get the "id" clockin.
+    *
+    * @param id the id of the clockin to retrieve
+    * @return the ResponseEntity with status 200 (OK) and with body the clockin, or with status 404 (Not Found)
+    */
     @RequestMapping(value = "/clockins/{id}",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
@@ -175,9 +185,7 @@ public class ClockinResource {
         log.debug("REST request to get Clockin : {}", id);
         Clockin clockin = clockinService.findOne(id);
         return Optional.ofNullable(clockin)
-            .map(result -> new ResponseEntity<>(
-                result,
-                HttpStatus.OK))
+            .map(result -> new ResponseEntity<>(result, HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
@@ -194,7 +202,10 @@ public class ClockinResource {
     public ResponseEntity<Void> deleteClockin(@PathVariable Long id) {
         log.debug("REST request to delete Clockin : {}", id);
         clockinService.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("clockin", id.toString())).build();
+        return ResponseEntity.ok()
+            .headers(
+                HeaderUtil.createEntityDeletionAlert("clockin", id.toString()))
+            .build();
     }
 
     /**

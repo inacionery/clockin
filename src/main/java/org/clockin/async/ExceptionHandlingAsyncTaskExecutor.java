@@ -1,18 +1,19 @@
 package org.clockin.async;
 
-import java.util.concurrent.Callable;
-import java.util.concurrent.Future;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.core.task.AsyncTaskExecutor;
 
-public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor,
-    InitializingBean, DisposableBean {
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
 
-    private final Logger log = LoggerFactory.getLogger(ExceptionHandlingAsyncTaskExecutor.class);
+public class ExceptionHandlingAsyncTaskExecutor
+    implements AsyncTaskExecutor, InitializingBean, DisposableBean {
+
+    private final Logger log = LoggerFactory
+        .getLogger(ExceptionHandlingAsyncTaskExecutor.class);
 
     private final AsyncTaskExecutor executor;
 
@@ -34,7 +35,8 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor,
         return () -> {
             try {
                 return task.call();
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 handle(e);
                 throw e;
             }
@@ -45,7 +47,8 @@ public class ExceptionHandlingAsyncTaskExecutor implements AsyncTaskExecutor,
         return () -> {
             try {
                 task.run();
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 handle(e);
             }
         };

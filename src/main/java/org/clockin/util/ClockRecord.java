@@ -11,101 +11,92 @@ import java.time.LocalDateTime;
  */
 public class ClockRecord {
 
-	public static final String RECORD_FORMAT = "(\\d{9})(3)(\\d{8})(\\d{4})(\\d{12})";
-	private String originalRecord;
-	private String nsr;
-	private String type;
-	private LocalDateTime dateTime;
-	private String pis;
+    public static final String RECORD_FORMAT = "(\\d{9})(3)(\\d{8})(\\d{4})(\\d{12})";
+    private String originalRecord;
+    private String nsr;
+    private String type;
+    private LocalDateTime dateTime;
+    private String pis;
 
-	public ClockRecord(String line) {
-		this.originalRecord = line;
+    public ClockRecord(String line) {
+        this.originalRecord = line;
 
-	}
+    }
 
-	public String getOriginalRecord() {
+    public String getOriginalRecord() {
 
-		return originalRecord;
-	}
+        return originalRecord;
+    }
 
+    /**
+     * @return the nsr
+     */
+    public String getNsr() {
 
-	/**
-	 * @return the nsr
-	 */
-	public String getNsr() {
+        return nsr;
+    }
 
-		return nsr;
-	}
+    /**
+     * @param nsr the nsr to set
+     */
+    public void setNsr(String nsr) {
 
+        this.nsr = nsr;
+    }
 
-	/**
-	 * @param nsr the nsr to set
-	 */
-	public void setNsr(String nsr) {
+    /**
+     * @return the type
+     */
+    public String getType() {
 
-		this.nsr = nsr;
-	}
+        return type;
+    }
 
+    /**
+     * @param type the type to set
+     */
+    public void setType(String type) {
 
-	/**
-	 * @return the type
-	 */
-	public String getType() {
+        this.type = type;
+    }
 
-		return type;
-	}
+    /**
+     * @return the dateTime
+     */
+    public LocalDateTime getDateTime() {
 
+        return dateTime;
+    }
 
-	/**
-	 * @param type the type to set
-	 */
-	public void setType(String type) {
+    /**
+     * @param dateTime the dateTime to set
+     */
+    public void setDateTime(LocalDateTime dateTime) {
 
-		this.type = type;
-	}
+        this.dateTime = dateTime;
+    }
 
+    /**
+     * @return the pis
+     */
+    public String getPis() {
 
-	/**
-	 * @return the dateTime
-	 */
-	public LocalDateTime getDateTime() {
+        return pis;
+    }
 
-		return dateTime;
-	}
+    /**
+     * @param pis the pis to set
+     */
+    public void setPis(String pis) {
 
+        this.pis = pis;
+    }
 
-	/**
-	 * @param dateTime the dateTime to set
-	 */
-	public void setDateTime(LocalDateTime dateTime) {
+    /**
+     * @param originalRecord the originalRecord to set
+     */
+    public void setOriginalRecord(String originalRecord) {
 
-		this.dateTime = dateTime;
-	}
-
-
-	/**
-	 * @return the pis
-	 */
-	public String getPis() {
-
-		return pis;
-	}
-
-
-	/**
-	 * @param pis the pis to set
-	 */
-	public void setPis(String pis) {
-
-		this.pis = pis;
-	}
-
-
-	/**
-	 * @param originalRecord the originalRecord to set
-	 */
-	public void setOriginalRecord(String originalRecord) {
-
-		this.originalRecord = originalRecord;
-	}
+        this.originalRecord = originalRecord;
+    }
 }

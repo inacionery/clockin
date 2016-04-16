@@ -1,9 +1,17 @@
 package org.clockin.web.rest;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import org.clockin.ClockinApp;
 import org.clockin.domain.User;
 import org.clockin.repository.UserRepository;
 import org.clockin.service.UserService;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,11 +25,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import javax.inject.Inject;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Test class for the UserResource REST controller.
@@ -45,49 +48,56 @@ public class UserResourceIntTest {
     @Before
     public void setup() {
         UserResource userResource = new UserResource();
-        ReflectionTestUtils.setField(userResource, "userRepository", userRepository);
+        ReflectionTestUtils.setField(userResource, "userRepository",
+            userRepository);
         ReflectionTestUtils.setField(userResource, "userService", userService);
-        this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource).build();
+        this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
+            .build();
     }
 
     @Test
     public void testGetExistingUser() throws Exception {
-        restUserMockMvc.perform(get("/api/users/admin")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$.lastName").value("Administrator"));
+        restUserMockMvc
+            .perform(get("/api/users/admin").accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType("application/json"))
+            .andExpect(jsonPath("$.lastName").value("Administrator"));
     }
 
     @Test
     public void testGetUnknownUser() throws Exception {
-        restUserMockMvc.perform(get("/api/users/unknown")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isNotFound());
+        restUserMockMvc
+            .perform(
+                get("/api/users/unknown").accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isNotFound());
     }
 
     @Test
     public void testGetExistingUserWithAnEmailLogin() throws Exception {
-        User user = userService.createUserInformation("john.doe@localhost.com", "johndoe", "John", "Doe", "john.doe@localhost.com", "en-US");
+        User user = userService.createUserInformation("john.doe@localhost.com",
+            "johndoe", "John", "Doe", "john.doe@localhost.com", "en-US");
 
-        restUserMockMvc.perform(get("/api/users/john.doe@localhost.com")
+        restUserMockMvc
+            .perform(get("/api/users/john.doe@localhost.com")
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$.login").value("john.doe@localhost.com"));
+            .andExpect(status().isOk())
+            .andExpect(content().contentType("application/json"))
+            .andExpect(jsonPath("$.login").value("john.doe@localhost.com"));
 
         userRepository.delete(user);
     }
 
     @Test
     public void testDeleteExistingUserWithAnEmailLogin() throws Exception {
-        User user = userService.createUserInformation("john.doe@localhost.com", "johndoe", "John", "Doe", "john.doe@localhost.com", "en-US");
+        User user = userService.createUserInformation("john.doe@localhost.com",
+            "johndoe", "John", "Doe", "john.doe@localhost.com", "en-US");
 
         restUserMockMvc.perform(delete("/api/users/john.doe@localhost.com")
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+            .accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 
-        assertThat(userRepository.findOneByLogin("john.doe@localhost.com").isPresent()).isFalse();
+        assertThat(
+            userRepository.findOneByLogin("john.doe@localhost.com").isPresent())
+                .isFalse();
 
         userRepository.delete(user);
     }
