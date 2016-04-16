@@ -89,7 +89,7 @@ public class SocialService {
             return user.get();
         }
 
-        String login = getLoginDependingOnProviderId(userProfile, providerId);
+        String login = userProfile.getEmail();
         String encryptedPassword = passwordEncoder
             .encode(RandomStringUtils.random(10));
         Set<Authority> authorities = new HashSet<>(1);
@@ -106,20 +106,6 @@ public class SocialService {
         newUser.setLangKey(langKey);
 
         return userRepository.save(newUser);
-    }
-
-    /**
-     * @return login if provider manage a login like Twitter or Github otherwise email address.
-     *         Because provider like Google or Facebook didn't provide login or login like "12099388847393"
-     */
-    private String getLoginDependingOnProviderId(UserProfile userProfile,
-        String providerId) {
-        switch (providerId) {
-            case "twitter":
-                return userProfile.getUsername().toLowerCase();
-            default:
-                return userProfile.getEmail();
-        }
     }
 
     private void createSocialConnection(String login,

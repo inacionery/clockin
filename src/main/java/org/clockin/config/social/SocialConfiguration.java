@@ -18,11 +18,8 @@ import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.web.ProviderSignInController;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.connect.web.SignInAdapter;
-import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
-import org.springframework.social.twitter.connect.TwitterConnectionFactory;
-// jhipster-needle-add-social-connection-factory-import-package
 
 import javax.inject.Inject;
 
@@ -60,39 +57,6 @@ public class SocialConfiguration implements SocialConfigurer {
             log.error(
                 "Cannot configure GoogleConnectionFactory id or secret null");
         }
-
-        // Facebook configuration
-        String facebookClientId = environment
-            .getProperty("spring.social.facebook.clientId");
-        String facebookClientSecret = environment
-            .getProperty("spring.social.facebook.clientSecret");
-        if (facebookClientId != null && facebookClientSecret != null) {
-            log.debug("Configuring FacebookConnectionFactory");
-            connectionFactoryConfigurer.addConnectionFactory(
-                new FacebookConnectionFactory(facebookClientId,
-                    facebookClientSecret));
-        }
-        else {
-            log.error(
-                "Cannot configure FacebookConnectionFactory id or secret null");
-        }
-
-        // Twitter configuration
-        String twitterClientId = environment
-            .getProperty("spring.social.twitter.clientId");
-        String twitterClientSecret = environment
-            .getProperty("spring.social.twitter.clientSecret");
-        if (twitterClientId != null && twitterClientSecret != null) {
-            log.debug("Configuring TwitterConnectionFactory");
-            connectionFactoryConfigurer.addConnectionFactory(
-                new TwitterConnectionFactory(twitterClientId,
-                    twitterClientSecret));
-        }
-        else {
-            log.error(
-                "Cannot configure TwitterConnectionFactory id or secret null");
-        }
-
         // jhipster-needle-add-social-connection-factory
     }
 
