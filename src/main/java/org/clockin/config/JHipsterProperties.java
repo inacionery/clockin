@@ -466,7 +466,7 @@ public class JHipsterProperties {
 
     public static class Social {
 
-        private String redirectAfterSignIn = "/#/home";
+        private String redirectAfterSignIn = "/#/clockin";
 
         public String getRedirectAfterSignIn() {
             return redirectAfterSignIn;
