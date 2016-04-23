@@ -14,13 +14,13 @@
                     ng-model="vm.clockin.id" readonly />
         </div>
         <div class="form-group">
-            <label class="control-label" translate="clockinApp.clockin.sequentialRegisterNumber" for="field_sequentialRegisterNumber">SequentialRegisterNumber</label>
+            <label class="control-label" translate="clockinApp.clockin.sequentialRegisterNumber" for="field_sequentialRegisterNumber">Sequential Register Number</label>
             <input type="text" class="form-control" name="sequentialRegisterNumber" id="field_sequentialRegisterNumber"
                     ng-model="vm.clockin.sequentialRegisterNumber"
                      />
         </div>
         <div class="form-group">
-            <label class="control-label" translate="clockinApp.clockin.dateTime" for="field_dateTime">DateTime</label>
+            <label class="control-label" translate="clockinApp.clockin.dateTime" for="field_dateTime">Date Time</label>
                 <div class="input-group">
                     <input id="field_dateTime" type="text" class="form-control" name="dateTime" datetime-picker="{{dateformat}}" ng-model="vm.clockin.dateTime" is-open="vm.datePickerOpenStatus.dateTime"
                       />
@@ -30,7 +30,7 @@
                 </div>
         </div>
         <div class="form-group">
-            <label class="control-label" translate="clockinApp.clockin.registryType" for="field_registryType">RegistryType</label>
+            <label class="control-label" translate="clockinApp.clockin.registryType" for="field_registryType">Registry Type</label>
             <select class="form-control" name="registryType" ng-model="vm.clockin.registryType" id="field_registryType">
                 <option value="TYPE_1" translate="clockinApp.RegistryType.TYPE_1">TYPE_1</option>
                 <option value="TYPE_2" translate="clockinApp.RegistryType.TYPE_2">TYPE_2</option>
@@ -41,7 +41,7 @@
         </div>
 
         <div class="form-group">
-            <label translate="clockinApp.clockin.employee" for="field_employee">employee</label>
+            <label translate="clockinApp.clockin.employee" for="field_employee">Employee</label>
             <select class="form-control" id="field_employee" name="employee" ng-model="vm.clockin.employee" ng-options="employee as employee.id for employee in vm.employees track by employee.id">
                 <option value=""></option>
             </select>

@@ -2,11 +2,7 @@ package org.clockin.repository;
 
 import org.clockin.domain.SocialUserConnection;
 
-import org.springframework.social.connect.Connection;
-import org.springframework.social.connect.ConnectionFactoryLocator;
-import org.springframework.social.connect.ConnectionKey;
-import org.springframework.social.connect.ConnectionRepository;
-import org.springframework.social.connect.UsersConnectionRepository;
+import org.springframework.social.connect.*;
 
 import java.util.List;
 import java.util.Set;

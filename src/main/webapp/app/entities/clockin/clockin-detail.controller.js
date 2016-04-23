@@ -10,11 +10,7 @@
     function ClockinDetailController($scope, $rootScope, $stateParams, entity, Clockin, Employee) {
         var vm = this;
         vm.clockin = entity;
-        vm.load = function (id) {
-            Clockin.get({id: id}, function(result) {
-                vm.clockin = result;
-            });
-        };
+        
         var unsubscribe = $rootScope.$on('clockinApp:clockinUpdate', function(event, result) {
             vm.clockin = result;
         });

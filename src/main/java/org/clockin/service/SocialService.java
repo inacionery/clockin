@@ -17,7 +17,6 @@ import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;

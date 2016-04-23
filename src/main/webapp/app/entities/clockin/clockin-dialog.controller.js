@@ -5,17 +5,16 @@
         .module('clockinApp')
         .controller('ClockinDialogController', ClockinDialogController);
 
-    ClockinDialogController.$inject = ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'Clockin', 'Employee'];
+    ClockinDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Clockin', 'Employee'];
 
-    function ClockinDialogController ($scope, $stateParams, $uibModalInstance, entity, Clockin, Employee) {
+    function ClockinDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Clockin, Employee) {
         var vm = this;
         vm.clockin = entity;
         vm.employees = Employee.query();
-        vm.load = function(id) {
-            Clockin.get({id : id}, function(result) {
-                vm.clockin = result;
-            });
-        };
+
+        $timeout(function (){
+            angular.element('.form-group:eq(1)>input').focus();
+        });
 
         var onSaveSuccess = function (result) {
             $scope.$emit('clockinApp:clockinUpdate', result);

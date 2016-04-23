@@ -1,7 +1,6 @@
 package org.clockin.repository.search;
 
 import org.clockin.domain.User;
-
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 /**

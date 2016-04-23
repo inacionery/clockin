@@ -35,18 +35,18 @@
         <table class="jh-table table table-striped">
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
-                    <th jh-sort-by="socialIdentificationNumber"><span translate="clockinApp.employee.socialIdentificationNumber">SocialIdentificationNumber</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="plannedDailyHours"><span translate="clockinApp.employee.plannedDailyHours">PlannedDailyHours</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="user.email"><span translate="clockinApp.employee.user">user</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="socialIdentificationNumber"><span translate="clockinApp.employee.socialIdentificationNumber">Social Identification Number</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="plannedDailyHours"><span translate="clockinApp.employee.plannedDailyHours">Planned Daily Hours</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="user.email"><span translate="clockinApp.employee.user">User</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="employee in vm.employees track by employee.id">
-                    <td><a ui-sref="employee-detail({id:employee.id})">{{employee.socialIdentificationNumber}}</a></td>
-                    <td><a ui-sref="employee-detail({id:employee.id})">{{employee.plannedDailyHours}}</a></td>
+                    <td>{{employee.socialIdentificationNumber}}</td>
+                    <td>{{employee.plannedDailyHours}}</td>
                     <td>
-                        <a ui-sref="employee-detail({id:employee.id})">{{employee.user.email}}</a>
+                        {{employee.user.email}}
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

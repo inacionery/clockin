@@ -2,9 +2,8 @@ package org.clockin.repository;
 
 import org.clockin.domain.User;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.time.ZonedDateTime;
+import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 

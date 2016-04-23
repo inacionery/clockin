@@ -20,12 +20,13 @@
     "testFrameworks": [
       "gatling"
     ],
-    "jhipsterVersion": "3.0.0",
+    "jhipsterVersion": "3.1.0",
     "serverPort": "8181",
     "applicationType": "monolith",
     "languages": [
       "en",
       "pt-br"
-    ]
+    ],
+    "jhiPrefix": "jhi"
   }
 }

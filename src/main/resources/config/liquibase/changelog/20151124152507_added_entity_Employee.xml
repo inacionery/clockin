@@ -16,7 +16,7 @@
     <!--
         Added the entity Employee.
     -->
-    <changeSet id="20151124152507" author="jhipster">
+    <changeSet id="20151124152507-1" author="jhipster">
         <createTable tableName="employee">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
@@ -35,11 +35,5 @@
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
         
-        <addForeignKeyConstraint baseColumnNames="user_id"
-                                 baseTableName="employee"
-                                 constraintName="fk_employee_user_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
-
     </changeSet>
 </databaseChangeLog>

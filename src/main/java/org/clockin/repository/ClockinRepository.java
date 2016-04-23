@@ -2,7 +2,7 @@ package org.clockin.repository;
 
 import org.clockin.domain.Clockin;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.*;
 
 /**
  * Spring Data JPA repository for the Clockin entity.

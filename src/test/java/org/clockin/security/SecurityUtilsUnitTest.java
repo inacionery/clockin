@@ -1,7 +1,5 @@
 package org.clockin.security;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.Test;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,6 +9,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
 * Test class for the SecurityUtils utility class.

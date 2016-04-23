@@ -1,5 +1,9 @@
 package org.clockin.config;
 
+import ch.qos.logback.classic.AsyncAppender;
+import ch.qos.logback.classic.LoggerContext;
+import net.logstash.logback.appender.LogstashSocketAppender;
+import net.logstash.logback.stacktrace.ShortenedThrowableConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -7,10 +11,6 @@ import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-
-import ch.qos.logback.classic.AsyncAppender;
-import ch.qos.logback.classic.LoggerContext;
-import net.logstash.logback.appender.LogstashSocketAppender;
 
 @Configuration
 public class LoggingConfiguration {
@@ -53,6 +53,13 @@ public class LoggingConfiguration {
         logstashAppender
             .setPort(jHipsterProperties.getLogging().getLogstash().getPort());
         logstashAppender.setCustomFields(customFields);
+
+        // Limit the maximum length of the forwarded stacktrace so that it won't exceed the 8KB UDP limit of logstash
+        ShortenedThrowableConverter throwableConverter = new ShortenedThrowableConverter();
+        throwableConverter.setMaxLength(7500);
+        throwableConverter.setRootCauseFirst(true);
+        logstashAppender.setThrowableConverter(throwableConverter);
+
         logstashAppender.start();
 
         // Wrap the appender in an Async appender for performance

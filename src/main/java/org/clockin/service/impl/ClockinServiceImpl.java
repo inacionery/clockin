@@ -1,22 +1,20 @@
 package org.clockin.service.impl;
 
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-
+import org.clockin.service.ClockinService;
 import org.clockin.domain.Clockin;
 import org.clockin.repository.ClockinRepository;
 import org.clockin.repository.search.ClockinSearchRepository;
-import org.clockin.service.ClockinService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
-
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Clockin.

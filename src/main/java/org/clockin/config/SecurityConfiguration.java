@@ -1,12 +1,8 @@
 package org.clockin.config;
 
-import org.clockin.security.AjaxAuthenticationFailureHandler;
-import org.clockin.security.AjaxAuthenticationSuccessHandler;
-import org.clockin.security.AjaxLogoutSuccessHandler;
-import org.clockin.security.AuthoritiesConstants;
-import org.clockin.security.CustomAccessDeniedHandler;
-import org.clockin.security.Http401UnauthorizedEntryPoint;
+import org.clockin.security.*;
 import org.clockin.web.filter.CsrfCookieGeneratorFilter;
+import org.clockin.config.JHipsterProperties;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,9 +14,10 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
+
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.csrf.CsrfFilter;
 

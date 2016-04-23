@@ -1,8 +1,7 @@
 package org.clockin.web.rest.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-
 import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 public class LoggerDTO {
 

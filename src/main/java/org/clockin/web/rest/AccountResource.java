@@ -1,5 +1,6 @@
 package org.clockin.web.rest;
 
+import com.codahale.metrics.annotation.Timed;
 import org.clockin.domain.PersistentToken;
 import org.clockin.domain.User;
 import org.clockin.repository.PersistentTokenRepository;
@@ -8,10 +9,9 @@ import org.clockin.security.SecurityUtils;
 import org.clockin.service.MailService;
 import org.clockin.service.UserService;
 import org.clockin.web.rest.dto.KeyAndPasswordDTO;
+import org.clockin.web.rest.dto.ManagedUserDTO;
 import org.clockin.web.rest.dto.UserDTO;
 import org.clockin.web.rest.util.HeaderUtil;
-
-import com.codahale.metrics.annotation.Timed;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -20,21 +20,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * REST controller for managing the current user's account.
@@ -60,7 +53,7 @@ public class AccountResource {
     /**
      * POST  /register : register the user.
      *
-     * @param userDTO the user DTO
+     * @param managedUserDTO the managed user DTO
      * @param request the HTTP request
      * @return the ResponseEntity with status 201 (Created) if the user is registred or 400 (Bad Request) if the login or e-mail is already in use
      */
@@ -70,33 +63,38 @@ public class AccountResource {
             MediaType.TEXT_PLAIN_VALUE })
     @Timed
     public ResponseEntity<?> registerAccount(
-        @Valid @RequestBody UserDTO userDTO, HttpServletRequest request) {
+        @Valid @RequestBody ManagedUserDTO managedUserDTO,
+        HttpServletRequest request) {
 
         HttpHeaders textPlainHeaders = new HttpHeaders();
         textPlainHeaders.setContentType(MediaType.TEXT_PLAIN);
 
-        return userRepository.findOneByLogin(userDTO.getLogin())
+        return userRepository.findOneByLogin(managedUserDTO.getLogin())
             .map(user -> new ResponseEntity<>("login already in use",
                 textPlainHeaders, HttpStatus.BAD_REQUEST))
-            .orElseGet(() -> userRepository.findOneByEmail(userDTO.getEmail())
-                .map(user -> new ResponseEntity<>(
-                    "e-mail address already in use", textPlainHeaders,
-                    HttpStatus.BAD_REQUEST))
-                .orElseGet(() -> {
-                    User user = userService.createUserInformation(
-                        userDTO.getLogin(), userDTO.getPassword(),
-                        userDTO.getFirstName(), userDTO.getLastName(),
-                        userDTO.getEmail().toLowerCase(), userDTO.getLangKey());
-                    String baseUrl = request.getScheme() + // "http"
-                    "://" + // "://"
-                    request.getServerName() + // "myhost"
-                    ":" + // ":"
-                    request.getServerPort() + // "80"
-                    request.getContextPath(); // "/myContextPath" or "" if deployed in root context
+            .orElseGet(
+                () -> userRepository.findOneByEmail(managedUserDTO.getEmail())
+                    .map(user -> new ResponseEntity<>(
+                        "e-mail address already in use", textPlainHeaders,
+                        HttpStatus.BAD_REQUEST))
+                    .orElseGet(() -> {
+                        User user = userService.createUserInformation(
+                            managedUserDTO.getLogin(),
+                            managedUserDTO.getPassword(),
+                            managedUserDTO.getFirstName(),
+                            managedUserDTO.getLastName(),
+                            managedUserDTO.getEmail().toLowerCase(),
+                            managedUserDTO.getLangKey());
+                        String baseUrl = request.getScheme() + // "http"
+                        "://" + // "://"
+                        request.getServerName() + // "myhost"
+                        ":" + // ":"
+                        request.getServerPort() + // "80"
+                        request.getContextPath(); // "/myContextPath" or "" if deployed in root context
 
-                    mailService.sendActivationEmail(user, baseUrl);
-                    return new ResponseEntity<>(HttpStatus.CREATED);
-                }));
+                        mailService.sendActivationEmail(user, baseUrl);
+                        return new ResponseEntity<>(HttpStatus.CREATED);
+                    }));
     }
 
     /**
@@ -156,7 +154,8 @@ public class AccountResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<String> saveAccount(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<String> saveAccount(
+        @Valid @RequestBody UserDTO userDTO) {
         Optional<User> existingUser = userRepository
             .findOneByEmail(userDTO.getEmail());
         if (existingUser.isPresent() && (!existingUser.get().getLogin()
@@ -294,7 +293,7 @@ public class AccountResource {
 
     private boolean checkPasswordLength(String password) {
         return (!StringUtils.isEmpty(password)
-            && password.length() >= UserDTO.PASSWORD_MIN_LENGTH
-            && password.length() <= UserDTO.PASSWORD_MAX_LENGTH);
+            && password.length() >= ManagedUserDTO.PASSWORD_MIN_LENGTH
+            && password.length() <= ManagedUserDTO.PASSWORD_MAX_LENGTH);
     }
 }

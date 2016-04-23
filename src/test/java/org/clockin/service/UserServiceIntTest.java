@@ -1,28 +1,26 @@
 package org.clockin.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.clockin.ClockinApp;
 import org.clockin.domain.PersistentToken;
 import org.clockin.domain.User;
 import org.clockin.repository.PersistentTokenRepository;
 import org.clockin.repository.UserRepository;
+import java.time.ZonedDateTime;
 import org.clockin.service.util.RandomUtil;
-
+import java.time.LocalDate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-
-import java.time.LocalDate;
-import java.time.ZonedDateTime;
-import java.util.List;
 import java.util.Optional;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.*;
 
 /**
  * Test class for the UserResource REST controller.

@@ -15,7 +15,7 @@
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.css" />
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css content/css/main.css -->
@@ -27,15 +27,18 @@
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <!-- <div ng-show="{{ENV === 'dev'}}" class="development" ng-cloak=""></div> -->
-    <div ui-view="navbar" ng-if="sigin" ng-cloak=""></div>
+    <div ui-view="navbar" ng-cloak></div>
+    <div class="container">
+        <div class="well" ui-view="content"></div>
 
-    <div ui-view="content"></div>    
-
-    <footer>
-        <p>Made with love by</p>
-        <a href="">Clóvis Neto</a>, <a href="#">Miguel Angêlo</a>, <a href="#">Walber Nunes</a>, <a href="#">Inácio Nery</a> e <a href="#">Igor Matos</a>
-    </footer>
-
+        <div class="footer" ng-cloak>
+             <footer>
+		        <p>Made with love by</p>
+		        <a href="">Clóvis Neto</a>, <a href="#">Miguel Angêlo</a>, <a href="#">Walber Nunes</a>, <a href="#">Inácio Nery</a> e <a href="#">Igor Matos</a>
+		    </footer>
+        </div>
+    </div>
+ 
     <!-- Google Analytics: uncomment and change UA-XXXXX-X to be your site's ID.
     <script>
         (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
@@ -51,8 +54,6 @@
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/angular-aria/angular-aria.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-material/angular-material.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/angular-cache-buster/angular-cache-buster.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
@@ -71,6 +72,9 @@
     <script src="bower_components/json3/lib/json3.js"></script>
     <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
     <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
+    <script src="bower_components/angular-material/angular-material.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -82,6 +86,21 @@
     <script src="app/account/reset/request/reset.request.controller.js"></script>
     <script src="app/account/reset/finish/reset.finish.state.js"></script>
     <script src="app/account/reset/finish/reset.finish.controller.js"></script>
+    <script src="app/entities/employee/employee.state.js"></script>
+    <script src="app/entities/employee/employee.service.js"></script>
+    <script src="app/entities/employee/employee.search.service.js"></script>
+    <script src="app/entities/employee/employee.controller.js"></script>
+    <script src="app/entities/employee/employee-dialog.controller.js"></script>
+    <script src="app/entities/employee/employee-detail.controller.js"></script>
+    <script src="app/entities/employee/employee-delete-dialog.controller.js"></script>
+    <script src="app/entities/clockin/_clockin.controller.js"></script>
+    <script src="app/entities/clockin/clockin.state.js"></script>
+    <script src="app/entities/clockin/clockin.service.js"></script>
+    <script src="app/entities/clockin/clockin.search.service.js"></script>
+    <script src="app/entities/clockin/clockin.controller.js"></script>
+    <script src="app/entities/clockin/clockin-dialog.controller.js"></script>
+    <script src="app/entities/clockin/clockin-detail.controller.js"></script>
+    <script src="app/entities/clockin/clockin-delete-dialog.controller.js"></script>
     <script src="app/services/user/user.service.js"></script>
     <script src="app/services/auth/sessions.service.js"></script>
     <script src="app/services/auth/register.service.js"></script>
@@ -99,19 +118,17 @@
     <script src="app/layouts/navbar/active-menu.directive.js"></script>
     <script src="app/layouts/navbar/active-link.directive.js"></script>
     <script src="app/layouts/error/error.state.js"></script>
-    <script src="app/entities/employee/employee.state.js"></script>
-    <script src="app/entities/employee/employee.service.js"></script>
-    <script src="app/entities/employee/employee.search.service.js"></script>
-    <script src="app/entities/employee/employee.controller.js"></script>
-    <script src="app/entities/employee/employee-dialog.controller.js"></script>
-    <script src="app/entities/employee/employee-detail.controller.js"></script>
-    <script src="app/entities/employee/employee-delete-dialog.controller.js"></script>
-    <script src="app/entities/clockin/clockin.state.js"></script>
-    <script src="app/entities/clockin/clockin.service.js"></script>
-    <script src="app/entities/clockin/clockin.search.service.js"></script>
-    <script src="app/entities/clockin/clockin.controller.js"></script>
-    <script src="app/entities/clockin/clockin-dialog.controller.js"></script>
-    <script src="app/entities/clockin/clockin-detail.controller.js"></script>
+    <script src="app/blocks/interceptor/notification.interceptor.js"></script>
+    <script src="app/blocks/interceptor/errorhandler.interceptor.js"></script>
+    <script src="app/blocks/interceptor/auth-expired.interceptor.js"></script>
+    <script src="app/blocks/handlers/translation.handler.js"></script>
+    <script src="app/blocks/handlers/state.handler.js"></script>
+    <script src="app/blocks/config/translation.config.js"></script>
+    <script src="app/blocks/config/translation-storage.provider.js"></script>
+    <script src="app/blocks/config/localstorage.config.js"></script>
+    <script src="app/blocks/config/http.config.js"></script>
+    <script src="app/blocks/config/compile.config.js"></script>
+    <script src="app/blocks/config/alert.config.js"></script>
     <script src="app/components/util/truncate-words.filter.js"></script>
     <script src="app/components/util/truncate-characters.filter.js"></script>
     <script src="app/components/util/sort.directive.js"></script>
@@ -138,17 +155,6 @@
     <script src="app/components/alert/alert.service.js"></script>
     <script src="app/components/alert/alert.directive.js"></script>
     <script src="app/components/alert/alert-error.directive.js"></script>
-    <script src="app/blocks/interceptor/notification.interceptor.js"></script>
-    <script src="app/blocks/interceptor/errorhandler.interceptor.js"></script>
-    <script src="app/blocks/interceptor/auth-expired.interceptor.js"></script>
-    <script src="app/blocks/handlers/translation.handler.js"></script>
-    <script src="app/blocks/handlers/state.handler.js"></script>
-    <script src="app/blocks/config/translation.config.js"></script>
-    <script src="app/blocks/config/translation-storage.provider.js"></script>
-    <script src="app/blocks/config/localstorage.config.js"></script>
-    <script src="app/blocks/config/http.config.js"></script>
-    <script src="app/blocks/config/compile.config.js"></script>
-    <script src="app/blocks/config/alert.config.js"></script>
     <script src="app/admin/user-management/user-management.state.js"></script>
     <script src="app/admin/user-management/user-management.controller.js"></script>
     <script src="app/admin/user-management/user-management-dialog.controller.js"></script>
@@ -186,9 +192,9 @@
     <script src="app/account/password/password-strength-bar.directive.js"></script>
     <script src="app/account/activate/activate.state.js"></script>
     <script src="app/account/activate/activate.controller.js"></script>
+    <script src="app/entities/entity.state.js"></script>
     <script src="app/home/home.state.js"></script>
     <script src="app/home/home.controller.js"></script>
-    <script src="app/entities/entity.state.js"></script>
     <script src="app/admin/admin.state.js"></script>
     <script src="app/account/account.state.js"></script>
     <script src="app/app.state.js"></script>

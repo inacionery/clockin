@@ -1,20 +1,18 @@
 package org.clockin.service.impl;
 
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
-
+import org.clockin.service.EmployeeService;
 import org.clockin.domain.Employee;
 import org.clockin.repository.EmployeeRepository;
 import org.clockin.repository.search.EmployeeSearchRepository;
-import org.clockin.service.EmployeeService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Employee.

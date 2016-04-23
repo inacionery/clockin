@@ -16,7 +16,7 @@
     <!--
         Added the entity Clockin.
     -->
-    <changeSet id="20151124151638" author="jhipster">
+    <changeSet id="20151124151638-1" author="jhipster">
         <createTable tableName="clockin">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
@@ -38,11 +38,5 @@
         </createTable>
         <dropDefaultValue tableName="clockin" columnName="date_time" columnDataType="datetime"/>
         
-        <addForeignKeyConstraint baseColumnNames="employee_id"
-                                 baseTableName="clockin"
-                                 constraintName="fk_clockin_employee_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="employee"/>
-
     </changeSet>
 </databaseChangeLog>

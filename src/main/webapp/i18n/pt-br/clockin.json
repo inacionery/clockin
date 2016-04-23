@@ -16,9 +16,9 @@
             "detail": {
                 "title": "Clockin"
             },
-            "sequentialRegisterNumber": "SequentialRegisterNumber",
-            "dateTime": "DateTime",
-            "registryType": "RegistryType",
+            "sequentialRegisterNumber": "Sequential Register Number",
+            "dateTime": "Date Time",
+            "registryType": "Registry Type",
             "employee": "Employee"
         }
     }

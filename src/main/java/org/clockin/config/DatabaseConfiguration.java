@@ -5,7 +5,7 @@ import org.clockin.config.liquibase.AsyncSpringLiquibase;
 import com.codahale.metrics.MetricRegistry;
 import com.fasterxml.jackson.datatype.hibernate4.Hibernate4Module;
 import com.zaxxer.hikari.HikariDataSource;
-
+import liquibase.integration.spring.SpringLiquibase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +25,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.inject.Inject;
 import javax.sql.DataSource;
-
 import java.util.Arrays;
-
-import liquibase.integration.spring.SpringLiquibase;
 
 @Configuration
 @EnableJpaRepositories("org.clockin.repository")
