@@ -24,7 +24,6 @@
     "serverPort": "8181",
     "applicationType": "monolith",
     "languages": [
-      "en",
       "pt-br"
     ],
     "jhiPrefix": "jhi"

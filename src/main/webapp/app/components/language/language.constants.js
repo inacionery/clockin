@@ -9,7 +9,6 @@
          They are written in English to avoid character encoding issues (not a perfect solution)
          */
         .constant('LANGUAGES', [
-            'en',
             'pt-br'
             // jhipster-needle-i18n-language-constant - JHipster will add/remove languages in this array
         ]
