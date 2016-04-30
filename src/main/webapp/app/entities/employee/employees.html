@@ -37,7 +37,7 @@
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
                     <th jh-sort-by="socialIdentificationNumber"><span translate="clockinApp.employee.socialIdentificationNumber">Social Identification Number</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="plannedDailyHours"><span translate="clockinApp.employee.plannedDailyHours">Planned Daily Hours</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="user.email"><span translate="clockinApp.employee.user">User</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="user.firstName"><span translate="clockinApp.employee.user">User</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -46,7 +46,7 @@
                     <td>{{employee.socialIdentificationNumber}}</td>
                     <td>{{employee.plannedDailyHours}}</td>
                     <td>
-                        {{employee.user.email}}
+                        {{employee.user.firstName}} {{employee.user.lastName}} - {{employee.user.email}}
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

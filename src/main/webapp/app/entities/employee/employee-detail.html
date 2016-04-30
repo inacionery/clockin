@@ -1,6 +1,6 @@
 
 <div>
-    <h2><span translate="clockinApp.employee.detail.title">Employee</span> {{vm.employee.id}}</h2>
+    <h2><strong translate="clockinApp.employee.detail.title">Employee</strong> {{vm.employee.user.firstName}} {{vm.employee.user.lastName}}</h2>
     <hr>
     <dl class="dl-horizontal">
         <dt><span translate="clockinApp.employee.socialIdentificationNumber">Social Identification Number</span></dt>
@@ -10,10 +10,10 @@
         <hr>
         <dt><span translate="clockinApp.employee.plannedDailyHours">Planned Daily Hours</span></dt>
         <dd>
-            <span>{{vm.employee.plannedDailyHours}}</span>
+            <span>{{vm.employee.plannedDailyHours}} Hrs</span>
         </dd>
         <hr>
-        <dt><span translate="clockinApp.employee.user">User</span></dt>
+        <dt><span translate="clockinApp.employee.email">E-mail</span></dt>
         <dd>
             {{vm.employee.user.email}}
         </dd>

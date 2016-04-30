@@ -2,6 +2,7 @@ package org.clockin.service.impl;
 
 import org.clockin.service.EmployeeService;
 import org.clockin.domain.Employee;
+import org.clockin.domain.User;
 import org.clockin.repository.EmployeeRepository;
 import org.clockin.repository.search.EmployeeSearchRepository;
 import org.slf4j.Logger;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import static org.elasticsearch.index.query.QueryBuilders.*;
+
+import java.util.List;
 
 /**
  * Service Implementation for managing Employee.
@@ -76,12 +79,15 @@ public class EmployeeServiceImpl implements EmployeeService {
      *  Delete the  employee by id.
      *  
      *  @param id the id of the entity
+     * @return 
      */
     @Override
-    public void delete(Long id) {
+    public Employee delete(Long id) {
         log.debug("Request to delete Employee : {}", id);
+        Employee employee = employeeRepository.findOne(id);
         employeeRepository.delete(id);
         employeeSearchRepository.delete(id);
+        return employee;
     }
 
     /**
@@ -97,5 +103,15 @@ public class EmployeeServiceImpl implements EmployeeService {
             query);
         return employeeSearchRepository.search(queryStringQuery(query),
             pageable);
+    }
+
+    public Employee findByUser(User user) {
+        return employeeRepository.findByUser(user);
+    }
+
+    public Employee findBySocialIdentificationNumber(
+        String socialIdentificationNumber) {
+        return employeeRepository
+            .findBySocialIdentificationNumber(socialIdentificationNumber);
     }
 }

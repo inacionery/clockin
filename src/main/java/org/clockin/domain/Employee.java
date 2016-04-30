@@ -26,7 +26,8 @@ public class Employee implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "social_identification_number")
+    @Column(name = "social_identification_number",
+        unique = true)
     private String socialIdentificationNumber;
 
     @Column(name = "planned_daily_hours")

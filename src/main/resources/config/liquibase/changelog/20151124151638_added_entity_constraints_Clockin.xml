@@ -14,5 +14,9 @@
                                  referencedColumnNames="id"
                                  referencedTableName="employee"/>
 
+        <addUniqueConstraint columnNames="social_identification_number"
+				             constraintName="uniq_employee_social_identification_number"
+				             tableName="employee"/>
+
     </changeSet>
 </databaseChangeLog>

@@ -1,6 +1,9 @@
 package org.clockin.service;
 
+import java.util.List;
+
 import org.clockin.domain.Employee;
+import org.clockin.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -37,8 +40,9 @@ public interface EmployeeService {
      *  Delete the "id" employee.
      *  
      *  @param id the id of the entity
+     * @return 
      */
-    void delete(Long id);
+    Employee delete(Long id);
 
     /**
      * Search for the employee corresponding to the query.
@@ -47,4 +51,9 @@ public interface EmployeeService {
      *  @return the list of entities
      */
     Page<Employee> search(String query, Pageable pageable);
+
+    Employee findByUser(User user);
+
+    Employee findBySocialIdentificationNumber(
+        String socialIdentificationNumber);
 }

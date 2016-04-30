@@ -53,11 +53,27 @@ public class EmployeeResource {
                     "idexists", "A new employee cannot already have an ID"))
                 .body(null);
         }
+        if (employeeService.findByUser(employee.getUser()) != null) {
+            return ResponseEntity.badRequest()
+                .headers(HeaderUtil.createFailureAlert("employee",
+                    "useralreadyassociated",
+                    "A new employee cannot already have User"))
+                .body(null);
+        }
+        if (employeeService.findBySocialIdentificationNumber(
+            employee.getSocialIdentificationNumber()) != null) {
+            return ResponseEntity.badRequest()
+                .headers(HeaderUtil.createFailureAlert("employee",
+                    "socialidentificationnumberreadyassociated",
+                    "A new employee cannot already have an SocialIdentificationNumber"))
+                .body(null);
+        }
         Employee result = employeeService.save(employee);
         return ResponseEntity
             .created(new URI("/api/employees/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("employee",
-                result.getId().toString()))
+                result.getUser().getFirstName() + " "
+                    + result.getUser().getLastName()))
             .body(result);
     }
 
@@ -80,9 +96,31 @@ public class EmployeeResource {
         if (employee.getId() == null) {
             return createEmployee(employee);
         }
+        Employee oldEmployee = employeeService.findByUser(employee.getUser());
+        if (employeeService.findByUser(employee.getUser()) != null
+            && oldEmployee != null && oldEmployee.getId() != employee.getId()) {
+            return ResponseEntity.badRequest()
+                .headers(HeaderUtil.createFailureAlert("employee",
+                    "useralreadyassociated",
+                    "A new employee cannot already have User"))
+                .body(null);
+        }
+        oldEmployee = employeeService.findBySocialIdentificationNumber(
+            employee.getSocialIdentificationNumber());
+        if (employeeService.findBySocialIdentificationNumber(
+            employee.getSocialIdentificationNumber()) != null
+            && oldEmployee != null && oldEmployee.getId() != employee.getId()) {
+            return ResponseEntity.badRequest()
+                .headers(HeaderUtil.createFailureAlert("employee",
+                    "socialidentificationnumberreadyassociated",
+                    "A new employee cannot already have an SocialIdentificationNumber"))
+                .body(null);
+        }
         Employee result = employeeService.save(employee);
-        return ResponseEntity.ok().headers(HeaderUtil
-            .createEntityUpdateAlert("employee", employee.getId().toString()))
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert("employee",
+                employee.getUser().getFirstName() + " "
+                    + employee.getUser().getLastName()))
             .body(result);
     }
 
@@ -136,10 +174,11 @@ public class EmployeeResource {
     @Timed
     public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
         log.debug("REST request to delete Employee : {}", id);
-        employeeService.delete(id);
+        Employee employee = employeeService.delete(id);
         return ResponseEntity.ok()
-            .headers(
-                HeaderUtil.createEntityDeletionAlert("employee", id.toString()))
+            .headers(HeaderUtil.createEntityDeletionAlert("employee",
+                employee.getUser().getFirstName() + " "
+                    + employee.getUser().getLastName()))
             .build();
     }
 

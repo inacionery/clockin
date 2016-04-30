@@ -6,7 +6,7 @@
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
-        <p translate="clockinApp.employee.delete.question" translate-values="{id: '{{vm.employee.id}}'}">Are you sure you want to delete this Employee?</p>
+        <p translate="clockinApp.employee.delete.question" translate-values="{param: '{{vm.employee.user.firstName}} {{vm.employee.user.lastName}}'}">Are you sure you want to delete this Employee?</p>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">

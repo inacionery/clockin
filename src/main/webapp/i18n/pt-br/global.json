@@ -8,7 +8,7 @@
             "entities": {
                 "main": "Entidades",
                 "clockin": "Folha de ponto",
-                "employee": "Funcionários",
+                "employee": "Funcionário",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
@@ -114,7 +114,9 @@
         "Size": "O campo {{fieldName}} não obedece os requisitos de tamanho mínimo ou máximo!",
         "userexists": "Usuário já existente!",
         "emailexists": "Este email já está cadastrado!",
-        "idexists": "Novo(a) {{entityName}} não pode ter uma ID"
+        "idexists": "Novo(a) {{entityName}} não pode ter uma ID",
+        "useralreadyassociated": "Usuário já está associado a um {{entityName}}",
+        "socialidentificationnumberreadyassociated": "Este PIS já está associado a um {{entityName}}"
     },
     "footer": "Este é o seu rodapé"
 }

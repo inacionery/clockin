@@ -7,11 +7,11 @@
                 "createOrEditLabel": "Cadastrar ou editar um funcionário",
                 "search": "Buscar por um funcionário"
             },
-            "created": "Um novo funcionário foi criado com o identificador {{ param }}",
-            "updated": "Um funcionário foi atualizado com o identificador {{ param }}",
-            "deleted": "Um funcionário foi apagado com o identificador {{ param }}",
+            "created": "O funcionário {{ param }} foi cadastrado",
+            "updated": "O funcionário {{ param }} foi atualizado",
+            "deleted": "O funcionário {{ param }} foi apagado",
             "delete": {
-                "question": "Você tem certeza que deseja apagar o funcionário {{ id }}?"
+                "question": "Você tem certeza que deseja apagar o funcionário {{ param }}?"
             },
             "detail": {
                 "title": "Funcionário"
