@@ -1,14 +1,23 @@
 package org.clockin.web.rest;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
+import javax.inject.Inject;
+
 import org.clockin.domain.Clockin;
 import org.clockin.domain.Employee;
 import org.clockin.service.ClockinService;
 import org.clockin.service.EmployeeService;
 import org.clockin.web.rest.dto.WorkDayDTO;
 import org.clockin.web.rest.util.HeaderUtil;
-
-import com.codahale.metrics.annotation.Timed;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -21,13 +30,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.inject.Inject;
-
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import com.codahale.metrics.annotation.Timed;
 
 /**
  * REST controller for managing Clockin.
@@ -114,25 +117,40 @@ public class ClockinResource {
     /**
      * GET /workdays -> get all workdays.
      */
-    @RequestMapping(value = "/workdays",
+    @RequestMapping(value = "/workdays/{date}",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<WorkDayDTO> getAllWorkDays() throws URISyntaxException {
+    public List<WorkDayDTO> getAllWorkDays(@PathVariable String date)
+        throws URISyntaxException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date currentDate = new Date();
+        try {
+            currentDate = dateFormat.parse(date);
+        }
+        catch (ParseException e) {
+        }
+
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(currentDate);
 
         List<Clockin> clockins = clockinService.findAll();
         List<WorkDayDTO> workDays = new ArrayList<>();
-
         WorkDayDTO workDayDTO = null;
         for (Clockin clockin : clockins) {
 
-            if (workDayDTO == null
-                || !workDayDTO.getDate().isEqual(clockin.getDate())) {
-                workDayDTO = new WorkDayDTO(clockin.getDate());
-                workDays.add(workDayDTO);
+            int yearDiff = c1.get(Calendar.YEAR) - clockin.getDate().getYear();
+            int monthDiff = c1.get(Calendar.MONTH) + 1
+                - clockin.getDate().getMonthValue();
+            if (yearDiff == 0 && monthDiff == 0) {
+                if (workDayDTO == null
+                    || !workDayDTO.getDate().isEqual(clockin.getDate())) {
+                    workDayDTO = new WorkDayDTO(clockin.getDate(),
+                        clockin.getEmployee());
+                    workDays.add(workDayDTO);
+                }
+                workDayDTO.addClockinValues(clockin);
             }
-
-            workDayDTO.addClockinValues(clockin);
         }
 
         return workDays;

@@ -1,31 +1,28 @@
-<h5 class="title-month">Dezembro <span>2015</span></h5>
-<div class="clockins">
-	<div layout-gt-sm="row" layout="column" class="clock-row">
-		<div flex="100" class="green day" flex-gt-sm="20">
-			<p>
-				TER
-				<span>01</span>
-			</p>
-		</div>
-		<div flex="60" class="clocks">
-			<div layout="row">
-				<md-button flex>
-					<p>08:00</p>
-				</md-button>
-				<md-button flex>
-					<p>13:00</p>
-				</md-button>
-				<md-button flex>
-					<p>15:00</p>
-				</md-button>
-				<md-button flex>
-					<p>17:00</p>
-				</md-button>
+<div ng-repeat="workday in vm.workdays track by workday.date">
+ 	<ion-item class="item-divider" ng-if="$index == 0 ||
+ 		 ((vm.workdays[$index-1].date|date:'yyyy') != (vm.workdays[$index].date|date:'yyyy') || 
+ 		 (vm.workdays[$index-1].date|date:'MMMM') != (vm.workdays[$index].date|date:'MMMM'))">
+		<h5 class="title-month">{{workday.date | date:"MMMM"}} <span>{{workday.date | date:"yyyy"}}</span></h5>
+	</ion-item>
+	<div class="clockins">
+		<div layout-gt-sm="row" layout="column" class="clock-row">
+			<div flex="100" class="green day" flex-gt-sm="20">
+				<p>
+				{{workday.date | date:"EEE"}}
+					<span>{{workday.date | date:"dd"}}</span>
+				</p>
 			</div>
+			<div flex="60" class="clocks">
+				<div layout="row">
+					<md-button flex ng-repeat="clockin in workday.clockinValues track by clockin.id">
+					<p>{{clockin.time}}</p>
+					</md-button>
+				</div>
+			</div>
+			<!-- <md-button class="gray" flex="20">
+				<i class="fa fa-cog"></i>
+				Saldo / Horas Trabalhadas
+			</md-button> -->
 		</div>
-		<md-button class="gray" flex="20">
-			<i class="fa fa-cog"></i>
-			Saldo / Horas Trabalhadas
-		</md-button>
 	</div>
 </div>

@@ -23,7 +23,6 @@ public class WorkDayDTO {
     private int minutesBalance;
     private int workDuration;
     private Employee employee;
-    private boolean isMissing;
 
     public WorkDayDTO(LocalDate date) {
         super();

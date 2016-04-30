@@ -7,7 +7,7 @@
     Clockin.$inject = ['$resource', 'DateUtils'];
 
     function Clockin ($resource, DateUtils) {
-        var resourceUrl =  'api/clockins/:id';
+        var resourceUrl =  'api/workdays/{date}';
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true},
