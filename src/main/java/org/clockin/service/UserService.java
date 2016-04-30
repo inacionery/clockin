@@ -120,7 +120,7 @@ public class UserService {
         user.setLastName(managedUserDTO.getLastName());
         user.setEmail(managedUserDTO.getEmail());
         if (managedUserDTO.getLangKey() == null) {
-            user.setLangKey("en"); // default language
+            user.setLangKey("pt-br"); // default language
         }
         else {
             user.setLangKey(managedUserDTO.getLangKey());
