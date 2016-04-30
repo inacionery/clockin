@@ -636,3 +636,7 @@ Social Buttons
         margin-top: 7vh;
     }
 }
+
+.btn-block {
+    display: inline;
+}
