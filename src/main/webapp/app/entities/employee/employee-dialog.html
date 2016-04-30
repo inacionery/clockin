@@ -25,7 +25,7 @@
 
         <div class="form-group">
             <label translate="clockinApp.employee.user" for="field_user">User</label>
-            <select class="form-control" id="field_user" name="user" ng-model="vm.employee.user" ng-options="user as user.email for user in vm.users track by user.id">
+            <select class="form-control" id="field_user" name="user" ng-model="vm.employee.user" ng-options="user as user.firstName + ' ' + user.lastName + ' - '  + user.email for user in vm.users track by user.id">
                 <option value=""></option>
             </select>
         </div>
