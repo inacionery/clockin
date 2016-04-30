@@ -56,18 +56,6 @@
                     </a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                         <li has-authority="ROLE_ADMIN" ui-sref-active="active" ng-switch-when="true">
-                            <a ui-sref="settings" ng-click="vm.collapseNavbar()">
-                                <span class="glyphicon glyphicon-wrench"></span>&nbsp;
-                                <span translate="global.menu.account.settings">Settings</span>
-                            </a>
-                        </li>
-                        <li has-authority="ROLE_ADMIN" ui-sref-active="active" ng-switch-when="true">
-                            <a ui-sref="password" ng-click="vm.collapseNavbar()">
-                                <span class="glyphicon glyphicon-lock"></span>
-                                <span translate="global.menu.account.password">Password</span>
-                            </a>
-                        </li>
-                        <li has-authority="ROLE_ADMIN" ui-sref-active="active" ng-switch-when="true">
                             <a ui-sref="sessions" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-cloud"></span>&nbsp;
                                 <span translate="global.menu.account.sessions">Sessions</span>

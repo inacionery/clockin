@@ -222,7 +222,7 @@ md-toolbar.md-default-theme.md-menu-toolbar md-toolbar-filler, md-toolbar.md-men
 
 .box {
     max-width: 24em;
-    margin: 23vh auto 2em;
+    margin: 5vh auto 2em;
     border-radius:0.2em;
     background: #fff;
     overflow: hidden;
@@ -639,4 +639,8 @@ Social Buttons
 
 .btn-block {
     display: inline;
+}
+
+.container {
+	width: 100%;
 }
