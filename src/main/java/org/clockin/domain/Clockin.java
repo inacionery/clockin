@@ -19,7 +19,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -41,7 +41,7 @@ public class Clockin implements Serializable {
     private String sequentialRegisterNumber;
 
     @Column(name = "date_time")
-    private ZonedDateTime dateTime;
+    private LocalDateTime dateTime;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "registry_type")
@@ -66,11 +66,11 @@ public class Clockin implements Serializable {
         this.sequentialRegisterNumber = sequentialRegisterNumber;
     }
 
-    public ZonedDateTime getDateTime() {
+    public LocalDateTime getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(ZonedDateTime dateTime) {
+    public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
 
