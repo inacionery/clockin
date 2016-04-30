@@ -86,6 +86,13 @@ public class SocialService {
                 "User already exist associate the connection to this account");
             return user.get();
         }
+        if (!email.endsWith("@liferay.com")) {
+            log.error(
+                "Only Liferay employees can create an account, login -> {}",
+                userName);
+            throw new IllegalArgumentException(
+                "Only Liferay employees can create an account");
+        }
 
         String login = userProfile.getEmail();
         String encryptedPassword = passwordEncoder
