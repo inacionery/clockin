@@ -33,6 +33,9 @@ public class ClockinApp {
     @Inject
     private Environment env;
 
+    @Inject
+	private DataImporter dataImporter;
+
     /**
      * Initializes clockin.
      * <p>
@@ -62,6 +65,8 @@ public class ClockinApp {
                 log.error("You have misconfigured your application! "
                     + "It should not run with both the 'dev' and 'cloud' profiles at the same time.");
             }
+
+            dataImporter.importData();
         }
     }
 
