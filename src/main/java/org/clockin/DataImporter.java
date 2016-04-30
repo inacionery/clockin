@@ -1,11 +1,11 @@
 package org.clockin;
 
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +19,6 @@ import org.clockin.domain.User;
 import org.clockin.service.ClockinService;
 import org.clockin.service.EmployeeService;
 import org.clockin.service.UserService;
-import org.clockin.web.rest.dto.ManagedUserDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,114 +26,120 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class DataImporter {
 
-	@Inject
-	private UserService userService;
+    @Inject
+    private UserService userService;
 
-	@Inject
-	private EmployeeService employeeService;
+    @Inject
+    private EmployeeService employeeService;
 
-	@Inject
-	private ClockinService clockinService;
+    @Inject
+    private ClockinService clockinService;
 
-	public void importData() {
+    public void importData() {
 
-		importUsersAndEmployees();
-	}
+        importUsersAndEmployees();
+    }
 
-	private void importUsersAndEmployees() {
+    private void importUsersAndEmployees() {
+        List<Employee> employees = null;
 
-		String path = "/Users/miguelangelo/all-employees.csv";
+        try (Stream<String> stream = Files.lines(Paths.get(
+            DataImporter.class.getResource("/all-employees.csv").toURI()))) {
+            employees = stream.map(line -> createEmployee(line))
+                .collect(Collectors.toList());
 
-		List<Employee> employees = null;
+            for (Employee employee : employees) {
+                URI uri = DataImporter.class.getResource("/all-clockins.csv")
+                    .toURI();
+                Files.lines(Paths.get(uri))
+                    .filter(line -> line
+                        .endsWith(employee.getSocialIdentificationNumber()))
+                    .forEach(line -> createClockin(employee, line));
+            }
+        }
+        catch (Exception e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
 
-		try (Stream<String> stream = Files.lines(Paths.get(path))) {
-			employees = stream.map(line -> createEmployee(line)).collect(Collectors.toList());
+    }
 
-			for (Employee employee : employees) {
-				Files.lines(Paths.get("/Users/miguelangelo/all-clockins.csv"))
-				.filter(line -> line.endsWith(employee.getSocialIdentificationNumber()))
-				.forEach(line -> createClockin(employee, line));
-			}
-		} catch (Exception e) {
-			throw new RuntimeException(e.getMessage(), e);
-		}
+    private void createClockin(Employee employee, String line) {
 
-	}
+        Clockin clockin = new Clockin();
 
-	private void createClockin(Employee employee, String line) {
+        clockin.setSequentialRegisterNumber(line.substring(0, 9));
 
-		Clockin clockin = new Clockin();
+        String dateString = line.substring(10, 18);
 
-		clockin.setSequentialRegisterNumber(line.substring(0, 9));
+        LocalDate date = LocalDate.parse(dateString,
+            DateTimeFormatter.ofPattern("ddMMyyyy"));
 
-		String dateString = line.substring(10, 18);
+        String timeString = line.substring(18, 22);
+        LocalTime time = LocalTime.parse(timeString,
+            DateTimeFormatter.ofPattern("HHmm"));
 
-		LocalDate date = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("ddMMyyyy"));
+        LocalDateTime dateTime = date.atTime(time);
 
-		String timeString = line.substring(18, 22);
-		LocalTime time = LocalTime.parse(timeString, DateTimeFormatter.ofPattern("HHmm"));
+        clockin.setDateTime(dateTime);
 
-		LocalDateTime dateTime = date.atTime(time);
+        clockin.setEmployee(employee);
 
-		clockin.setDateTime(dateTime);
+        clockinService.save(clockin);
+    }
 
-		clockin.setEmployee(employee);
+    private Employee createEmployee(String line) {
 
-		clockinService.save(clockin);
-	}
+        Employee employee = new Employee();
 
-	private Employee createEmployee(String line) {
+        String[] data = line.split("#");
 
-		Employee employee = new Employee();
+        employee.setPlannedDailyHours(8);
+        employee.setSocialIdentificationNumber(data[0]);
 
-		String[] data = line.split("#");
+        User user = createUser(data);
 
-		employee.setPlannedDailyHours(8);
-		employee.setSocialIdentificationNumber(data[0]);
+        employee.setUser(user);
 
-		User user = createUser(data);
+        employeeService.save(employee);
 
-		employee.setUser(user);
+        return employee;
+    }
 
-		employeeService.save(employee);
+    private User createUser(String[] data) {
 
-		return employee;
-	}
+        String email = data[3];
+        String password = "12345";
+        String firstName = data[1];
+        String lastName = data[2];
+        String langKey = "pt-BR";
+        User user = userService.createUserInformation(email, password,
+            firstName, lastName, email, langKey);
 
-	private User createUser(String[] data) {
+        return user;
+    }
 
-		String email = data[3];
-		String password = "12345";
-		String firstName = data[1];
-		String lastName = data[2];
-		String langKey = "pt-BR";
-		User user = userService.createUserInformation(email, password, firstName, lastName, email, langKey);
+    public UserService getUserService() {
+        return userService;
+    }
 
-		return user;
-	}
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
-	public UserService getUserService() {
-		return userService;
-	}
+    public EmployeeService getEmployeeService() {
+        return employeeService;
+    }
 
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
+    public void setEmployeeService(EmployeeService employeeService) {
+        this.employeeService = employeeService;
+    }
 
-	public EmployeeService getEmployeeService() {
-		return employeeService;
-	}
+    public ClockinService getClockinService() {
+        return clockinService;
+    }
 
-	public void setEmployeeService(EmployeeService employeeService) {
-		this.employeeService = employeeService;
-	}
-
-	public ClockinService getClockinService() {
-		return clockinService;
-	}
-
-	public void setClockinService(ClockinService clockinService) {
-		this.clockinService = clockinService;
-	}
+    public void setClockinService(ClockinService clockinService) {
+        this.clockinService = clockinService;
+    }
 
 }

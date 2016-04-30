@@ -25,7 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.ZoneId;
@@ -54,10 +53,9 @@ public class ClockinResourceIntTest {
     private static final String DEFAULT_SEQUENTIAL_REGISTER_NUMBER = "AAAAA";
     private static final String UPDATED_SEQUENTIAL_REGISTER_NUMBER = "BBBBB";
 
-    private static final LocalDateTime DEFAULT_DATE_TIME = LocalDateTime
-        .now();
-    private static final LocalDateTime UPDATED_DATE_TIME = LocalDateTime
-        .now().withNano(0);
+    private static final LocalDateTime DEFAULT_DATE_TIME = LocalDateTime.now();
+    private static final LocalDateTime UPDATED_DATE_TIME = LocalDateTime.now()
+        .withNano(0);
     private static final String DEFAULT_DATE_TIME_STR = dateTimeFormatter
         .format(DEFAULT_DATE_TIME);
 

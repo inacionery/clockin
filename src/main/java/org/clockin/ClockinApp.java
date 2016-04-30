@@ -34,7 +34,7 @@ public class ClockinApp {
     private Environment env;
 
     @Inject
-	private DataImporter dataImporter;
+    private DataImporter dataImporter;
 
     /**
      * Initializes clockin.
@@ -66,7 +66,7 @@ public class ClockinApp {
                     + "It should not run with both the 'dev' and 'cloud' profiles at the same time.");
             }
 
-            dataImporter.importData();
+            //dataImporter.importData();
         }
     }
 
