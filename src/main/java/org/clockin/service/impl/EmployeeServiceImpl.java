@@ -15,8 +15,6 @@ import org.springframework.stereotype.Service;
 import javax.inject.Inject;
 import static org.elasticsearch.index.query.QueryBuilders.*;
 
-import java.util.List;
-
 /**
  * Service Implementation for managing Employee.
  */
@@ -105,10 +103,12 @@ public class EmployeeServiceImpl implements EmployeeService {
             pageable);
     }
 
+    @Override
     public Employee findByUser(User user) {
         return employeeRepository.findByUser(user);
     }
 
+    @Override
     public Employee findBySocialIdentificationNumber(
         String socialIdentificationNumber) {
         return employeeRepository

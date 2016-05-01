@@ -1,20 +1,23 @@
 package org.clockin.service.impl;
 
-import org.clockin.service.ClockinService;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+
 import org.clockin.domain.Clockin;
+import org.clockin.domain.Employee;
 import org.clockin.repository.ClockinRepository;
 import org.clockin.repository.search.ClockinSearchRepository;
+import org.clockin.service.ClockinService;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * Service Implementation for managing Clockin.
@@ -34,7 +37,7 @@ public class ClockinServiceImpl implements ClockinService {
 
     /**
      * Save a clockin.
-     * 
+     *
      * @param clockin the entity to save
      * @return the persisted entity
      */
@@ -48,7 +51,7 @@ public class ClockinServiceImpl implements ClockinService {
 
     /**
      *  Get all the clockins.
-     *  
+     *
      *  @return the list of entities
      */
     @Override
@@ -75,7 +78,7 @@ public class ClockinServiceImpl implements ClockinService {
 
     /**
      *  Delete the  clockin by id.
-     *  
+     *
      *  @param id the id of the entity
      */
     @Override
@@ -98,5 +101,13 @@ public class ClockinServiceImpl implements ClockinService {
         return StreamSupport.stream(clockinSearchRepository
             .search(queryStringQuery(query)).spliterator(), false)
             .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Clockin> findByEmployee(Employee employee) {
+        log.debug("Request to get Clockin : {}", employee);
+        List<Clockin> result = clockinRepository.findByEmployee(employee);
+        return result;
     }
 }

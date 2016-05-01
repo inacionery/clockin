@@ -1,23 +1,17 @@
 package org.clockin.web.rest;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
-import javax.inject.Inject;
-
 import org.clockin.domain.Clockin;
 import org.clockin.domain.Employee;
+import org.clockin.domain.User;
+import org.clockin.repository.UserRepository;
+import org.clockin.security.SecurityUtils;
 import org.clockin.service.ClockinService;
 import org.clockin.service.EmployeeService;
 import org.clockin.web.rest.dto.WorkDayDTO;
 import org.clockin.web.rest.util.HeaderUtil;
+
+import com.codahale.metrics.annotation.Timed;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -30,7 +24,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.codahale.metrics.annotation.Timed;
+import javax.inject.Inject;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * REST controller for managing Clockin.
@@ -46,6 +50,9 @@ public class ClockinResource {
 
     @Inject
     private EmployeeService employeeService;
+
+    @Inject
+    private UserRepository userRepository;
 
     /**
      * POST  /clockins : Create a new clockin.
@@ -123,6 +130,11 @@ public class ClockinResource {
     @Timed
     public List<WorkDayDTO> getAllWorkDays(@PathVariable String date)
         throws URISyntaxException {
+
+        Optional<User> user = userRepository
+            .findOneByLogin(SecurityUtils.getCurrentUserLogin());
+        Employee employee = employeeService.findByUser(user.get());
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date currentDate = new Date();
         try {
@@ -134,7 +146,7 @@ public class ClockinResource {
         Calendar c1 = Calendar.getInstance();
         c1.setTime(currentDate);
 
-        List<Clockin> clockins = clockinService.findAll();
+        List<Clockin> clockins = clockinService.findByEmployee(employee);
         List<WorkDayDTO> workDays = new ArrayList<>();
         WorkDayDTO workDayDTO = null;
         for (Clockin clockin : clockins) {
