@@ -15,7 +15,7 @@
         },
         {
             "fieldName": "dateTime",
-            "fieldType": "LocalDateTime"
+            "fieldType": "ZonedDateTime"
         },
         {
             "fieldName": "registryType",

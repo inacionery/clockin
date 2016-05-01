@@ -1,26 +1,28 @@
 package org.clockin;
 
-import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import javax.inject.Inject;
-
 import org.clockin.domain.Clockin;
 import org.clockin.domain.Employee;
 import org.clockin.domain.User;
 import org.clockin.service.ClockinService;
 import org.clockin.service.EmployeeService;
 import org.clockin.service.UserService;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.inject.Inject;
+
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @Transactional
@@ -78,7 +80,8 @@ public class DataImporter {
         LocalTime time = LocalTime.parse(timeString,
             DateTimeFormatter.ofPattern("HHmm"));
 
-        LocalDateTime dateTime = date.atTime(time);
+        ZonedDateTime dateTime = date.atTime(time)
+            .atZone(ZoneId.systemDefault());
 
         clockin.setDateTime(dateTime);
 
