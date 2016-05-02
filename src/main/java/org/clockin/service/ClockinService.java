@@ -3,6 +3,7 @@ package org.clockin.service;
 import org.clockin.domain.Clockin;
 import org.clockin.domain.Employee;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 /**
@@ -48,5 +49,6 @@ public interface ClockinService {
      */
     List<Clockin> search(String query);
 
-    List<Clockin> findByEmployee(Employee employee);
+    List<Clockin> findByEmployeeDatesBetween(Employee employee,
+        ZonedDateTime start, ZonedDateTime end);
 }

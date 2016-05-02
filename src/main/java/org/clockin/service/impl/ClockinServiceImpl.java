@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -105,9 +106,13 @@ public class ClockinServiceImpl implements ClockinService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Clockin> findByEmployee(Employee employee) {
-        log.debug("Request to get Clockin : {}", employee);
-        List<Clockin> result = clockinRepository.findByEmployee(employee);
+    public List<Clockin> findByEmployeeDatesBetween(Employee employee,
+        ZonedDateTime start, ZonedDateTime end) {
+        log.debug("Request to get Clockin : {} Between {} and {}", employee,
+            start, end);
+        List<Clockin> result = clockinRepository
+            .findByEmployeeAndDateTimeBetweenOrderByDateTime(employee, start,
+                end);
         return result;
     }
 }

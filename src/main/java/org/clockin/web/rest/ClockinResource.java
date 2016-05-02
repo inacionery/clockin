@@ -29,10 +29,11 @@ import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -122,86 +123,6 @@ public class ClockinResource {
     }
 
     /**
-     * GET /workdays -> get all workdays.
-     */
-    @RequestMapping(value = "/workdays/{date}",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public List<WorkDayDTO> getAllWorkDays(@PathVariable String date)
-        throws URISyntaxException {
-
-        Optional<User> user = userRepository
-            .findOneByLogin(SecurityUtils.getCurrentUserLogin());
-        Employee employee = employeeService.findByUser(user.get());
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date currentDate = new Date();
-        try {
-            currentDate = dateFormat.parse(date);
-        }
-        catch (ParseException e) {
-        }
-
-        Calendar c1 = Calendar.getInstance();
-        c1.setTime(currentDate);
-
-        List<Clockin> clockins = clockinService.findByEmployee(employee);
-        List<WorkDayDTO> workDays = new ArrayList<>();
-        WorkDayDTO workDayDTO = null;
-        for (Clockin clockin : clockins) {
-
-            int yearDiff = c1.get(Calendar.YEAR) - clockin.getDate().getYear();
-            int monthDiff = c1.get(Calendar.MONTH) + 1
-                - clockin.getDate().getMonthValue();
-            if (yearDiff == 0 && monthDiff == 0) {
-                if (workDayDTO == null
-                    || !workDayDTO.getDate().isEqual(clockin.getDate())) {
-                    workDayDTO = new WorkDayDTO(clockin.getDate(),
-                        clockin.getEmployee());
-                    workDays.add(workDayDTO);
-                }
-                workDayDTO.addClockinValues(clockin);
-            }
-        }
-
-        return workDays;
-    }
-
-    /**
-     * GET /workdays/employee/:id -> get all workdays based on employee id.
-     */
-    @RequestMapping(value = "/workdays/employee/{id}",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public List<WorkDayDTO> getAllWorkDays(@PathVariable Long id)
-        throws URISyntaxException {
-
-        List<Clockin> clockins = clockinService.findAll();
-        List<WorkDayDTO> workDays = new ArrayList<>();
-        Employee employee = employeeService.findOne(id);
-
-        WorkDayDTO workDayDTO = null;
-        for (Clockin clockin : clockins) {
-
-            if ((workDayDTO == null
-                || !workDayDTO.getDate().isEqual(clockin.getDate()))
-                && clockin.getEmployee().getId() == id) {
-                workDayDTO = new WorkDayDTO(clockin.getDate(), employee);
-                workDays.add(workDayDTO);
-            }
-
-            if (clockin.getEmployee().getId() == id) {
-                workDayDTO.addClockinValues(clockin);
-            }
-
-        }
-
-        return workDays;
-    }
-
-    /**
     * GET  /clockins/:id : get the "id" clockin.
     *
     * @param id the id of the clockin to retrieve
@@ -252,6 +173,60 @@ public class ClockinResource {
     public List<Clockin> searchClockins(@RequestParam String query) {
         log.debug("REST request to search Clockins for query {}", query);
         return clockinService.search(query);
+    }
+
+    /**
+     * GET /workdays/ /workdays/{year}/{month} -> get all workdays.
+     * @throws ParseException
+     */
+    @RequestMapping(value = { "/workdays", "/workdays/{year}/{month}" },
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<WorkDayDTO> getAllWorkDays(
+        @PathVariable(value = "year") Optional<Integer> yearParam,
+        @PathVariable(value = "month") Optional<Integer> monthParam)
+        throws URISyntaxException, ParseException {
+
+        int year = LocalDate.now().getYear();
+        int month = LocalDate.now().getMonth().getValue();
+
+        if (yearParam.isPresent()) {
+            year = yearParam.get();
+        }
+        if (monthParam.isPresent()) {
+            month = monthParam.get();
+        }
+        LocalDate startDate = LocalDate.of(year, month, 1);
+        LocalDate endDate = LocalDate.of(year, month,
+            startDate.lengthOfMonth());
+
+        ZonedDateTime start = ZonedDateTime.of(startDate, LocalTime.MIN,
+            ZoneId.systemDefault());
+
+        ZonedDateTime end = ZonedDateTime.of(endDate, LocalTime.MAX,
+            ZoneId.systemDefault());
+
+        Optional<User> user = userRepository
+            .findOneByLogin(SecurityUtils.getCurrentUserLogin());
+        Employee employee = employeeService.findByUser(user.get());
+
+        List<Clockin> clockins = clockinService
+            .findByEmployeeDatesBetween(employee, start, end);
+        List<WorkDayDTO> workDays = new ArrayList<>();
+        WorkDayDTO workDayDTO = null;
+        for (Clockin clockin : clockins) {
+
+            if (workDayDTO == null
+                || !workDayDTO.getDate().isEqual(clockin.getDate())) {
+                workDayDTO = new WorkDayDTO(clockin.getDate(),
+                    clockin.getEmployee());
+                workDays.add(workDayDTO);
+            }
+            workDayDTO.addClockinValues(clockin);
+        }
+
+        return workDays;
     }
 
 }
