@@ -42,7 +42,6 @@ body.bg-dark footer {
 .day p {
     text-align: center;
     color: #fff;
-    line-height: 2.4em;
     margin: 0.5em;
 }
 
@@ -62,7 +61,7 @@ body.bg-dark footer {
 
 .clocks .layout-row button {
     box-sizing: border-box;
-    height: 8.5em;
+    height: 3.7em;
     display: block;
     border-bottom: solid 3px rgba(0,0,0,0.1);
 }
@@ -86,22 +85,9 @@ body.bg-dark footer {
     margin-bottom: 0.3em;
 }
 
-.clocks .layout-row button:first-child {
+.clocks .layout-row button {
     background: #80d8ff;
 }
-
-.clocks .layout-row button:nth-child(2) {
-    background: #8c9eff;
-}
-
-.clocks .layout-row button:nth-child(3) {
-    background: #b388ff;
-}
-
-.clocks .layout-row button:nth-child(4) {
-    background: #ff80ab;
-}
-
 .clocks p {
     display: inline-block;
     font-size: 1.5em;
@@ -643,4 +629,12 @@ Social Buttons
 
 .container {
 	width: 100%;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
 }

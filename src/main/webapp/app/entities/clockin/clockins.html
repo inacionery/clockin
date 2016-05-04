@@ -1,26 +1,20 @@
- <button type="submit"
-        ui-sref="clockin-page({year:(vm.workdays[0].date|date:'yyyy'), month:(vm.workdays[0].date|date:'MM')-1})"
-        class="btn btn-info btn-sm">
-        Anterior
+<button type="submit"
+   	ui-sref="clockin-page({year:vm.previousYear, month:vm.previousMonth})"
+    class="btn btn-info btn-sm left">
+    {{vm.previousDate | date : 'MMMM/yyyy' | uppercase}}
 </button>
- <button type="submit"
-        ui-sref="clockin-page({year:(vm.workdays[0].date|date:'yyyy'), month:(vm.workdays[0].date|date:'MM')+1})"
-        class="btn btn-info btn-sm">
-        Posterior
+<button type="submit"
+    ui-sref="clockin-page({year:vm.nextYear, month:vm.nextMonth})"
+    class="btn btn-info btn-sm right">
+    {{vm.nextDate | date : 'MMMM/yyyy' | uppercase}}
 </button>
-
+<h5 class="title-month">{{vm.date | date:"MMMM" | uppercase}} <span>{{vm.date | date:"yyyy"}}</span></h5>
 <div ng-repeat="workday in vm.workdays track by workday.date">
- 	<ion-item class="item-divider" ng-if="$index == 0 ||
- 		 ((vm.workdays[$index-1].date|date:'yyyy') != (vm.workdays[$index].date|date:'yyyy') || 
- 		 (vm.workdays[$index-1].date|date:'MMMM') != (vm.workdays[$index].date|date:'MMMM'))">
-		<h5 class="title-month">{{workday.date | date:"MMMM" | uppercase}} <span>{{workday.date | date:"yyyy"}}</span></h5>
-	</ion-item>
 	<div class="clockins">
 		<div layout-gt-sm="row" layout="column" class="clock-row">
 			<div flex="100" class="green day" flex-gt-sm="20">
 				<p>
-				{{workday.date | date:"EEE" | uppercase}}
-					<span>{{workday.date | date:"dd"}}</span>
+				{{workday.date | date:"EEE" | uppercase}} {{workday.date | date:"dd"}}
 				</p>
 			</div>
 			<div flex="60" class="clocks">
