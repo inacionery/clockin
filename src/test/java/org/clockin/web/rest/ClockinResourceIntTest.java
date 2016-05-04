@@ -26,9 +26,10 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import java.time.Instant;
-import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -55,9 +56,9 @@ public class ClockinResourceIntTest {
     private static final String UPDATED_SEQUENTIAL_REGISTER_NUMBER = "BBBBB";
 
     private static final ZonedDateTime DEFAULT_DATE_TIME = ZonedDateTime
-        .ofInstant(Instant.ofEpochMilli(0L), ZoneId.systemDefault());
+        .ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_DATE_TIME = ZonedDateTime
-        .now(ZoneId.systemDefault()).withNano(0);
+        .now(ZoneOffset.UTC).withNano(0);
     private static final String DEFAULT_DATE_TIME_STR = dateTimeFormatter
         .format(DEFAULT_DATE_TIME);
 
