@@ -12,7 +12,7 @@
 <div ng-repeat="workday in vm.workdays track by workday.date">
 	<div class="clockins">
 		<div layout-gt-sm="row" layout="column" class="clock-row">
-			<div flex="100" class="green day" flex-gt-sm="20">
+			<div flex="100" class='{{vm.isWeekend(workday.date) ? "lightPurple" : "green"}} day' flex-gt-sm="20">
 				<p>
 				{{workday.date | date:"EEE" | uppercase}} {{workday.date | date:"dd"}}
 				</p>

@@ -26,5 +26,10 @@
         vm.previousDate = new Date(vm.previousYear, vm.previousMonth - 1);
         vm.nextDate = new Date(vm.nextYear, vm.nextMonth -1);
         vm.workdays = entity;
+        vm.isWeekend = function isWeekend(date) {
+    		date = new Date(date);
+    	 	var day = date.getDay();
+    	 	return day == 5 || day == 6;
+    	};
     }
 })();

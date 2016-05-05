@@ -33,6 +33,11 @@
             });
         };
 
+        vm.isWeekend = function isWeekend(date) {
+    		date = new Date(date);
+    	 	var day = date.getDay();
+    	 	return day == 5 || day == 6;
+    	};
         vm.loadAll();
         
     }
