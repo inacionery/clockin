@@ -215,15 +215,19 @@ public class ClockinResource {
             .findByEmployeeDatesBetween(employee, start, end);
         List<WorkDayDTO> workDays = new ArrayList<>();
         WorkDayDTO workDayDTO = null;
-        for (Clockin clockin : clockins) {
-
-            if (workDayDTO == null
-                || !workDayDTO.getDate().isEqual(clockin.getDate())) {
-                workDayDTO = new WorkDayDTO(clockin.getDate(),
-                    clockin.getEmployee());
-                workDays.add(workDayDTO);
+        int clockinCount = 0;
+        for (int i = 1; i <= startDate.lengthOfMonth(); i++) {
+            LocalDate curDate = LocalDate.of(year, month, i);
+            workDayDTO = new WorkDayDTO(curDate, employee);
+            for (int j = clockinCount; j < clockins.size(); j++) {
+                Clockin clockin = clockins.get(j);
+                if (!workDayDTO.getDate().isEqual(clockin.getDate())) {
+                    clockinCount = j;
+                    break;
+                }
+                workDayDTO.addClockinValues(clockin);
             }
-            workDayDTO.addClockinValues(clockin);
+            workDays.add(workDayDTO);
         }
 
         return workDays;
