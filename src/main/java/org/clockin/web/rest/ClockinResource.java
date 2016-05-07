@@ -31,7 +31,7 @@ import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -202,10 +202,10 @@ public class ClockinResource {
             startDate.lengthOfMonth());
 
         ZonedDateTime start = ZonedDateTime.of(startDate, LocalTime.MIN,
-            ZoneId.systemDefault());
+            ZoneOffset.UTC);
 
         ZonedDateTime end = ZonedDateTime.of(endDate, LocalTime.MAX,
-            ZoneId.systemDefault());
+            ZoneOffset.UTC);
 
         Optional<User> user = userRepository
             .findOneByLogin(SecurityUtils.getCurrentUserLogin());
