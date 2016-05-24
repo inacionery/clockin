@@ -3,7 +3,7 @@
         "title": "Bem vindo, ao Clockin!",
         "subtitle": "Esta é a sua página principal",
         "logged": {
-            "message": "Olá {{username}}."
+            "message": "Olá, {{username}}."
         }
     }
 }
