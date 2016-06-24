@@ -20,6 +20,7 @@
     <!-- endbuild -->
     <!-- build:css content/css/main.css -->
     <link rel="stylesheet" href="content/css/main.css">
+    <link rel="stylesheet" href="content/css/clockin-calendar.css">
     <!-- endbuild -->
 </head>
 <body ng-app="clockinApp" ng-class="{'bg-dark': !sigin}">
@@ -38,7 +39,7 @@
 		    </footer>
         </div>
     </div>
- 
+
     <!-- Google Analytics: uncomment and change UA-XXXXX-X to be your site's ID.
     <script>
         (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
@@ -86,6 +87,22 @@
     <script src="app/account/reset/request/reset.request.controller.js"></script>
     <script src="app/account/reset/finish/reset.finish.state.js"></script>
     <script src="app/account/reset/finish/reset.finish.controller.js"></script>
+    <script src="app/entities/employee/employee.state.js"></script>
+    <script src="app/entities/employee/employee.service.js"></script>
+    <script src="app/entities/employee/employee.search.service.js"></script>
+    <script src="app/entities/employee/employee.controller.js"></script>
+    <script src="app/entities/employee/employee-dialog.controller.js"></script>
+    <script src="app/entities/employee/employee-detail.controller.js"></script>
+    <script src="app/entities/employee/employee-delete-dialog.controller.js"></script>
+    <script src="app/entities/clockin/clockin.state.js"></script>
+    <script src="app/entities/clockin/clockin.service.js"></script>
+    <script src="app/entities/clockin/clockin.search.service.js"></script>
+    <script src="app/entities/clockin/clockin.controller.js"></script>
+    <script src="app/entities/clockin/clockin-dialog.controller.js"></script>
+    <script src="app/entities/clockin/clockin-detail.controller.js"></script>
+    <script src="app/entities/clockin/clockin-page.controller.js"></script>
+    <script src="app/entities/clockin/clockin-calendar-init.controller.js"></script>
+    <script src="app/entities/clockin/clockin-calendar-pagination.controller.js"></script>
     <script src="app/services/user/user.service.js"></script>
     <script src="app/services/auth/sessions.service.js"></script>
     <script src="app/services/auth/register.service.js"></script>
