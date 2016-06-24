@@ -20,8 +20,8 @@ spring:
     datasource:
         url: jdbc:mysql://localhost:3306/clockin?useUnicode=true&characterEncoding=utf8&useSSL=false
         name:
-        username: root
-        password:
+        username: clockin
+        password: donotremember
         hikari:
             data-source-properties:
                 cachePrepStmts: true
