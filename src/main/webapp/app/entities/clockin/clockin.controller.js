@@ -38,6 +38,23 @@
     	 	var day = date.getDay();
     	 	return day == 5 || day == 6;
     	};
+    	
+    	vm.firstHalf = function firstHalf(workdays){
+    		var firstHalf = [];
+    		for (var i = 0; i < (workdays.length/2); i++) { 
+    			firstHalf[i] = workdays[i];
+    		}
+    		return firstHalf;
+    	};
+ 
+    	vm.lastHalf = function lastHalf(workdays){
+    		var lastHalf = [];
+    		for (var i = 0; i < (workdays.length/2); i++) { 
+    			lastHalf[i] = workdays[i + (workdays.length/2) + (workdays.length%2 * 0.5)];
+    		}
+    		return lastHalf;
+    	};
+
         vm.loadAll();
         
     }
