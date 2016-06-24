@@ -179,7 +179,7 @@ public class ClockinResource {
      * GET /workdays/ /workdays/{year}/{month} -> get all workdays.
      * @throws ParseException
      */
-    @RequestMapping(value = { "/workdays", "/workdays/{year}/{month}" },
+    @RequestMapping(value = { "/workdays", "/workdays/{year}/{month}" , "/workdays-calendar/{year}/{month}" },
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
