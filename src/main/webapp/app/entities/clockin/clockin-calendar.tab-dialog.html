@@ -1,0 +1,32 @@
+<md-dialog>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>{{dayLabel}}</h2>
+                <span flex></span>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <md-tabs md-dynamic-height md-border-bottom>
+                <md-tab label="clockins">
+                    <md-content class="md-padding">
+                        <table align="center">
+                            <tr>
+                                <td ng-repeat="clockin in clockinValues track by clockin.id">
+                                    {{clockin.time}}
+                                </td>
+                            </tr>
+                        </table>
+                    </md-content>
+                </md-tab>
+            </md-tabs>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <md-button ng-click="hide()" >
+                Ok
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
