@@ -633,10 +633,10 @@ Social Buttons
 	width: 100%;
 }
 
-.left {
+button.left {
 	float: left;
 }
 
-.right {
+button.right {
 	float: right;
 }
