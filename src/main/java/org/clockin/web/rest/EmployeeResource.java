@@ -53,7 +53,9 @@ public class EmployeeResource {
                     "idexists", "A new employee cannot already have an ID"))
                 .body(null);
         }
-        if (employeeService.findByUser(employee.getUser()) != null) {
+
+        if (employee.getUser() != null
+            && employeeService.findByUser(employee.getUser()) != null) {
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert("employee",
                     "useralreadyassociated",
@@ -71,9 +73,10 @@ public class EmployeeResource {
         Employee result = employeeService.save(employee);
         return ResponseEntity
             .created(new URI("/api/employees/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("employee",
-                result.getUser().getFirstName() + " "
-                    + result.getUser().getLastName()))
+            .headers(
+                HeaderUtil.createEntityCreationAlert("employee",
+                    employee.getUser() != null ? result.getUser().getFirstName()
+                        + " " + result.getUser().getLastName() : ""))
             .body(result);
     }
 
@@ -96,31 +99,32 @@ public class EmployeeResource {
         if (employee.getId() == null) {
             return createEmployee(employee);
         }
-        Employee oldEmployee = employeeService.findByUser(employee.getUser());
-        if (employeeService.findByUser(employee.getUser()) != null
-            && oldEmployee != null && oldEmployee.getId() != employee.getId()) {
-            return ResponseEntity.badRequest()
-                .headers(HeaderUtil.createFailureAlert("employee",
-                    "useralreadyassociated",
-                    "A new employee cannot already have User"))
-                .body(null);
+        if (employee.getUser() != null) {
+            Employee oldEmployee = employeeService
+                .findByUser(employee.getUser());
+            if (oldEmployee != null
+                && oldEmployee.getId() != employee.getId()) {
+                return ResponseEntity.badRequest()
+                    .headers(HeaderUtil.createFailureAlert("employee",
+                        "useralreadyassociated",
+                        "User already associated a employee"))
+                    .body(null);
+            }
         }
-        oldEmployee = employeeService.findBySocialIdentificationNumber(
+        Employee oldEmployee = employeeService.findBySocialIdentificationNumber(
             employee.getSocialIdentificationNumber());
-        if (employeeService.findBySocialIdentificationNumber(
-            employee.getSocialIdentificationNumber()) != null
-            && oldEmployee != null && oldEmployee.getId() != employee.getId()) {
+        if (oldEmployee != null && oldEmployee.getId() != employee.getId()) {
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert("employee",
                     "socialidentificationnumberreadyassociated",
-                    "A new employee cannot already have an SocialIdentificationNumber"))
+                    "Social Identification Number already associated a employee"))
                 .body(null);
         }
         Employee result = employeeService.save(employee);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("employee",
-                employee.getUser().getFirstName() + " "
-                    + employee.getUser().getLastName()))
+                employee.getUser() != null ? employee.getUser().getFirstName()
+                    + " " + employee.getUser().getLastName() : ""))
             .body(result);
     }
 
@@ -177,8 +181,8 @@ public class EmployeeResource {
         Employee employee = employeeService.delete(id);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityDeletionAlert("employee",
-                employee.getUser().getFirstName() + " "
-                    + employee.getUser().getLastName()))
+                employee.getUser() != null ? employee.getUser().getFirstName()
+                    + " " + employee.getUser().getLastName() : ""))
             .build();
     }
 

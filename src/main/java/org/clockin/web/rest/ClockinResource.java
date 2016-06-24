@@ -211,23 +211,29 @@ public class ClockinResource {
             .findOneByLogin(SecurityUtils.getCurrentUserLogin());
         Employee employee = employeeService.findByUser(user.get());
 
-        List<Clockin> clockins = clockinService
-            .findByEmployeeDatesBetween(employee, start, end);
         List<WorkDayDTO> workDays = new ArrayList<>();
-        WorkDayDTO workDayDTO = null;
-        int clockinCount = 0;
-        for (int i = 1; i <= startDate.lengthOfMonth(); i++) {
-            LocalDate curDate = LocalDate.of(year, month, i);
-            workDayDTO = new WorkDayDTO(curDate, employee);
-            for (int j = clockinCount; j < clockins.size(); j++) {
-                Clockin clockin = clockins.get(j);
-                if (!workDayDTO.getDate().isEqual(clockin.getDate())) {
-                    clockinCount = j;
-                    break;
+
+        if (employee != null) {
+            List<Clockin> clockins = clockinService
+                .findByEmployeeDatesBetween(employee, start, end);
+
+            int clockinCount = 0;
+            for (int i = 1; i <= startDate.lengthOfMonth(); i++) {
+                LocalDate curDate = LocalDate.of(year, month, i);
+                WorkDayDTO workDayDTO = new WorkDayDTO(curDate, employee);
+
+                for (int j = clockinCount; j < clockins.size(); j++) {
+                    Clockin clockin = clockins.get(j);
+
+                    if (!workDayDTO.getDate().isEqual(clockin.getDate())) {
+                        clockinCount = j;
+                        break;
+                    }
+
+                    workDayDTO.addClockinValues(clockin);
                 }
-                workDayDTO.addClockinValues(clockin);
+                workDays.add(workDayDTO);
             }
-            workDays.add(workDayDTO);
         }
 
         return workDays;
