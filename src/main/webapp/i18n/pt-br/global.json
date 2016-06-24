@@ -8,6 +8,8 @@
             "entities": {
                 "main": "Entidades",
                 "clockin": "Folha de ponto",
+                "calendar": "Calendário",
+                "list": "Lista",
                 "employee": "Funcionário",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
@@ -22,7 +24,8 @@
             },
             "admin": {
                 "main": "Administração",
-                "userManagement": "Gerenciamento de usuário",
+                "userManagement": "Gerenciamento de usuários",
+                "employeeManagement": "Gerenciamento de funcionários",
                 "tracker": "Rastreamento de usuário",
                 "metrics": "Métricas",
                 "health": "Estado do Sistema",
