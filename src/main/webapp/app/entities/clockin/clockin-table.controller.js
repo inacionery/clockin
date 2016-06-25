@@ -3,11 +3,11 @@
 
     angular
         .module('clockinApp')
-        .controller('ClockinPageController', ClockinPageController);
+        .controller('ClockinTableController', ClockinTableController);
 
-    ClockinPageController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'Clockin', 'Employee'];
+    ClockinTableController.$inject = ['$scope', '$rootScope', '$stateParams', 'entity', 'Clockin', 'Employee'];
 
-    function ClockinPageController($scope, $rootScope, $stateParams, entity, Clockin, Employee) {
+    function ClockinTableController($scope, $rootScope, $stateParams, entity, Clockin, Employee) {
         var vm = this;
         var month = eval($stateParams.month);
         var year = eval($stateParams.year);
