@@ -179,11 +179,11 @@ public class ClockinResource {
      * GET /workdays/ /workdays/{year}/{month} -> get all workdays.
      * @throws ParseException
      */
-    @RequestMapping(value = { "/workdays", "/workdays/{year}/{month}" , "/workdays-calendar/{year}/{month}" },
+    @RequestMapping(value = { "clockin", "/workdays/{year}/{month}" },
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<WorkDayDTO> getAllWorkDays(
+    public List<WorkDayDTO> getWorkDaysByYearMonthToTable(
         @PathVariable(value = "year") Optional<Integer> yearParam,
         @PathVariable(value = "month") Optional<Integer> monthParam)
         throws URISyntaxException, ParseException {
@@ -234,6 +234,87 @@ public class ClockinResource {
                 }
                 workDays.add(workDayDTO);
             }
+        }
+
+        return workDays;
+    }
+
+    /**
+     * GET -> get all workdays.
+     * @throws ParseException
+     */
+    @RequestMapping(value = { "clockin", "/workdays-calendar/{year}/{month}" },
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<WorkDayDTO> getWorkDaysByYearMonthToCalendar(
+        @PathVariable(value = "year") Optional<Integer> yearParam,
+        @PathVariable(value = "month") Optional<Integer> monthParam)
+        throws URISyntaxException, ParseException {
+
+        int year = LocalDate.now().getYear();
+        int month = LocalDate.now().getMonth().getValue();
+
+        if (yearParam.isPresent()) {
+            year = yearParam.get();
+        }
+        if (monthParam.isPresent()) {
+            month = monthParam.get();
+        }
+        LocalDate startDate = LocalDate.of(year, month, 1);
+        LocalDate endDate = LocalDate.of(year, month,
+            startDate.lengthOfMonth());
+
+        ZonedDateTime start = ZonedDateTime.of(startDate, LocalTime.MIN,
+            ZoneOffset.UTC);
+
+        ZonedDateTime end = ZonedDateTime.of(endDate, LocalTime.MAX,
+            ZoneOffset.UTC);
+
+        Optional<User> user = userRepository
+            .findOneByLogin(SecurityUtils.getCurrentUserLogin());
+        Employee employee = employeeService.findByUser(user.get());
+
+        List<WorkDayDTO> workDays = new ArrayList<>();
+
+        int diff = startDate.getDayOfWeek().getValue() == 7 ? 0
+            : startDate.getDayOfWeek().getValue();
+        LocalDate previousDate = endDate.minusMonths(1);
+        for (int i = 0; i < diff; i++) {
+            LocalDate curDate = previousDate.minusDays(diff - i - 1);
+            WorkDayDTO workDayDTO = new WorkDayDTO(curDate, employee);
+            workDays.add(workDayDTO);
+        }
+
+        if (employee != null) {
+            List<Clockin> clockins = clockinService
+                .findByEmployeeDatesBetween(employee, start, end);
+
+            int clockinCount = 0;
+            for (int i = 1; i <= startDate.lengthOfMonth(); i++) {
+                LocalDate curDate = LocalDate.of(year, month, i);
+                WorkDayDTO workDayDTO = new WorkDayDTO(curDate, employee);
+
+                for (int j = clockinCount; j < clockins.size(); j++) {
+                    Clockin clockin = clockins.get(j);
+
+                    if (!workDayDTO.getDate().isEqual(clockin.getDate())) {
+                        clockinCount = j;
+                        break;
+                    }
+
+                    workDayDTO.addClockinValues(clockin);
+                }
+                workDays.add(workDayDTO);
+            }
+        }
+
+        diff = 42 - workDays.size();
+        LocalDate nextStartDate = startDate.plusMonths(1).withDayOfMonth(1);
+        for (int i = 0; i < diff; i++) {
+            LocalDate curDate = nextStartDate.plusDays(i);
+            WorkDayDTO workDayDTO = new WorkDayDTO(curDate, employee);
+            workDays.add(workDayDTO);
         }
 
         return workDays;

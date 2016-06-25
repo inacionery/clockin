@@ -41,8 +41,8 @@
                     $translatePartialLoader.addPart('global');
                     return $translate.refresh();
                 }],
-                entity: ['$stateParams', 'Clockin', function($stateParams, Clockin) {
-                    return Clockin.query({year : $stateParams.year, month : $stateParams.month});
+                entity: ['$stateParams', 'ClockinTable', function($stateParams, ClockinTable) {
+                    return ClockinTable.query({year : $stateParams.year, month : $stateParams.month});
                 }]
             }
         })
@@ -77,8 +77,8 @@
                     $translatePartialLoader.addPart('global');
                     return $translate.refresh();
                 }],
-                entity: ['$stateParams', 'Clockin', function($stateParams, Clockin) {
-                    return Clockin.query({year : $stateParams.year, month : $stateParams.month});
+                entity: ['$stateParams', 'ClockinCalendar', function($stateParams, ClockinCalendar) {
+                    return ClockinCalendar.query({year : $stateParams.year, month : $stateParams.month});
                 }]
             }
         });
