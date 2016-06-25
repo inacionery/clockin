@@ -8,7 +8,7 @@
    class="btn btn-info btn-sm right">
 {{vm.nextDate | date : 'MMMM/yyyy' | uppercase}}
 </button>
-<h5 class="title-month">{{vm.date | date:"MMMM" | uppercase}} / {{vm.date | date:"yyyy"}}</h5>
+<h5 class="title-month">{{vm.date | date:"MMMM" | capitalize}} / {{vm.date | date:"yyyy"}}</h5>
 <!-- <div ng-repeat="workday in vm.workdays track by workday.date">
 	<div class="clockins">
 		<div layout-gt-sm="row" layout="column" class="clock-row">
@@ -36,7 +36,7 @@
       <table class="table table-striped">
          <tbody>
             <tr ng-repeat="workday in vm.firstHalf(vm.workdays)">
-               <td>{{workday.date | date:"EEE" | uppercase}} {{workday.date | date:"dd"}}</td>
+               <td>{{workday.date | date:"EEE" | capitalize}} {{workday.date | date:"dd"}}</td>
                <td ng-repeat="clockin in workday.clockinValues track by clockin.id">{{clockin.time}}</td>
                <td colspan="100%"></td>
             </tr>
@@ -47,7 +47,7 @@
       <table class="table table-striped">
          <tbody>
             <tr ng-repeat="workday in vm.lastHalf(vm.workdays)">
-               <td>{{workday.date | date:"EEE" | uppercase}} {{workday.date | date:"dd"}}</td>
+               <td>{{workday.date | date:"EEE" | capitalize}} {{workday.date | date:"dd"}}</td>
                <td ng-repeat="clockin in workday.clockinValues track by clockin.id">{{clockin.time}}</td>
                <td colspan="100%"></td>
             </tr>
