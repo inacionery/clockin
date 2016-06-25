@@ -1,62 +1,50 @@
 <div ng-cloak>
-
-    <md-grid-list layout="row" layout-wrap class="month-title"
-        md-cols-xs="3" md-cols-sm="3" md-cols-md="3" md-cols-gt-md="3"
-        md-row-height-xs="2:3" md-row-height-sm=2:1" md-row-height="2:1"
-        md-row-height-gt-md="4:1" md-gutter="8px" md-gutter-gt-sm="12px" >
-
-        <md-grid-tile ng-click="vm.loadAll()"
-                      ui-sref="clockin-calendar({year: vm.previousYear, month: vm.previousMonth})"
-                      flex="none" class="month-changer">
-            <span id="month-prev"></span>
-        </md-grid-tile>
-
-        <md-grid-tile flex>
-            <div layout="column">
-                <h2 class="md-headline">{{vm.currentMonth}}</h2>
-                <p class="md-subhead">{{vm.currentYear}}<p>
-            </div>
-        </md-grid-tile>
-
-        <md-grid-tile ng-click="vm.loadAll()"
-                      ui-sref="clockin-calendar({year: vm.nextYear, month: vm.nextMonth})"
-                      flex="nogrow" class="month-changer">
-            <span id="month-next"></span>
-        </md-grid-tile>
-
-    </md-grid-list>
-
-    <md-grid-list
-        md-cols-xs="7" md-cols-sm="7" md-cols-md="7" md-cols-gt-md="7"
-        md-row-height-xs="4:1" md-row-height-sm="8:1" md-row-height="8:1"
-        md-row-height-gt-md="12:1" md-gutter="8px" md-gutter-gt-sm="12px" >
-
-        <md-grid-tile
-            ng-repeat="h in vm.shortDays" md-rowspan="3"
-            gt-md-rowspan="2" md-colspan="1" md-colspan-sm="1" md-colspan-xs="1">
-
-            <p hide-xs hide-sm class="md-headline">{{h.header}}</p>
-            <p hide-md hide-gt-md class="md-headline">{{h.fstChar}}</p>
-        </md-grid-tile>
-
-    </md-grid-list>
-
-    <md-grid-list
-        class="top-bordered" ng-repeat="week in vm.getWeeksOfMonth()"
-        md-cols-xs="7" md-cols-sm="7" md-cols-md="7" md-cols-gt-md="7"
-        md-row-height-gt-md="8:1" md-row-height="4:1" md-row-height-xs="2:1"
-        md-gutter="12px" md-gutter-gt-sm="8px" >
-
-        <md-grid-tile
-            ng-repeat="d in week"
-            class="{{ d.clockinValues.length > 0 ? 'dateEnable' : 'dateDisable' }}"
-            md-rowspan="4" sm-rowspan="4" xs-rowspan="1"
-            md-colspan="1" md-colspan-sm="1" md-colspan-xs="1"
-            ng-click="showTabDialog($event,d)" >
-
-            <p hide-xs class="md-display-1">{{d.date}}</p>
-            <p hide-gt-xs class="md-title">{{d.date}}</p>
-        </md-grid-tile>
-
-    </md-grid-list>
+   <md-grid-list layout="row" layout-wrap class="month-title"
+      md-cols-xs="3" md-cols-sm="3" md-cols-md="3" md-cols-gt-md="3"
+      md-row-height-xs="2:3" md-row-height-sm="2:1" md-row-height="2:1"
+      md-row-height-gt-md="4:1" md-gutter="8px" md-gutter-gt-sm="12px" >
+      <md-grid-tile ng-click="vm.loadAll()"
+         ui-sref="clockin-calendar({year: vm.previousYear, month: vm.previousMonth})"
+         flex="none" class="month-changer">
+         <span id="month-prev"></span>
+      </md-grid-tile>
+      <md-grid-tile flex>
+         <div layout="column">
+            <h2 class="md-headline">{{vm.currentMonth}}</h2>
+            <p class="md-subhead">{{vm.currentYear}}
+            <p>
+         </div>
+      </md-grid-tile>
+      <md-grid-tile ng-click="vm.loadAll()"
+         ui-sref="clockin-calendar({year: vm.nextYear, month: vm.nextMonth})"
+         flex="nogrow" class="month-changer">
+         <span id="month-next"></span>
+      </md-grid-tile>
+   </md-grid-list>
+   <md-grid-list
+      md-cols-xs="7" md-cols-sm="7" md-cols-md="7" md-cols-gt-md="7"
+      md-row-height-xs="4:1" md-row-height-sm="8:1" md-row-height="8:1"
+      md-row-height-gt-md="12:1" md-gutter="8px" md-gutter-gt-sm="12px" >
+      <md-grid-tile
+         ng-repeat="h in vm.shortDays" md-rowspan="3"
+         gt-md-rowspan="2" md-colspan="1" md-colspan-sm="1" md-colspan-xs="1">
+         <p hide-xs hide-sm class="md-headline">{{h.header}}</p>
+         <p hide-md hide-gt-md class="md-headline">{{h.fstChar}}</p>
+      </md-grid-tile>
+   </md-grid-list>
+   <md-grid-list
+      class="top-bordered" ng-repeat="week in vm.getWeeksOfMonth()"
+      md-cols-xs="7" md-cols-sm="7" md-cols-md="7" md-cols-gt-md="7"
+      md-row-height-gt-md="8:1" md-row-height="4:1" md-row-height-xs="2:1"
+      md-gutter="12px" md-gutter-gt-sm="8px" >
+      <md-grid-tile
+         ng-repeat="d in week"
+         class="{{ d.clockinValues.length > 0 ? 'dateEnable' : 'dateDisable' }}"
+         md-rowspan="4" sm-rowspan="4" xs-rowspan="1"
+         md-colspan="1" md-colspan-sm="1" md-colspan-xs="1"
+         ng-click="showTabDialog($event,d)" >
+         <p hide-xs class="md-display-1">{{d.date}}</p>
+         <p hide-gt-xs class="md-title">{{d.date}}</p>
+      </md-grid-tile>
+   </md-grid-list>
 </div>
