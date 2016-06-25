@@ -3,12 +3,12 @@
 
     angular
         .module('clockinApp')
-        .controller('ClockinCalendarPaginationController', ClockinCalendarPaginationController);
+        .controller('ClockinCalendarController', ClockinCalendarController);
 
-    ClockinCalendarPaginationController.$inject = ['Clockin','entity','$scope','$state','$locale',
+    ClockinCalendarController.$inject = ['Clockin','entity','$scope','$state','$locale',
     '$rootScope','$stateParams','$mdMedia','$mdDialog'];
 
-    function ClockinCalendarPaginationController (Clockin, entity, $scope, $state, $locale, $rootScope, $stateParams,
+    function ClockinCalendarController (Clockin, entity, $scope, $state, $locale, $rootScope, $stateParams,
     $mdMedia, $mdDialog) {
         var vm = this;
         vm.previousYear = eval($stateParams.year);
@@ -33,7 +33,7 @@
             return (n < 10) ? ("0" + n) : n;
         };
 
-        vm.captalize = function(word) {
+        vm.capitalize = function(word) {
             return word.charAt(0).toUpperCase() + word.slice(1);
         };
 
@@ -73,8 +73,8 @@
 
         //TODO criar uma função para avanção e retornar com os meses.
         //TODO verificar se há dados no presente dia (clicável ou não).
-        vm.getWeeksOfMonth = function() {
-            var workday = vm.parseDate(entity[0].date);
+        vm.getWeeksOfMonth = function(strDate) {
+            var workday = vm.parseDate(strDate);
             var displayableDates = vm.calendarRangeDays(workday);
             var dateCursor = new Date(displayableDates.first);
             var weeks = [];
@@ -105,10 +105,42 @@
 
         vm.shortDays = $locale.DATETIME_FORMATS.SHORTDAY.map(function(sd){
             return {
-                header: vm.captalize(sd),
+                header: vm.capitalize(sd),
                 fstChar: sd.charAt(0).toUpperCase()
             };
         });
+
+        vm.loadAll = function() {
+            Clockin.query(function(result) {
+                vm.workdays = result;
+            });
+        };
+
+        if ((typeof $stateParams.month === 'undefined') || (typeof $stateParams.year === 'undefined')) {
+            var today = new Date();
+            vm.previousMonth = today.getMonth() - 1; // month based (0 - 11)
+            vm.previousYear = today.getFullYear();
+            vm.currentMonth = vm.capitalize($locale.DATETIME_FORMATS.STANDALONEMONTH[today.getMonth()]);
+            vm.currentYear = vm.previousYear;
+            vm.loadAll();
+        } else {
+            vm.previousMonth = (eval($stateParams.month) - 1);
+            vm.previousYear = eval($stateParams.year);
+            vm.nextYear = vm.previousYear + 1;
+            vm.nextMonth = vm.previousMonth + 1;
+            vm.currentMonth = vm.capitalize($locale.DATETIME_FORMATS.STANDALONEMONTH[eval($stateParams.month)]);
+            vm.currentYear = vm.previousYear;
+            vm.workdays = entity;
+        }
+
+        if (vm.previousMonth === 0) {
+            vm.previousYear = (vm.previousYear - 1);
+            vm.previousMonth = 12;
+        } else if (vm.nextMonth === 13) {
+            vm.nextYear = (vm.nextYear + 1);
+            vm.nextMonth = 1;
+        }
+
 
         $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
         $scope.showTabDialog = function(event, weekCell) {
@@ -135,15 +167,5 @@
               $mdDialog.hide();
             };
         }
-
-      vm.workdays = entity;
-      var fstDateMonth = vm.parseDate(entity[0].date);
-
-      vm.month = {
-          year : fstDateMonth.getFullYear(),
-          name : vm.captalize($locale.DATETIME_FORMATS.MONTH[fstDateMonth.getMonth()]),
-          weeks : vm.getWeeksOfMonth()
-      };
-
     }
 })();
