@@ -6,10 +6,10 @@
         .controller('ClockinCalendarController', ClockinCalendarController);
 
     ClockinCalendarController.$inject = ['ClockinCalendar','entity','$scope','$state','$locale',
-    '$rootScope','$stateParams','$mdMedia','$mdDialog','$filter'];
+    '$rootScope','$stateParams','$mdMedia','$mdDialog','$filter','DateUtils'];
 
     function ClockinCalendarController (ClockinCalendar, entity, $scope, $state, $locale, $rootScope, $stateParams,
-    $mdMedia, $mdDialog, $filter) {
+    $mdMedia, $mdDialog, $filter, DateUtils) {
         var vm = this;
 
         var month = eval($stateParams.month);
@@ -36,7 +36,24 @@
                 fstChar: shortDay.charAt(0).toUpperCase()
             };
         });
-    	
+
+        function weekDay(strDate) {
+            var date = DateUtils.convertLocalDateFromServer(strDate);
+            var weekDay = $locale.DATETIME_FORMATS.DAY[date.getDay()];
+
+            return $filter('capitalize')(weekDay);
+        }
+
+        function padDate(strDate) {
+            var date = DateUtils.convertLocalDateFromServer(strDate);
+
+            if (date.getDate() < 10) {
+                return "0" + date.getDate();
+            }
+
+            return date.getDate();
+        }
+
         $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
         $scope.showTabDialog = function(event, weekCell) {
 
@@ -46,18 +63,21 @@
                     templateUrl: '/app/entities/clockin/clockin-calendar.tab-dialog.html',
                     parent: angular.element(document.body),
                     targetEvent: event,
-                    clickOutsideToClose:true,
+                    clickOutsideToClose: true,
+                    disableParentScroll: false,
                     locals: {
                         clockinValues: weekCell.clockinValues,
-                        dayLabel: $locale.DATETIME_FORMATS.SHORTDAY[weekCell.date]
+                        weekDay: weekDay(weekCell.date),
+                        padDate: padDate(weekCell.date)
                     }
                 });
            }
         };
 
-        function DialogController($scope, $mdDialog, clockinValues, dayLabel) {
+        function DialogController($scope, $mdDialog, clockinValues, weekDay, padDate) {
             $scope.clockinValues = clockinValues;
-            $scope.dayLabel = dayLabel;
+            $scope.weekDay = weekDay;
+            $scope.padDate = padDate;
             $scope.hide = function() {
               $mdDialog.hide();
             };
