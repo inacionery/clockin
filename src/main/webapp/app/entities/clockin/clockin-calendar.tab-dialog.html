@@ -2,18 +2,21 @@
     <form>
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2>{{dayLabel}}</h2>
-                <span flex></span>
+                <p flex>{{weekDay}}</p>
+                <p>{{padDate}}</p>
             </div>
         </md-toolbar>
 
         <md-dialog-content>
-            <md-tabs md-dynamic-height md-border-bottom>
-                <md-tab label="clockins">
+            <md-tabs class="calendar-message" md-dynamic-height md-border-bottom>
+                <md-tab class="calendar-message" label="clockins">
                     <md-content class="md-padding">
-                        <table align="center">
-                            <tr>
-                                <td ng-repeat="clockin in clockinValues track by clockin.id">
+                        <table class="fancy-table" align="center">
+                            <tr ng-repeat="clockin in clockinValues track by clockin.id">
+                                <td>
+                                    {{clockinValues.indexOf(clockin) + 1}}
+                                </td>
+                                <td>
                                     {{clockin.time}}
                                 </td>
                             </tr>
