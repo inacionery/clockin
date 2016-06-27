@@ -2,8 +2,8 @@
     <form>
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <p flex>{{weekDay}}</p>
-                <p>{{padDate}}</p>
+                <p flex>{{workday.date | date:"EEEE" | capitalize }}</pflex>
+                <p>{{workday.date | date:"dd"}}</p>
             </div>
         </md-toolbar>
 
@@ -12,9 +12,9 @@
                 <md-tab class="calendar-message" label="clockins">
                     <md-content class="md-padding">
                         <table class="fancy-table" align="center">
-                            <tr ng-repeat="clockin in clockinValues track by clockin.id">
+                            <tr ng-repeat="clockin in workday.clockinValues track by clockin.id">
                                 <td>
-                                    {{clockinValues.indexOf(clockin) + 1}}
+                                    {{$index + 1}}
                                 </td>
                                 <td>
                                     {{clockin.time}}
