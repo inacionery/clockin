@@ -37,27 +37,10 @@
             };
         });
 
-        function weekDay(strDate) {
-            var date = DateUtils.convertLocalDateFromServer(strDate);
-            var weekDay = $locale.DATETIME_FORMATS.DAY[date.getDay()];
-
-            return $filter('capitalize')(weekDay);
-        }
-
-        function padDate(strDate) {
-            var date = DateUtils.convertLocalDateFromServer(strDate);
-
-            if (date.getDate() < 10) {
-                return "0" + date.getDate();
-            }
-
-            return date.getDate();
-        }
-
         $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
-        $scope.showTabDialog = function(event, weekCell) {
+        $scope.showTabDialog = function(event, workday) {
 
-            if (weekCell.clockinValues.length > 0) {
+            if (workday.clockinValues.length > 0) {
                 $mdDialog.show({
                     controller: DialogController,
                     templateUrl: '/app/entities/clockin/clockin-calendar.tab-dialog.html',
@@ -66,18 +49,14 @@
                     clickOutsideToClose: true,
                     disableParentScroll: false,
                     locals: {
-                        clockinValues: weekCell.clockinValues,
-                        weekDay: weekDay(weekCell.date),
-                        padDate: padDate(weekCell.date)
+                        workday: workday
                     }
                 });
            }
         };
 
-        function DialogController($scope, $mdDialog, clockinValues, weekDay, padDate) {
-            $scope.clockinValues = clockinValues;
-            $scope.weekDay = weekDay;
-            $scope.padDate = padDate;
+        function DialogController($scope, $mdDialog, workday) {
+            $scope.workday = workday;
             $scope.hide = function() {
               $mdDialog.hide();
             };
