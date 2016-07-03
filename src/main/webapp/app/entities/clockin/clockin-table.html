@@ -1,57 +1,86 @@
-<button type="submit"
-   ui-sref="clockin-table({year:vm.previousYear, month:vm.previousMonth})"
-   class="btn btn-info btn-sm left">
-{{vm.previousDate | date : 'MMMM/yyyy' | uppercase}}
-</button>
-<button type="submit"
-   ui-sref="clockin-table({year:vm.nextYear, month:vm.nextMonth})"
-   class="btn btn-info btn-sm right">
-{{vm.nextDate | date : 'MMMM/yyyy' | uppercase}}
-</button>
-<h5 class="title-month">{{vm.date | date:"MMMM" | capitalize}} / {{vm.date | date:"yyyy"}}</h5>
-<!-- <div ng-repeat="workday in vm.workdays track by workday.date">
-	<div class="clockins">
-		<div layout-gt-sm="row" layout="column" class="clock-row">
-			<div flex="100" class='{{vm.isWeekend(workday.date) ? "lightPurple" : "green"}} day' flex-gt-sm="20">
-				<p>
-				{{workday.date | date:"EEE" | uppercase}} {{workday.date | date:"dd"}}
-				</p>
-			</div>
-			<div flex="60" class="clocks">
-				<div layout="row">
-					<md-button flex ng-repeat="clockin in workday.clockinValues track by clockin.id">
-					<p>{{clockin.time}}</p>
-					</md-button>
-				</div>
-			</div>
-			<md-button class="gray" flex="20">
-				<i class="fa fa-cog"></i>
-				Saldo / Horas Trabalhadas
-			</md-button>
-		</div>
-	</div>
-</div> -->
-<div class="row text-center">
-   <div class="col-md-6">
-      <table class="table table-striped">
-         <tbody>
-            <tr ng-repeat="workday in vm.firstHalf(vm.workdays)">
-               <td>{{workday.date | date:"EEE" | capitalize}} {{workday.date | date:"dd"}}</td>
-               <td ng-repeat="clockin in workday.clockinValues track by clockin.id">{{clockin.time}}</td>
-               <td colspan="100%"></td>
-            </tr>
-         </tbody>
-      </table>
-   </div>
-   <div class="col-md-6">
-      <table class="table table-striped">
-         <tbody>
-            <tr ng-repeat="workday in vm.lastHalf(vm.workdays)">
-               <td>{{workday.date | date:"EEE" | capitalize}} {{workday.date | date:"dd"}}</td>
-               <td ng-repeat="clockin in workday.clockinValues track by clockin.id">{{clockin.time}}</td>
-               <td colspan="100%"></td>
-            </tr>
-         </tbody>
-      </table>
-   </div>
+<div ng-cloak>
+    <div flex="grow">
+        <md-grid-list layout="row" layout-wrap class="month-title"
+            md-cols-xs="3" md-cols-sm="3" md-cols-md="3" md-cols-gt-md="3"
+            md-row-height-xs="2:3" md-row-height-sm="2:1" md-row-height="2:1"
+            md-row-height-gt-md="4:1" md-gutter="8px" md-gutter-gt-sm="12px" >
+
+            <md-grid-tile
+                ui-sref="clockin-table({year: vm.previousYear, month: vm.previousMonth})"
+                flex="none" class="month-changer">
+                <span id="month-prev"></span>
+            </md-grid-tile>
+            <md-grid-tile flex>
+                <div layout="column">
+                    <h2 class="md-headline">{{vm.date | date:"MMMM" | capitalize}}</h2>
+                    <p class="md-subhead">{{vm.date | date:"yyyy"}}<p>
+                </div>
+            </md-grid-tile>
+            <md-grid-tile
+                ui-sref="clockin-table({year: vm.nextYear, month: vm.nextMonth})"
+                flex="nogrow" class="month-changer">
+                <span id="month-next"></span>
+            </md-grid-tile>
+        </md-grid-list>
+    </div>
+
+    <div class="page-table" layout-xs="column" layout-gt-xs="column" layout-gt-sm="row">
+        <div flex-xs="grow" flex-gt-xs="grow" flex-gt-sm="50">
+            <div class="table-row"
+                 ng-repeat="workday in vm.firstHalf(vm.workdays)" layout="row">
+
+                <div flex="25" layout="column" class="month-title table-header">
+                    <div class="date-label {{workday.isMissing ? 'warning' : ''}}">
+                        <p class="md-caption week-day">
+                            {{workday.date | date:"EEE" | capitalize}}
+                        </p>
+                        <p class="md-subhead date">
+                            {{workday.date | date:"dd"}}
+                        </p>
+                    </div>
+                </div>
+
+                <md-grid-list class="clockins-container"
+                    flex md-cols-xs="4" md-cols-sm="4" md-cols-md="4" md-cols-gt-md="4"
+                    md-row-height-xs="2:1" md-row-height-gt-xs="8:1" md-row-height-sm="4:1"
+                    md-row-height-gt-sm="3:1" md-gutter="8px" md-gutter-gt-sm="12px">
+
+                    <md-grid-tile flex class="table-cell"
+                                  ng-repeat="clockin in workday.clockinValues track by clockin.id">
+
+                        <p class="md-body-1">{{clockin.time}}</p>
+                    </md-grid-tile>
+                </md-grid-list>
+            </div>
+        </div>
+
+        <div flex-xs="grow" flex-gt-xs="grow" flex-gt-sm="50">
+            <div class="table-row"
+                 ng-repeat="workday in vm.lastHalf(vm.workdays)" layout="row">
+
+                <div flex="25" layout="column" class="month-title table-header">
+                    <div class="date-label {{workday.isMissing ? 'warning' : ''}}">
+                        <p class="md-caption week-day">
+                            {{workday.date | date:"EEE" | capitalize}}
+                        </p>
+                        <p class="md-subhead date">
+                            {{workday.date | date:"dd"}}
+                        </p>
+                    </div>
+                </div>
+
+                <md-grid-list class="clockins-container"
+                    flex md-cols-xs="4" md-cols-sm="4" md-cols-md="4" md-cols-gt-md="4"
+                    md-row-height-xs="2:1" md-row-height-gt-xs="8:1" md-row-height-sm="4:1"
+                    md-row-height-gt-sm="3:1" md-gutter="8px" md-gutter-gt-sm="12px">
+
+                    <md-grid-tile class="table-cell"
+                                  ng-repeat="clockin in workday.clockinValues track by clockin.id">
+
+                        <p class="md-body-1">{{clockin.time}}</p>
+                    </md-grid-tile>
+                </md-grid-list>
+            </div>
+        </div>
+    </div>
 </div>
