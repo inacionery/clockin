@@ -1,0 +1,86 @@
+# ===================================================================
+# Spring Boot configuration.
+#
+# This configuration will be overriden by the Spring profile you use,
+# for example application-dev.yml if you use the "dev" profile.
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+
+#Chave de API
+#Esta é sua chave de API
+#AIzaSyDTfqG-naljKznKC5KC1mqz7U6X1s3RzkE
+#
+#
+#Cliente OAuth
+#Este é seu ID do cliente
+#792407625725-cddge87dqb3a22v1enfmegqs9s622th4.apps.googleusercontent.com
+#Esta é sua chave secreta do cliente
+#J23gkFgJngQUeXEU93oIwvAZ
+
+
+spring:
+    application:
+        name: clockin
+    jpa:
+        open-in-view: false
+        hibernate:
+            ddl-auto: none
+            naming-strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy
+    messages:
+        basename: i18n/messages
+    mvc:
+        favicon:
+            enabled: false
+    thymeleaf:
+        mode: XHTML
+    social:
+        # see https://developers.google.com/+/web/signin/server-side-flow#step_1_create_a_client_id_and_client_secret
+        google:
+            clientId: YOUR-ID
+            clientSecret: YOUR-SECRET
+
+        # jhipster-needle-add-social-configuration
+
+security:
+    basic:
+        enabled: false
+
+# ===================================================================
+# JHipster specific properties
+# ===================================================================
+
+jhipster:
+    async:
+        corePoolSize: 2
+        maxPoolSize: 50
+        queueCapacity: 10000
+    #cors: #By default CORS are not enabled. Uncomment to enable.
+        #allowed-origins: "*"
+        #allowed-methods: GET, PUT, POST, DELETE, OPTIONS
+        #allowed-headers: "*"
+        #exposed-headers:
+        #allow-credentials: true
+        #max-age: 1800
+    mail:
+        from: clockin@localhost
+    security:
+        rememberMe:
+            # security key (this key should be unique for your application, and kept secret)
+            key: 137c5ecf6426a5e3a1290b63fffc4da2061fd4a4
+    swagger:
+        title: clockin API
+        description: clockin API documentation
+        version: 0.0.1
+        termsOfServiceUrl:
+        contactName:
+        contactUrl:
+        contactEmail:
+        license:
+        licenseUrl:
+    social:
+        redirectAfterSignIn: "/#/clockin"
