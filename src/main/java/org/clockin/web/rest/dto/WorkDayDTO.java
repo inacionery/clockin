@@ -94,8 +94,10 @@ public class WorkDayDTO {
     }
 
     public int getMinutesBalance() {
-        minutesBalance = getWorkDuration()
-            - (employee.getPlannedDailyHours() * 60);
+        if (employee.getPlannedDailyHours() != null) {
+            minutesBalance = getWorkDuration()
+                - (employee.getPlannedDailyHours() * 60);
+        }
         return minutesBalance;
     }
 
