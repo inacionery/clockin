@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -107,12 +107,23 @@ public class ClockinServiceImpl implements ClockinService {
     @Override
     @Transactional(readOnly = true)
     public List<Clockin> findByEmployeeDatesBetween(Employee employee,
-        ZonedDateTime start, ZonedDateTime end) {
+        LocalDateTime start, LocalDateTime end) {
         log.debug("Request to get Clockin : {} Between {} and {}", employee,
             start, end);
         List<Clockin> result = clockinRepository
             .findByEmployeeAndDateTimeBetweenOrderByDateTime(employee, start,
                 end);
+        return result;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Clockin findByEmployeeAndDateTime(Employee employee,
+        LocalDateTime dateTime) {
+        log.debug("Request to get Clockin : {} DateTime {}", employee,
+            dateTime);
+        Clockin result = clockinRepository.findByEmployeeAndDateTime(employee,
+            dateTime);
         return result;
     }
 }
