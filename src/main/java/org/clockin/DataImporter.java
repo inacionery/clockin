@@ -17,8 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -80,7 +79,7 @@ public class DataImporter {
         LocalTime time = LocalTime.parse(timeString,
             DateTimeFormatter.ofPattern("HHmm"));
 
-        ZonedDateTime dateTime = date.atTime(time).atZone(ZoneOffset.UTC);
+        LocalDateTime dateTime = date.atTime(time);
 
         clockin.setDateTime(dateTime);
 

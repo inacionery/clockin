@@ -1,42 +1,39 @@
 package org.clockin.web.rest;
 
-import org.clockin.ClockinApp;
-import org.clockin.domain.Clockin;
-import org.clockin.repository.ClockinRepository;
-import org.clockin.service.ClockinService;
-import org.clockin.repository.search.ClockinSearchRepository;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.inject.Inject;
+
+import org.clockin.domain.Clockin;
+import org.clockin.domain.enumeration.RegistryType;
+import org.clockin.repository.ClockinRepository;
+import org.clockin.repository.search.ClockinSearchRepository;
+import org.clockin.service.ClockinService;
+import org.junit.Before;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.annotation.PostConstruct;
-import javax.inject.Inject;
-import java.time.Instant;
-import java.time.format.DateTimeFormatter;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-
-import org.clockin.domain.enumeration.RegistryType;
 
 /**
  * Test class for the ClockinResource REST controller.
@@ -55,10 +52,10 @@ public class ClockinResourceIntTest {
     private static final String DEFAULT_SEQUENTIAL_REGISTER_NUMBER = "AAAAA";
     private static final String UPDATED_SEQUENTIAL_REGISTER_NUMBER = "BBBBB";
 
-    private static final ZonedDateTime DEFAULT_DATE_TIME = ZonedDateTime
+    private static final LocalDateTime DEFAULT_DATE_TIME = LocalDateTime
         .ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_DATE_TIME = ZonedDateTime
-        .now(ZoneOffset.UTC).withNano(0);
+    private static final LocalDateTime UPDATED_DATE_TIME = LocalDateTime.now()
+        .withNano(0);
     private static final String DEFAULT_DATE_TIME_STR = dateTimeFormatter
         .format(DEFAULT_DATE_TIME);
 

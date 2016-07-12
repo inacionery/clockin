@@ -5,7 +5,7 @@ import org.clockin.domain.Employee;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -13,6 +13,9 @@ import java.util.List;
  */
 public interface ClockinRepository extends JpaRepository<Clockin, Long> {
     List<Clockin> findByEmployeeAndDateTimeBetweenOrderByDateTime(
-        Employee employee, ZonedDateTime start, ZonedDateTime end);
+        Employee employee, LocalDateTime start, LocalDateTime end);
+
+    Clockin findByEmployeeAndDateTime(Employee employee,
+        LocalDateTime dateTime);
 
 }

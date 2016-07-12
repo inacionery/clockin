@@ -11,18 +11,6 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
-#Chave de API
-#Esta é sua chave de API
-#AIzaSyDTfqG-naljKznKC5KC1mqz7U6X1s3RzkE
-#
-#
-#Cliente OAuth
-#Este é seu ID do cliente
-#792407625725-cddge87dqb3a22v1enfmegqs9s622th4.apps.googleusercontent.com
-#Esta é sua chave secreta do cliente
-#J23gkFgJngQUeXEU93oIwvAZ
-
-
 spring:
     application:
         name: clockin
