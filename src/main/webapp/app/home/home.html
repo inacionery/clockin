@@ -1,18 +1,19 @@
 <div ng-cloak>
     <div class="row">
-        <div class="col-md-4">
-        </div>
-        <div class="col-md-4 center-txt">
-            <h1>Clockin!</h1>
-
+        <div class="col-md-12 center-txt">
+            <h1 class="login-text">
+				<i class="fa fa-clock-o logo-icon"></i> Clockin!
+			</h1>
+			<p>Para acompanhar suas horas, é necessário logar-se</p>
+<br>
             <div ng-switch="vm.isAuthenticated()">
                 <div class="alert alert-success" ng-switch-when="true" translate="home.logged.message" translate-values="{username: '{{vm.account.firstName}}'}">
                     Welcome "{{vm.account.firstName}}".
                 </div>
 
-                <button class="alert alert-success btn btn-lg btn-block btn-info active" ng-switch-when="false" type="button" ng-click="vm.login()">
-                    <span translate="global.menu.account.login" class="ng-scope ng-binding">Sign in</span>
-                </button>
+				<md-button ng-if="!vm.isAuthenticated()" class="md-raised md-primary btn btn-info" ng-click="vm.login()">
+					<span translate="global.menu.account.login" class="ng-scope ng-binding">Sign in</span>
+				</md-button>
             </div>
         </div>
          <div class="col-md-4">

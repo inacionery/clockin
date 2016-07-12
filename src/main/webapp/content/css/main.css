@@ -7,11 +7,11 @@ body {
     font-family: 'Open Sans', Helvetica, Arial, sans-serif;
     font-size: 2em;
     color: #333;
-    overflow-x:hidden;    
+    overflow-x:hidden;
 }
 
 body.bg-dark, .bg-dark {
-    background: #009FC5;    
+    background: #009FC5;
 }
 
 body.bg-dark footer {
@@ -23,6 +23,22 @@ body.bg-dark footer {
     color: #fff;
     padding: 0.5em;
 }
+
+.login-text {
+	margin-bottom: 30px;
+}
+
+.logo-icon {
+	color: #00c0ef;
+    font-size: 2em;
+    display: block;
+}
+
+.login-box {
+	width: 50%;
+	margin: 28vh auto 10vh;
+}
+
 
 .clockins .md-button {
     border-radius: 0;
@@ -46,7 +62,7 @@ body.bg-dark footer {
 }
 
 .day span {
-    display: block;    
+    display: block;
     font-size: 3em;
     font-weight: 600;
 }
@@ -105,7 +121,7 @@ body.bg-dark footer {
 }
 
 .gray {
-  background: #f5f5f5; 
+  background: #f5f5f5;
   border-bottom: solid 3px rgba(0,0,0,0.1);
 }
 .green {
@@ -121,7 +137,7 @@ body.bg-dark footer {
 .purple {
   background: #b388ff; }
 .lightPurple {
-  background: #8c9eff; 
+  background: #8c9eff;
   border-bottom: solid 3px rgba(0,0,0,0.1);
 }
 .red {
@@ -129,7 +145,7 @@ body.bg-dark footer {
 .pink {
   background: #ff80ab; }
 
-.navbar-brand i, body.bg-dark footer {    
+.navbar-brand i, body.bg-dark footer {
     color: #fff;
 }
 
@@ -192,7 +208,7 @@ md-toolbar.md-default-theme.md-menu-toolbar md-toolbar-filler, md-toolbar.md-men
 .flex {
   display: -webkit-box;
   display: -moz-box;
-  display: -ms-flexbox; 
+  display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
 }
@@ -216,7 +232,7 @@ md-toolbar.md-default-theme.md-menu-toolbar md-toolbar-filler, md-toolbar.md-men
     justify-content:center;
 }
 
-.box h1 {    
+.box h1 {
     height: 1.5em;
     font-size: 5em;
     margin-top: 0;
@@ -257,7 +273,7 @@ h4 {
     margin-top: 0;
     font-size: 0.9em;
     font-size: 0.8em;
-    color: #A2A2A2;    
+    color: #A2A2A2;
 }
 
 .navbar-default .navbar-toggle, .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
@@ -598,11 +614,11 @@ Social Buttons
     }
 
     .navbar-nav .open .dropdown-menu {
-        background: rgba(0, 174, 216, 0.32);        
+        background: rgba(0, 174, 216, 0.32);
     }
 
     .navbar-default .navbar-nav .open .dropdown-menu > .active > a,
-    .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, 
+    .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover,
     .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
         background: transparent;
     }
@@ -616,7 +632,7 @@ Social Buttons
     h4 {
         font-size: 0.8em;
     }
-    
+
     .box {
         margin-top: 7vh;
     }
