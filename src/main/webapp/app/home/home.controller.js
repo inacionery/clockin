@@ -5,9 +5,9 @@
         .module('clockinApp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state', '$window'];
 
-    function HomeController ($scope, Principal, LoginService, $state) {
+    function HomeController ($scope, Principal, LoginService, $state, $window) {
         var vm = this;
 
         vm.account = null;
@@ -24,6 +24,8 @@
             Principal.identity().then(function(account) {
                 vm.account = account;
                 vm.isAuthenticated = Principal.isAuthenticated;
+
+				$window.localStorage.firstName = vm.account.firstName;
             });
         }
         function register () {

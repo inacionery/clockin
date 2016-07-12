@@ -16,8 +16,20 @@
     height: 42px;
 }
 
-.warning {
-    background: #F0F505;
+.warning, .warning:hover {
+	background: #fff173;
+}
+
+.dates, .dates:active, .dates:focus, .md-button.btn.btn-info:active, .md-button.btn.btn-info:focus {
+	outline: none;
+}
+
+.dateEnable {
+	cursor: pointer;
+}
+
+.bordered {
+	border: solid 1px #eaeaea;
 }
 
 .table-header .week-day {
