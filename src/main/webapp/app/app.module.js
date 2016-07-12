@@ -3,10 +3,10 @@
 
     angular
         .module('clockinApp', [
-            'ngStorage', 
+            'ngStorage',
             'ngMaterial',
             'tmh.dynamicLocale',
-            'pascalprecht.translate', 
+            'pascalprecht.translate',
             'ngResource',
             'ngCookies',
             'ngAria',
@@ -21,10 +21,12 @@
         ])
         .run(run);
 
-    run.$inject = ['stateHandler', 'translationHandler'];
+    run.$inject = ['stateHandler', 'translationHandler', '$window', '$rootScope'];
 
-    function run(stateHandler, translationHandler) {
+    function run(stateHandler, translationHandler, $window, $rootScope) {
         stateHandler.initialize();
         translationHandler.initialize();
+
+		$rootScope.firstName = $window.localStorage.firstName;
     }
 })();
