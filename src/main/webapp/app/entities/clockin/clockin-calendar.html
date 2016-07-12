@@ -1,14 +1,15 @@
 <div ng-cloak>
+	<!-- HEADER OF MONTHS -->
    <md-grid-list layout="row" layout-wrap class="month-title"
       md-cols-xs="3" md-cols-sm="3" md-cols-md="3" md-cols-gt-md="3"
-      md-row-height-xs="2:3" md-row-height-sm="2:1" md-row-height="2:1"
+      md-row-height-xs="3:3" md-row-height-sm="2:1" md-row-height="3:1"
       md-row-height-gt-md="4:1" md-gutter="8px" md-gutter-gt-sm="12px" >
       <md-grid-tile
          ui-sref="clockin-calendar({year: vm.previousYear, month: vm.previousMonth})"
          flex="none" class="month-changer">
-         <span id="month-prev"></span>
+			<span class="glyphicon glyphicon-chevron-left"></span>
       </md-grid-tile>
-      <md-grid-tile flex>
+      <md-grid-tile flex md-colspan="1">
          <div layout="column">
             <h2 class="md-headline">{{vm.date | date:"MMMM" | capitalize}}</h2>
             <p class="md-subhead">{{vm.date | date:"yyyy"}}<p>
@@ -17,13 +18,15 @@
       <md-grid-tile
          ui-sref="clockin-calendar({year: vm.nextYear, month: vm.nextMonth})"
          flex="nogrow" class="month-changer">
-         <span id="month-next"></span>
+		 <span class="glyphicon glyphicon-chevron-right"></span>
       </md-grid-tile>
    </md-grid-list>
+   <!-- HEADER OF MONTHS -->
+
    <md-grid-list
       md-cols-xs="7" md-cols-sm="7" md-cols-md="7" md-cols-gt-md="7"
-      md-row-height-xs="4:1" md-row-height-sm="8:1" md-row-height="8:1"
-      md-row-height-gt-md="12:1" md-gutter="8px" md-gutter-gt-sm="12px" >
+      md-row-height-xs="4:1" md-row-height-sm="8:1" md-row-height="6:1"
+      md-row-height-gt-md="6:1" md-gutter="8px" md-gutter-gt-sm="12px" >
       <md-grid-tile
          ng-repeat="shortDay in vm.shortDays" md-rowspan="3"
          gt-md-rowspan="2" md-colspan="1" md-colspan-sm="1" md-colspan-xs="1">
@@ -31,18 +34,26 @@
          <p hide-md hide-gt-md class="md-headline">{{shortDay.fstChar}}</p>
       </md-grid-tile>
    </md-grid-list>
+
    <md-grid-list
-      class="top-bordered" 
+      class="top-bordered"
       md-cols-xs="7" md-cols-sm="7" md-cols-md="7" md-cols-gt-md="7"
-      md-row-height-gt-md="8:1" md-row-height="4:1" md-row-height-xs="2:1"
+      md-row-height-gt-md="10:1" md-row-height="10:1" md-row-height-xs="5:1"
       md-gutter="12px" md-gutter-gt-sm="8px" >
-      <md-grid-tile
+      <md-grid-tile ng-class="{'warning bordered': workday.isMissing}"
       	ng-repeat="workday in vm.workdays"
-         class="{{ workday.clockinValues.length > 0 ? 'dateEnable' : 'dateDisable' }}"
+         class="{{ workday.clockinValues.length > 0 ? 'dateEnable' : 'dateDisable' }} dates"
          md-rowspan="4" sm-rowspan="4" xs-rowspan="1"
          md-colspan="1" md-colspan-sm="1" md-colspan-xs="1"
          ng-click="showTabDialog($event,workday)" >
          <p hide-xs class="md-display-1">{{workday.date| date:"dd" }}</p>
+
+		<md-button ng-if="workday.isMissing" aria-label="batidas-impares" class="date-warning">
+			<md-tooltip>
+			Você está com batidas impares
+			</md-tooltip>
+			<span class="glyphicon glyphicon-exclamation-sign"></span>
+		</md-button>
          <p hide-gt-xs class="md-title">{{workday.date| date:"dd" }}</p>
       </md-grid-tile>
    </md-grid-list>
