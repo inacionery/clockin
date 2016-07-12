@@ -5,9 +5,9 @@
         .module('clockinApp')
         .controller('NavbarController', NavbarController);
 
-    NavbarController.$inject = ['$state', 'Auth', 'Principal', 'ENV', 'LoginService'];
+    NavbarController.$inject = ['$state', 'Auth', 'Principal', 'ENV', 'LoginService', '$window', '$rootScope'];
 
-    function NavbarController ($state, Auth, Principal, ENV, LoginService) {
+    function NavbarController ($state, Auth, Principal, ENV, LoginService, $window, $rootScope) {
         var vm = this;
 
         vm.isNavbarCollapsed = true;
@@ -27,6 +27,8 @@
         function logout () {
             collapseNavbar();
             Auth.logout();
+			$window.localStorage.firstName = null;
+			$rootScope.firstName = null;
             $state.go('home');
         }
 

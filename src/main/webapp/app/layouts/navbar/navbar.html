@@ -12,7 +12,7 @@
         <div class="navbar-collapse" uib-collapse="vm.isNavbarCollapsed" ng-switch="vm.isAuthenticated()">
             <ul class="nav navbar-nav navbar-right">
                 <li ui-sref-active="active">
-                    <a ui-sref="home" ng-click="vm.collapseNavbar()">
+                    <a ui-sref="home" ng-click="vm.collapseNavbar()">{{vm.account.firstName}}
                         <span class="glyphicon glyphicon-home"></span>
                         <span class="hidden-sm" translate="global.menu.home">Home</span>
                     </a>
