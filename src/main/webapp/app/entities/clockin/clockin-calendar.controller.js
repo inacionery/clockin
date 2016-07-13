@@ -43,7 +43,7 @@
             if (workday.clockinValues.length > 0) {
                 $mdDialog.show({
                     controller: DialogController,
-                    templateUrl: '/app/entities/clockin/clockin-calendar.tab-dialog.html',
+                    templateUrl: 'app/entities/clockin/clockin-calendar.tab-dialog.html',
                     parent: angular.element(document.body),
                     targetEvent: event,
                     clickOutsideToClose: true,
