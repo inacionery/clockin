@@ -7,7 +7,7 @@
             md-row-height-gt-md="4:1" md-gutter="8px" md-gutter-gt-sm="12px" >
 
 			<md-grid-tile
-	           ui-sref="clockin-calendar({year: vm.previousYear, month: vm.previousMonth})"
+	           ui-sref="clockin-table({year: vm.previousYear, month: vm.previousMonth})"
 	           flex="none" class="month-changer">
 	  			<span class="glyphicon glyphicon-chevron-left"></span>
 	        </md-grid-tile>
@@ -18,7 +18,7 @@
                 </div>
             </md-grid-tile>
 			<md-grid-tile
-	           ui-sref="clockin-calendar({year: vm.nextYear, month: vm.nextMonth})"
+	           ui-sref="clockin-table({year: vm.nextYear, month: vm.nextMonth})"
 	           flex="nogrow" class="month-changer">
 	  		 <span class="glyphicon glyphicon-chevron-right"></span>
 	        </md-grid-tile>
