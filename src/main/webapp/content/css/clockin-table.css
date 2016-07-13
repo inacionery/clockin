@@ -12,8 +12,8 @@
 .date-label {
     margin: auto;
     border-radius: 50%;
-    width: 42px ;
-    height: 42px;
+    width: 40px ;
+    height: 40px;
 }
 
 .warning, .warning:hover {
@@ -53,13 +53,8 @@
     margin: auto;
 }
 
-.page-table:hover {
-    color: transparent;
-    text-shadow: 0 0 3px #aaa;
-}
-
 .table-row {
-    margin: 10px;
+    margin: 5px;
 }
 
 .table-row:hover {
