@@ -196,7 +196,7 @@ public class ClockinResource {
      * POST  /clockins : Create a new clockin.
      * @throws JSONException 
      */
-    @RequestMapping(value = "/clockins",
+    @RequestMapping(value = "/clockins/create",
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
