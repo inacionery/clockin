@@ -39,7 +39,7 @@
 
     	vm.firstHalf = function firstHalf(workdays){
     		var firstHalf = [];
-    		for (var i = 0; i < (workdays.length/2); i++) { 
+    		for (var i = 0; i < (workdays.length/2) - (workdays.length%2 * 0.5); i++) { 
     			firstHalf[i] = workdays[i];
     		}
     		return firstHalf;
@@ -47,8 +47,8 @@
  
     	vm.lastHalf = function lastHalf(workdays){
     		var lastHalf = [];
-    		for (var i = 0; i < (workdays.length/2); i++) { 
-    			lastHalf[i] = workdays[i + (workdays.length/2) + (workdays.length%2 * 0.5)];
+    		for (var i = 0; i < (workdays.length/2) + (workdays.length%2 * 0.5); i++) { 
+    			lastHalf[i] = workdays[i + (workdays.length/2) - (workdays.length%2 * 0.5)];
     		}
     		return lastHalf;
     	};
