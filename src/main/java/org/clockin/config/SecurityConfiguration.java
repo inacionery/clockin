@@ -65,6 +65,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**")
+            .antMatchers(HttpMethod.POST, "/api/clockins/create")
             .antMatchers("/app/**/*.{js,html}")
             .antMatchers("/bower_components/**").antMatchers("/i18n/**")
             .antMatchers("/content/**").antMatchers("/swagger-ui/index.html")
