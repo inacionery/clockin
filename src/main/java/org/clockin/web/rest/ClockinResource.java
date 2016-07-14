@@ -224,9 +224,10 @@ public class ClockinResource {
                     .getJSONArray("clockins");
 
                 for (int k = 0; k < clockinsArray.length(); k++) {
-                    JSONObject clockin = clockinsArray.getJSONObject(k);
-                    LocalTime time = LocalTime.parse(clockin.getString("time"));
-                    long id = clockin.getLong("id");
+                    JSONObject clockinObject = clockinsArray.getJSONObject(k);
+                    LocalTime time = LocalTime
+                        .parse(clockinObject.getString("time"));
+                    Long id = clockinObject.getLong("id");
 
                     addClockin(employee, date, time, id);
                 }
@@ -239,7 +240,9 @@ public class ClockinResource {
         if (employee == null
             || !employee.getSocialIdentificationNumber().equals(pis)) {
             employee = employeeService.findBySocialIdentificationNumber(pis);
-            if (employee == null) {
+            if (employee == null
+                || employee.getSocialIdentificationNumber() == null
+                || !employee.getSocialIdentificationNumber().equals(pis)) {
                 employee = new Employee();
                 employee.setSocialIdentificationNumber(pis);
                 employee = employeeService.save(employee);
@@ -249,10 +252,11 @@ public class ClockinResource {
     }
 
     private void addClockin(Employee employee, LocalDate date, LocalTime time,
-        long id) {
-        LocalDateTime dateTime = LocalDateTime.of(date, time);
+        Long id) {
         Clockin clockin = clockinService.findOne(id);
-        if (clockin == null) {
+        if (clockin == null || clockin.getId() == null
+            || !clockin.getId().equals(id)) {
+            LocalDateTime dateTime = LocalDateTime.of(date, time);
             clockin = new Clockin();
             clockin.setId(id);
             clockin.setEmployee(employee);
