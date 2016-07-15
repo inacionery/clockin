@@ -1,9 +1,10 @@
 package org.clockin.config.social;
 
-import org.clockin.repository.SocialUserConnectionRepository;
-import org.clockin.repository.CustomSocialUsersConnectionRepository;
-import org.clockin.security.social.CustomSignInAdapter;
+import javax.inject.Inject;
 
+import org.clockin.repository.CustomSocialUsersConnectionRepository;
+import org.clockin.repository.SocialUserConnectionRepository;
+import org.clockin.security.social.CustomSignInAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +21,6 @@ import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
-import javax.inject.Inject;
 
 /**
  * Basic Spring Social configuration.

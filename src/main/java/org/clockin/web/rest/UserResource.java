@@ -1,11 +1,21 @@
 package org.clockin.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+
 import org.clockin.domain.Authority;
 import org.clockin.domain.User;
 import org.clockin.repository.AuthorityRepository;
 import org.clockin.repository.UserRepository;
-import org.clockin.repository.search.UserSearchRepository;
 import org.clockin.security.AuthoritiesConstants;
 import org.clockin.service.MailService;
 import org.clockin.service.UserService;
@@ -22,17 +32,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
-
-import javax.inject.Inject;
-import java.net.URI;
-import java.net.URISyntaxException;
-import javax.servlet.http.HttpServletRequest;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * REST controller for managing users.
@@ -75,9 +79,6 @@ public class UserResource {
 
     @Inject
     private UserService userService;
-
-    @Inject
-    private UserSearchRepository userSearchRepository;
 
     /**
      * POST  /users  : Creates a new user.
@@ -246,22 +247,5 @@ public class UserResource {
         return ResponseEntity.ok()
             .headers(HeaderUtil.createAlert("userManagement.deleted", login))
             .build();
-    }
-
-    /**
-     * SEARCH  /_search/users/:query : search for the User corresponding
-     * to the query.
-     *
-     * @param query the query to search
-     * @return the result of the search
-     */
-    @RequestMapping(value = "/_search/users/{query}",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public List<User> search(@PathVariable String query) {
-        return StreamSupport.stream(
-            userSearchRepository.search(queryStringQuery(query)).spliterator(),
-            false).collect(Collectors.toList());
     }
 }

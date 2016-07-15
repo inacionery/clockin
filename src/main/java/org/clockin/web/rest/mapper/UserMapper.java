@@ -1,13 +1,14 @@
 package org.clockin.web.rest.mapper;
 
-import org.clockin.domain.Authority;
-import org.clockin.domain.User;
-import org.clockin.web.rest.dto.UserDTO;
-import org.mapstruct.*;
-
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.clockin.domain.Authority;
+import org.clockin.domain.User;
+import org.clockin.web.rest.dto.UserDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Mapper for the entity User and its DTO UserDTO.

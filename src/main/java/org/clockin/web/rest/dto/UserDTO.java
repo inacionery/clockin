@@ -1,13 +1,15 @@
 package org.clockin.web.rest.dto;
 
-import org.clockin.domain.Authority;
-import org.clockin.domain.User;
-
-import org.hibernate.validator.constraints.Email;
-
-import javax.validation.constraints.*;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.clockin.domain.Authority;
+import org.clockin.domain.User;
+import org.hibernate.validator.constraints.Email;
 
 /**
  * A DTO representing a user, with his authorities.

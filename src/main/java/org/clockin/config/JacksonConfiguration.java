@@ -1,13 +1,19 @@
 package org.clockin.config;
 
-import org.clockin.domain.util.*;
-
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import java.time.*;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
+
+import org.clockin.domain.util.JSR310DateTimeSerializer;
+import org.clockin.domain.util.JSR310LocalDateDeserializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 @Configuration
 public class JacksonConfiguration {

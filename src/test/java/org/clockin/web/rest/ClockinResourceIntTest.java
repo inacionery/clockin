@@ -23,7 +23,6 @@ import javax.inject.Inject;
 import org.clockin.domain.Clockin;
 import org.clockin.domain.enumeration.RegistryType;
 import org.clockin.repository.ClockinRepository;
-import org.clockin.repository.search.ClockinSearchRepository;
 import org.clockin.service.ClockinService;
 import org.junit.Before;
 import org.mockito.MockitoAnnotations;
@@ -69,9 +68,6 @@ public class ClockinResourceIntTest {
     private ClockinService clockinService;
 
     @Inject
-    private ClockinSearchRepository clockinSearchRepository;
-
-    @Inject
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Inject
@@ -95,7 +91,6 @@ public class ClockinResourceIntTest {
 
     @Before
     public void initTest() {
-        clockinSearchRepository.deleteAll();
         clockin = new Clockin();
         clockin.setSequentialRegisterNumber(DEFAULT_SEQUENTIAL_REGISTER_NUMBER);
         clockin.setDateTime(DEFAULT_DATE_TIME);
@@ -124,11 +119,6 @@ public class ClockinResourceIntTest {
         assertThat(testClockin.getDateTime()).isEqualTo(DEFAULT_DATE_TIME);
         assertThat(testClockin.getRegistryType())
             .isEqualTo(DEFAULT_REGISTRY_TYPE);
-
-        // Validate the Clockin in ElasticSearch
-        Clockin clockinEs = clockinSearchRepository
-            .findOne(testClockin.getId());
-        assertThat(clockinEs).isEqualToComparingFieldByField(testClockin);
     }
 
     //@Test
@@ -209,10 +199,6 @@ public class ClockinResourceIntTest {
         assertThat(testClockin.getRegistryType())
             .isEqualTo(UPDATED_REGISTRY_TYPE);
 
-        // Validate the Clockin in ElasticSearch
-        Clockin clockinEs = clockinSearchRepository
-            .findOne(testClockin.getId());
-        assertThat(clockinEs).isEqualToComparingFieldByField(testClockin);
     }
 
     //@Test
@@ -228,11 +214,6 @@ public class ClockinResourceIntTest {
             .perform(delete("/api/clockins/{id}", clockin.getId())
                 .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
-
-        // Validate ElasticSearch is empty
-        boolean clockinExistsInEs = clockinSearchRepository
-            .exists(clockin.getId());
-        assertThat(clockinExistsInEs).isFalse();
 
         // Validate the database is empty
         List<Clockin> clockins = clockinRepository.findAll();

@@ -2,7 +2,7 @@ package org.clockin.repository;
 
 import org.clockin.domain.Employee;
 import org.clockin.domain.User;
-import org.springframework.data.jpa.repository.*;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Spring Data JPA repository for the Employee entity.

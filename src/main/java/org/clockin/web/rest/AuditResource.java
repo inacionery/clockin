@@ -1,22 +1,26 @@
 package org.clockin.web.rest;
 
-import org.clockin.service.AuditEventService;
-
+import java.net.URISyntaxException;
 import java.time.LocalDate;
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.clockin.service.AuditEventService;
 import org.clockin.web.rest.util.PaginationUtil;
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-
-import java.net.URISyntaxException;
-import javax.inject.Inject;
-import java.util.List;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * REST controller for getting the audit events.

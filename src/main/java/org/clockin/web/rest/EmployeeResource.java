@@ -1,6 +1,14 @@
 package org.clockin.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+
+import javax.inject.Inject;
+
 import org.clockin.domain.Employee;
 import org.clockin.service.EmployeeService;
 import org.clockin.web.rest.util.HeaderUtil;
@@ -13,13 +21,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.inject.Inject;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * REST controller for managing Employee.
@@ -184,29 +190,6 @@ public class EmployeeResource {
                 employee.getUser() != null ? employee.getUser().getFirstName()
                     + " " + employee.getUser().getLastName() : ""))
             .build();
-    }
-
-    /**
-     * SEARCH  /_search/employees?query=:query : search for the employee corresponding
-     * to the query.
-     *
-     * @param query the query of the employee search
-     * @return the result of the search
-     */
-    @RequestMapping(value = "/_search/employees",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<List<Employee>> searchEmployees(
-        @RequestParam String query, Pageable pageable)
-        throws URISyntaxException {
-        log.debug("REST request to search for a page of Employees for query {}",
-            query);
-        Page<Employee> page = employeeService.search(query, pageable);
-        HttpHeaders headers = PaginationUtil
-            .generateSearchPaginationHttpHeaders(query, page,
-                "/api/_search/employees");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
 }

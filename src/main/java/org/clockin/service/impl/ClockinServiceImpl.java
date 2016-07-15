@@ -1,24 +1,18 @@
 package org.clockin.service.impl;
 
-import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import org.clockin.domain.Clockin;
 import org.clockin.domain.Employee;
 import org.clockin.repository.ClockinRepository;
-import org.clockin.repository.search.ClockinSearchRepository;
 import org.clockin.service.ClockinService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.inject.Inject;
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 /**
  * Service Implementation for managing Clockin.
@@ -33,9 +27,6 @@ public class ClockinServiceImpl implements ClockinService {
     @Inject
     private ClockinRepository clockinRepository;
 
-    @Inject
-    private ClockinSearchRepository clockinSearchRepository;
-
     /**
      * Save a clockin.
      *
@@ -46,7 +37,6 @@ public class ClockinServiceImpl implements ClockinService {
     public Clockin save(Clockin clockin) {
         log.debug("Request to save Clockin : {}", clockin);
         Clockin result = clockinRepository.save(clockin);
-        clockinSearchRepository.save(result);
         return result;
     }
 
@@ -86,22 +76,6 @@ public class ClockinServiceImpl implements ClockinService {
     public void delete(Long id) {
         log.debug("Request to delete Clockin : {}", id);
         clockinRepository.delete(id);
-        clockinSearchRepository.delete(id);
-    }
-
-    /**
-     * Search for the clockin corresponding to the query.
-     *
-     *  @param query the query of the search
-     *  @return the list of entities
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<Clockin> search(String query) {
-        log.debug("Request to search Clockins for query {}", query);
-        return StreamSupport.stream(clockinSearchRepository
-            .search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
     }
 
     @Override

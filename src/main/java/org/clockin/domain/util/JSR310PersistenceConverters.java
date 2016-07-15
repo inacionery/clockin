@@ -1,12 +1,17 @@
 package org.clockin.domain.util;
 
-import org.clockin.domain.util.JSR310DateConverters.*;
-
-import java.time.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+
+import org.clockin.domain.util.JSR310DateConverters.DateToLocalDateTimeConverter;
+import org.clockin.domain.util.JSR310DateConverters.DateToZonedDateTimeConverter;
+import org.clockin.domain.util.JSR310DateConverters.LocalDateTimeToDateConverter;
+import org.clockin.domain.util.JSR310DateConverters.ZonedDateTimeToDateConverter;
 
 public final class JSR310PersistenceConverters {
 

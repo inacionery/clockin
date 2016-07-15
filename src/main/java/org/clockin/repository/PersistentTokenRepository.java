@@ -1,11 +1,11 @@
 package org.clockin.repository;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.clockin.domain.PersistentToken;
 import org.clockin.domain.User;
-import java.time.LocalDate;
 import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.List;
 
 /**
  * Spring Data JPA repository for the PersistentToken entity.

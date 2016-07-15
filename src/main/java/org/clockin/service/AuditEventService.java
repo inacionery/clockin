@@ -1,16 +1,17 @@
 package org.clockin.service;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
+import javax.inject.Inject;
+
 import org.clockin.config.audit.AuditEventConverter;
 import org.clockin.repository.PersistenceAuditEventRepository;
-import java.time.LocalDateTime;
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.inject.Inject;
-import java.util.Optional;
 
 /**
  * Service for managing audit events.

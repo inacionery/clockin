@@ -15,17 +15,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.clockin.domain.enumeration.RegistryType;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.data.elasticsearch.annotations.Document;
 
 /**
  * A Clockin.
  */
 @Entity
 @Table(name = "clockin")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "clockin")
 public class Clockin implements Serializable {
 
     private static final long serialVersionUID = 1L;

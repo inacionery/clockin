@@ -4,13 +4,13 @@
 
 package org.clockin.web.rest.dto;
 
-import org.clockin.domain.Clockin;
-import org.clockin.domain.Employee;
-
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.clockin.domain.Clockin;
+import org.clockin.domain.Employee;
 
 /**
  * @author Miguel Angelo Caldas Gallindo

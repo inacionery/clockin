@@ -42,14 +42,6 @@ public interface EmployeeService {
      */
     Employee delete(Long id);
 
-    /**
-     * Search for the employee corresponding to the query.
-     * 
-     *  @param query the query of the search
-     *  @return the list of entities
-     */
-    Page<Employee> search(String query, Pageable pageable);
-
     Employee findByUser(User user);
 
     Employee findBySocialIdentificationNumber(

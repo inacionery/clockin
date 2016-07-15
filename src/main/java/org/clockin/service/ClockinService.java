@@ -1,10 +1,10 @@
 package org.clockin.service;
 
-import org.clockin.domain.Clockin;
-import org.clockin.domain.Employee;
-
 import java.time.LocalDateTime;
 import java.util.List;
+
+import org.clockin.domain.Clockin;
+import org.clockin.domain.Employee;
 
 /**
  * Service Interface for managing Clockin.
@@ -40,14 +40,6 @@ public interface ClockinService {
      *  @param id the id of the entity
      */
     void delete(Long id);
-
-    /**
-     * Search for the clockin corresponding to the query.
-     *
-     *  @param query the query of the search
-     *  @return the list of entities
-     */
-    List<Clockin> search(String query);
 
     List<Clockin> findByEmployeeDatesBetween(Employee employee,
         LocalDateTime start, LocalDateTime end);

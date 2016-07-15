@@ -1,7 +1,6 @@
 package org.clockin.repository;
 
 import org.clockin.domain.Authority;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

@@ -1,19 +1,17 @@
 package org.clockin.service.impl;
 
-import org.clockin.service.EmployeeService;
+import javax.inject.Inject;
+
 import org.clockin.domain.Employee;
 import org.clockin.domain.User;
 import org.clockin.repository.EmployeeRepository;
-import org.clockin.repository.search.EmployeeSearchRepository;
+import org.clockin.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
-
-import javax.inject.Inject;
-import static org.elasticsearch.index.query.QueryBuilders.*;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Service Implementation for managing Employee.
@@ -28,9 +26,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Inject
     private EmployeeRepository employeeRepository;
 
-    @Inject
-    private EmployeeSearchRepository employeeSearchRepository;
-
     /**
      * Save a employee.
      * 
@@ -41,7 +36,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee save(Employee employee) {
         log.debug("Request to save Employee : {}", employee);
         Employee result = employeeRepository.save(employee);
-        employeeSearchRepository.save(result);
         return result;
     }
 
@@ -84,23 +78,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         log.debug("Request to delete Employee : {}", id);
         Employee employee = employeeRepository.findOne(id);
         employeeRepository.delete(id);
-        employeeSearchRepository.delete(id);
         return employee;
-    }
-
-    /**
-     * Search for the employee corresponding to the query.
-     *
-     *  @param query the query of the search
-     *  @return the list of entities
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public Page<Employee> search(String query, Pageable pageable) {
-        log.debug("Request to search for a page of Employees for query {}",
-            query);
-        return employeeSearchRepository.search(queryStringQuery(query),
-            pageable);
     }
 
     @Override

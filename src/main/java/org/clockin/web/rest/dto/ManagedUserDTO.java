@@ -1,12 +1,12 @@
 package org.clockin.web.rest.dto;
 
 import java.time.ZonedDateTime;
-
 import java.util.Set;
 
-import org.clockin.domain.User;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.clockin.domain.User;
 
 /**
  * A DTO extending the UserDTO, which is meant to be used in the user management UI.

@@ -1,5 +1,11 @@
 package org.clockin.security;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import javax.inject.Inject;
+
 import org.clockin.domain.User;
 import org.clockin.repository.UserRepository;
 import org.slf4j.Logger;
@@ -10,10 +16,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.inject.Inject;
-import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Authenticate a user from the database.

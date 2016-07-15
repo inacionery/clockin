@@ -3,15 +3,15 @@
         "clockin" : {
             "home": {
                 "title": "Clockins",
-                "createLabel": "Create a new Clockin",
-                "createOrEditLabel": "Create or edit a Clockin",
-                "search": "Search for Clockin"
+                "createLabel": "Criar novo Clockin",
+                "createOrEditLabel": "Criar ou editar Clockin",
+                "search": "Pesquisar por Clockin"
             },
-            "created": "A new Clockin is created with identifier {{ param }}",
-            "updated": "A Clockin is updated with identifier {{ param }}",
-            "deleted": "A Clockin is deleted with identifier {{ param }}",
+            "created": "Um novo Clockin é criado com o identificador {{ param }}",
+            "updated": "Um Clockin é atualizado com o identificador {{ param }}",
+            "deleted": "Um Clockin é deletado com o identificador {{ param }}",
             "delete": {
-                "question": "Are you sure you want to delete Clockin {{ id }}?"
+                "question": "Tem certeza de que deseja excluir Clockin {{ id }}?"
             },
             "detail": {
                 "title": "Clockin"
