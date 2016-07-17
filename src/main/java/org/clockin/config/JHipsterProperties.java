@@ -129,12 +129,31 @@ public class JHipsterProperties {
 
         private int timeToLiveSeconds = 3600;
 
+        private final Ehcache ehcache = new Ehcache();
+
         public int getTimeToLiveSeconds() {
             return timeToLiveSeconds;
         }
 
         public void setTimeToLiveSeconds(int timeToLiveSeconds) {
             this.timeToLiveSeconds = timeToLiveSeconds;
+        }
+
+        public Ehcache getEhcache() {
+            return ehcache;
+        }
+
+        public static class Ehcache {
+
+            private String maxBytesLocalHeap = "16M";
+
+            public String getMaxBytesLocalHeap() {
+                return maxBytesLocalHeap;
+            }
+
+            public void setMaxBytesLocalHeap(String maxBytesLocalHeap) {
+                this.maxBytesLocalHeap = maxBytesLocalHeap;
+            }
         }
     }
 

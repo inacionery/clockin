@@ -17,11 +17,15 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 /**
  * A Employee.
  */
 @Entity
 @Table(name = "employee")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Employee implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,6 +43,7 @@ public class Employee implements Serializable {
 
     @OneToMany(mappedBy = "employee")
     @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Clockin> clockins = new HashSet<>();
 
     @OneToOne

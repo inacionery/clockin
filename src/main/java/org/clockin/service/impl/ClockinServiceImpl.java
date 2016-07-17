@@ -29,11 +29,10 @@ public class ClockinServiceImpl implements ClockinService {
 
     /**
      * Save a clockin.
-     *
+     * 
      * @param clockin the entity to save
      * @return the persisted entity
      */
-    @Override
     public Clockin save(Clockin clockin) {
         log.debug("Request to save Clockin : {}", clockin);
         Clockin result = clockinRepository.save(clockin);
@@ -42,10 +41,9 @@ public class ClockinServiceImpl implements ClockinService {
 
     /**
      *  Get all the clockins.
-     *
+     *  
      *  @return the list of entities
      */
-    @Override
     @Transactional(readOnly = true)
     public List<Clockin> findAll() {
         log.debug("Request to get all Clockins");
@@ -59,7 +57,6 @@ public class ClockinServiceImpl implements ClockinService {
      *  @param id the id of the entity
      *  @return the entity
      */
-    @Override
     @Transactional(readOnly = true)
     public Clockin findOne(Long id) {
         log.debug("Request to get Clockin : {}", id);
@@ -69,10 +66,9 @@ public class ClockinServiceImpl implements ClockinService {
 
     /**
      *  Delete the  clockin by id.
-     *
+     *  
      *  @param id the id of the entity
      */
-    @Override
     public void delete(Long id) {
         log.debug("Request to delete Clockin : {}", id);
         clockinRepository.delete(id);

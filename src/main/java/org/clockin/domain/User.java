@@ -21,6 +21,8 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Email;
 
 /**
@@ -28,6 +30,7 @@ import org.hibernate.validator.constraints.Email;
  */
 @Entity
 @Table(name = "jhi_user")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class User extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -102,12 +105,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
             referencedColumnName = "id") },
         inverseJoinColumns = { @JoinColumn(name = "authority_name",
             referencedColumnName = "name") })
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Authority> authorities = new HashSet<>();
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,
         orphanRemoval = true,
         mappedBy = "user")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<PersistentToken> persistentTokens = new HashSet<>();
 
     public Long getId() {

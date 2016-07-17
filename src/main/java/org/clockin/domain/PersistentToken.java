@@ -15,6 +15,9 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 /**
  * Persistent tokens are used by Spring Security to automatically log in users.
  *
@@ -22,6 +25,7 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "jhi_persistent_token")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class PersistentToken implements Serializable {
 
     private static final long serialVersionUID = 1L;

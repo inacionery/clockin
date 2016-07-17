@@ -1,5 +1,9 @@
 package org.clockin.web.rest;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.time.Instant;
@@ -11,10 +15,6 @@ import java.time.ZonedDateTime;
 import org.clockin.domain.util.JSR310DateTimeSerializer;
 import org.clockin.domain.util.JSR310LocalDateDeserializer;
 import org.springframework.http.MediaType;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 /**
  * Utility class for testing REST controllers.

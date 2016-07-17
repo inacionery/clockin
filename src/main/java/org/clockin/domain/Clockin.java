@@ -15,12 +15,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.clockin.domain.enumeration.RegistryType;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Clockin.
  */
 @Entity
 @Table(name = "clockin")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Clockin implements Serializable {
 
     private static final long serialVersionUID = 1L;

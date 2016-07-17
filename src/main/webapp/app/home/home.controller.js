@@ -37,7 +37,7 @@
             });
         }
 
-        function register() {
+        function register () {
             $state.go('register');
         }
     }
