@@ -18,7 +18,7 @@
                  ng-repeat="workday in vm.firstHalf(vm.workdays)" layout="row">
 
                 <div flex="25" layout="column" class="month-title table-header">
-                    <div class="date-label {{workday.isMissing ? 'warning' : ''}}">
+                    <div class="date-label {{(workday.isMissing && ((workday.date | date:'dd') != (vm.today | date:'dd'))) ? 'warning' : ''}}">
                         <p class="md-caption week-day">
                             {{workday.date | date:"EEE" | capitalize}}
                         </p>
@@ -47,7 +47,7 @@
                  ng-repeat="workday in vm.lastHalf(vm.workdays)" layout="row">
 
                 <div flex="25" layout="column" class="month-title table-header">
-                    <div class="date-label {{workday.isMissing ? 'warning' : ''}}">
+                    <div class="date-label {{(workday.isMissing && ((workday.date | date:'dd') != (vm.today | date:'dd'))) ? 'warning' : ''}}">
                         <p class="md-caption week-day">
                             {{workday.date | date:"EEE" | capitalize}}
                         </p>

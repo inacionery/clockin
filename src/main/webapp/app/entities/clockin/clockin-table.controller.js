@@ -30,6 +30,7 @@
         vm.nextDate = new Date(vm.nextYear, vm.nextMonth -1);
         
         vm.workdays = entity;
+        vm.today = new Date();
 
         vm.isWeekend = function isWeekend(date) {
     		date = new Date(date);

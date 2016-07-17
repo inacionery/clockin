@@ -7,9 +7,9 @@
 
     HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state', '$window', '$rootScope'];
 
-    function HomeController ($scope, Principal, LoginService, $state, $window, $rootScope) {
+    function HomeController($scope, Principal, LoginService, $state, $window, $rootScope) {
         var vm = this;
-		var today = new Date();
+        var today = new Date();
 
         vm.account = null;
         vm.isAuthenticated = null;
@@ -26,14 +26,18 @@
                 vm.account = account;
                 vm.isAuthenticated = Principal.isAuthenticated;
 
-				if(vm.account){
-					$rootScope.firstName = $window.localStorage.firstName = vm.account.firstName;
+                if (vm.account) {
+                    $rootScope.firstName = $window.localStorage.firstName = vm.account.firstName;
 
-					$state.go("clockin-table", {year: today.getFullYear(), month: today.getMonth()});
-				}
+                    $state.go("clockin-table", {
+                        year: today.getFullYear(),
+                        month: today.getMonth()
+                    });
+                }
             });
         }
-        function register () {
+
+        function register() {
             $state.go('register');
         }
     }
