@@ -212,6 +212,26 @@ public class UserResource {
     }
 
     /**
+     * GET  /users : get all users.
+     * 
+     * @param pageable the pagination information
+     * @return the ResponseEntity with status 200 (OK) and with body all users
+     * @throws URISyntaxException if the pagination headers couldnt be generated
+     */
+    @RequestMapping(value = "/users/all",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<ManagedUserDTO>> getAllUsers()
+        throws URISyntaxException {
+        List<User> users = userRepository.findAll();
+        List<ManagedUserDTO> managedUserDTOs = users.stream()
+            .map(ManagedUserDTO::new).collect(Collectors.toList());
+        return new ResponseEntity<>(managedUserDTOs, HttpStatus.OK);
+    }
+
+    /**
      * GET  /users/:login : get the "login" user.
      *
      * @param login the login of the user to find

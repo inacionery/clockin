@@ -10,7 +10,7 @@
     function EmployeeDialogController ($timeout, $scope, $stateParams, $uibModalInstance, $q, entity, Employee, User) {
         var vm = this;
         vm.employee = entity;
-        vm.users = User.query();
+        vm.users = User.queryAll();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
