@@ -5,10 +5,11 @@
         .module('clockinApp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state', '$window'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state', '$window', '$rootScope'];
 
-    function HomeController ($scope, Principal, LoginService, $state, $window) {
+    function HomeController ($scope, Principal, LoginService, $state, $window, $rootScope) {
         var vm = this;
+		var today = new Date();
 
         vm.account = null;
         vm.isAuthenticated = null;
@@ -25,7 +26,11 @@
                 vm.account = account;
                 vm.isAuthenticated = Principal.isAuthenticated;
 
-				$window.localStorage.firstName = vm.account.firstName;
+				if(vm.account){
+					$rootScope.firstName = $window.localStorage.firstName = vm.account.firstName;
+
+					$state.go("clockin-table", {year: today.getFullYear(), month: today.getMonth()});
+				}
             });
         }
         function register () {

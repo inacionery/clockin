@@ -27,8 +27,8 @@
         function logout () {
             collapseNavbar();
             Auth.logout();
-			$window.localStorage.firstName = null;
-			$rootScope.firstName = null;
+			delete $window.localStorage.firstName;
+			delete $rootScope.firstName;
             $state.go('home');
         }
 

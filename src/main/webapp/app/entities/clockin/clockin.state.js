@@ -7,18 +7,20 @@
     stateConfig.$inject = ['$stateProvider'];
 
     var today = new Date();
+	var stateToday = today.toISOString().split("T")[0];
 
     function stateConfig($stateProvider) {
         $stateProvider
         .state('clockin-table', {
             parent: 'entity',
             url: '/workdays/{year}/{month}',
-            params: { 
+            params: {
+				today: stateToday,
             	year: {
             		value: eval(today.getFullYear()).toString(),
             		squash: false,
                 },
-                month : { 
+                month : {
                 	value: eval(today.getMonth()+1).toString(),
                     squash: false,
                 },
@@ -49,12 +51,13 @@
         .state('clockin-calendar', {
             parent: 'entity',
             url: '/workdays-calendar/{year}/{month}',
-            params: { 
+            params: {
+				today: stateToday,
             	year: {
             		value: eval(today.getFullYear()).toString(),
             		squash: false,
                 },
-                month : { 
+                month : {
                 	value: eval(today.getMonth()+1).toString(),
                     squash: false,
                 },
