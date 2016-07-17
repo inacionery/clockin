@@ -29,6 +29,7 @@
         vm.date = new Date(vm.previousYear, vm.previousMonth);
 
         vm.workdays = entity;
+		vm.today = new Date();
 
         vm.shortDays = $locale.DATETIME_FORMATS.SHORTDAY.map(function(shortDay){
             return {
@@ -36,7 +37,7 @@
                 fstChar: shortDay.charAt(0).toUpperCase()
             };
         });
-
+		$scope.today = $stateParams.today;
         $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
         $scope.showTabDialog = function(event, workday) {
 
