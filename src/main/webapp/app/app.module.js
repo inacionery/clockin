@@ -23,10 +23,12 @@
 
     run.$inject = ['stateHandler', 'translationHandler', '$window', '$rootScope'];
 
-    function run(stateHandler, translationHandler, $window, $rootScope) {
+    function run(stateHandler, translationHandler, $window, $rootScope, Principal) {
         stateHandler.initialize();
         translationHandler.initialize();
 
-		$rootScope.firstName = $window.localStorage.firstName;
+		$rootScope.$on('$locationChangeStart', function(event, toState, toParams, fromState, fromParams) {
+			$rootScope.firstName = $window.localStorage.firstName;
+		});
     }
 })();
