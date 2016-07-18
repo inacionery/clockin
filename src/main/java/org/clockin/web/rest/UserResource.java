@@ -225,7 +225,7 @@ public class UserResource {
     @Transactional(readOnly = true)
     public ResponseEntity<List<ManagedUserDTO>> getAllUsers()
         throws URISyntaxException {
-        List<User> users = userRepository.findAll();
+        List<User> users = userRepository.findAllByActivatedIsTrue();
         List<ManagedUserDTO> managedUserDTOs = users.stream()
             .map(ManagedUserDTO::new).collect(Collectors.toList());
         return new ResponseEntity<>(managedUserDTOs, HttpStatus.OK);
