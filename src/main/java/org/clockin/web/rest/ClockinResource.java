@@ -223,6 +223,10 @@ public class ClockinResource {
                 LocalDate date = LocalDate
                     .parse(workdayObject.getString("date"));
 
+                Long workPlanned = workdayObject.getLong("workPlanned");
+
+                Long workDone = workdayObject.getLong("workDone");
+
                 JSONArray clockinsArray = workdayObject
                     .getJSONArray("clockins");
 
