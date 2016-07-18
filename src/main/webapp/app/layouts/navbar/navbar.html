@@ -3,7 +3,7 @@
       <div class="navbar-header">
          <a class="navbar-brand" href="#/"><i class="fa fa-clock-o"></i> <span translate="global.title">Clockin</span></a>
       </div>
-      <div class="navbar-collapse" uib-collapse="vm.isNavbarCollapsed" ng-switch="vm.isAuthenticated()">
+      <div class="navbar-collapse" uib-collapse="vm.isNavbarCollapsed" ng-switch="vm.isAuthenticated()" has-authority="ROLE_USER">
          <ul class="nav navbar-nav navbar-right">
             <li class="welcome-text">
                Olá, {{firstName}}
