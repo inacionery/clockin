@@ -25,7 +25,7 @@
                 <constraints nullable="true" />
             </column>
             
-            <column name="date_time" type="timestamp">
+            <column name="time" type="timestamp">
                 <constraints nullable="true" />
             </column>
             
@@ -33,10 +33,10 @@
                 <constraints nullable="true" />
             </column>
             
-            <column name="employee_id" type="bigint"/>
+            <column name="workday_id" type="bigint"/>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="clockin" columnName="date_time" columnDataType="datetime"/>
+        <dropDefaultValue tableName="clockin" columnName="time" columnDataType="datetime"/>
         
     </changeSet>
 </databaseChangeLog>

@@ -1,0 +1,35 @@
+{
+    "relationships": [
+        {
+            "relationshipName": "employee",
+            "otherEntityName": "employee",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "clockin",
+            "otherEntityName": "clockin",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "workday"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "workPlanned",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "workDone",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "date",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "changelogDate": "20160718022911",
+    "dto": "no",
+    "service": "serviceImpl",
+    "entityTableName": "workday",
+    "pagination": "no"
+}

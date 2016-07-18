@@ -20,7 +20,8 @@
             "socialIdentificationNumber": "PIS",
             "plannedDailyHours": "Jornada",
             "clockin": "Clockin",
-            "user": "Usuário"
+            "user": "Usuário",
+            "workday": "Workday"
         }
     }
 }

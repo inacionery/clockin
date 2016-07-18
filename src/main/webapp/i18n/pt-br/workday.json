@@ -1,0 +1,26 @@
+{
+    "clockinApp": {
+        "workday" : {
+            "home": {
+                "title": "Workdays",
+                "createLabel": "Criar novo Workday",
+                "createOrEditLabel": "Criar ou editar Workday",
+                "search": "Pesquisar por Workday"
+            },
+            "created": "Um novo Workday é criado com o identificador {{ param }}",
+            "updated": "Um Workday é atualizado com o identificador {{ param }}",
+            "deleted": "Um Workday é deletado com o identificador {{ param }}",
+            "delete": {
+                "question": "Tem certeza de que deseja excluir Workday {{ id }}?"
+            },
+            "detail": {
+                "title": "Workday"
+            },
+            "workPlanned": "Work Planned",
+            "workDone": "Work Done",
+            "date": "Date",
+            "employee": "Employee",
+            "clockin": "Clockin"
+        }
+    }
+}

@@ -51,12 +51,12 @@ public class ClockinResourceIntTest {
     private static final String DEFAULT_SEQUENTIAL_REGISTER_NUMBER = "AAAAA";
     private static final String UPDATED_SEQUENTIAL_REGISTER_NUMBER = "BBBBB";
 
-    private static final LocalDateTime DEFAULT_DATE_TIME = LocalDateTime
+    private static final LocalDateTime DEFAULT_TIME = LocalDateTime
         .ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final LocalDateTime UPDATED_DATE_TIME = LocalDateTime.now()
+    private static final LocalDateTime UPDATED_TIME = LocalDateTime.now()
         .withNano(0);
-    private static final String DEFAULT_DATE_TIME_STR = dateTimeFormatter
-        .format(DEFAULT_DATE_TIME);
+    private static final String DEFAULT_TIME_STR = dateTimeFormatter
+        .format(DEFAULT_TIME);
 
     private static final RegistryType DEFAULT_REGISTRY_TYPE = RegistryType.TYPE_1;
     private static final RegistryType UPDATED_REGISTRY_TYPE = RegistryType.TYPE_2;
@@ -93,7 +93,7 @@ public class ClockinResourceIntTest {
     public void initTest() {
         clockin = new Clockin();
         clockin.setSequentialRegisterNumber(DEFAULT_SEQUENTIAL_REGISTER_NUMBER);
-        clockin.setDateTime(DEFAULT_DATE_TIME);
+        clockin.setTime(DEFAULT_TIME);
         clockin.setRegistryType(DEFAULT_REGISTRY_TYPE);
     }
 
@@ -116,7 +116,7 @@ public class ClockinResourceIntTest {
         Clockin testClockin = clockins.get(clockins.size() - 1);
         assertThat(testClockin.getSequentialRegisterNumber())
             .isEqualTo(DEFAULT_SEQUENTIAL_REGISTER_NUMBER);
-        assertThat(testClockin.getDateTime()).isEqualTo(DEFAULT_DATE_TIME);
+        assertThat(testClockin.getTime()).isEqualTo(DEFAULT_TIME);
         assertThat(testClockin.getRegistryType())
             .isEqualTo(DEFAULT_REGISTRY_TYPE);
     }
@@ -135,8 +135,7 @@ public class ClockinResourceIntTest {
                 jsonPath("$.[*].id").value(hasItem(clockin.getId().intValue())))
             .andExpect(jsonPath("$.[*].sequentialRegisterNumber")
                 .value(hasItem(DEFAULT_SEQUENTIAL_REGISTER_NUMBER.toString())))
-            .andExpect(jsonPath("$.[*].dateTime")
-                .value(hasItem(DEFAULT_DATE_TIME_STR)))
+            .andExpect(jsonPath("$.[*].time").value(hasItem(DEFAULT_TIME_STR)))
             .andExpect(jsonPath("$.[*].registryType")
                 .value(hasItem(DEFAULT_REGISTRY_TYPE.toString())));
     }
@@ -154,7 +153,7 @@ public class ClockinResourceIntTest {
             .andExpect(jsonPath("$.id").value(clockin.getId().intValue()))
             .andExpect(jsonPath("$.sequentialRegisterNumber")
                 .value(DEFAULT_SEQUENTIAL_REGISTER_NUMBER.toString()))
-            .andExpect(jsonPath("$.dateTime").value(DEFAULT_DATE_TIME_STR))
+            .andExpect(jsonPath("$.time").value(DEFAULT_TIME_STR))
             .andExpect(jsonPath("$.registryType")
                 .value(DEFAULT_REGISTRY_TYPE.toString()));
     }
@@ -180,7 +179,7 @@ public class ClockinResourceIntTest {
         updatedClockin.setId(clockin.getId());
         updatedClockin
             .setSequentialRegisterNumber(UPDATED_SEQUENTIAL_REGISTER_NUMBER);
-        updatedClockin.setDateTime(UPDATED_DATE_TIME);
+        updatedClockin.setTime(UPDATED_TIME);
         updatedClockin.setRegistryType(UPDATED_REGISTRY_TYPE);
 
         restClockinMockMvc
@@ -195,7 +194,7 @@ public class ClockinResourceIntTest {
         Clockin testClockin = clockins.get(clockins.size() - 1);
         assertThat(testClockin.getSequentialRegisterNumber())
             .isEqualTo(UPDATED_SEQUENTIAL_REGISTER_NUMBER);
-        assertThat(testClockin.getDateTime()).isEqualTo(UPDATED_DATE_TIME);
+        assertThat(testClockin.getTime()).isEqualTo(UPDATED_TIME);
         assertThat(testClockin.getRegistryType())
             .isEqualTo(UPDATED_REGISTRY_TYPE);
 
@@ -218,26 +217,5 @@ public class ClockinResourceIntTest {
         // Validate the database is empty
         List<Clockin> clockins = clockinRepository.findAll();
         assertThat(clockins).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    //@Test
-    @Transactional
-    public void searchClockin() throws Exception {
-        // Initialize the database
-        clockinService.save(clockin);
-
-        // Search the clockin
-        restClockinMockMvc
-            .perform(get("/api/_search/clockins?query=id:" + clockin.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(
-                jsonPath("$.[*].id").value(hasItem(clockin.getId().intValue())))
-            .andExpect(jsonPath("$.[*].sequentialRegisterNumber")
-                .value(hasItem(DEFAULT_SEQUENTIAL_REGISTER_NUMBER.toString())))
-            .andExpect(jsonPath("$.[*].dateTime")
-                .value(hasItem(DEFAULT_DATE_TIME_STR)))
-            .andExpect(jsonPath("$.[*].registryType")
-                .value(hasItem(DEFAULT_REGISTRY_TYPE.toString())));
     }
 }

@@ -38,13 +38,10 @@ public class Employee implements Serializable {
         unique = true)
     private String socialIdentificationNumber;
 
-    @Column(name = "planned_daily_hours")
-    private Integer plannedDailyHours;
-
     @OneToMany(mappedBy = "employee")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Clockin> clockins = new HashSet<>();
+    private Set<Workday> workdays = new HashSet<>();
 
     @OneToOne
     @JoinColumn(unique = true)
@@ -67,20 +64,12 @@ public class Employee implements Serializable {
         this.socialIdentificationNumber = socialIdentificationNumber;
     }
 
-    public Integer getPlannedDailyHours() {
-        return plannedDailyHours;
+    public Set<Workday> getWorkdays() {
+        return workdays;
     }
 
-    public void setPlannedDailyHours(Integer plannedDailyHours) {
-        this.plannedDailyHours = plannedDailyHours;
-    }
-
-    public Set<Clockin> getClockins() {
-        return clockins;
-    }
-
-    public void setClockins(Set<Clockin> clockins) {
-        this.clockins = clockins;
+    public void setWorkdays(Set<Workday> workdays) {
+        this.workdays = workdays;
     }
 
     public User getUser() {
@@ -114,7 +103,6 @@ public class Employee implements Serializable {
     @Override
     public String toString() {
         return "Employee{" + "id=" + id + ", socialIdentificationNumber='"
-            + socialIdentificationNumber + "'" + ", plannedDailyHours='"
-            + plannedDailyHours + "'" + '}';
+            + socialIdentificationNumber + "'" + '}';
     }
 }

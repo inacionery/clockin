@@ -17,9 +17,9 @@
                 "title": "Clockin"
             },
             "sequentialRegisterNumber": "Sequential Register Number",
-            "dateTime": "Date Time",
+            "time": "Time",
             "registryType": "Registry Type",
-            "employee": "Employee"
+            "workday": "Workday"
         }
     }
 }

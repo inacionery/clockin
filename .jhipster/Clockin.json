@@ -1,10 +1,10 @@
 {
     "relationships": [
         {
-            "relationshipName": "employee",
-            "otherEntityName": "employee",
+            "relationshipName": "workday",
+            "otherEntityName": "workday",
             "relationshipType": "many-to-one",
-            "otherEntityRelationshipName": "clockins",
+            "otherEntityRelationshipName": "clockin",
             "otherEntityField": "id"
         }
     ],
@@ -14,7 +14,7 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "dateTime",
+            "fieldName": "time",
             "fieldType": "ZonedDateTime"
         },
         {

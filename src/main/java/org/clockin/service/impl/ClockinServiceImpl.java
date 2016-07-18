@@ -1,12 +1,11 @@
 package org.clockin.service.impl;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import org.clockin.domain.Clockin;
-import org.clockin.domain.Employee;
+import org.clockin.domain.Workday;
 import org.clockin.repository.ClockinRepository;
 import org.clockin.service.ClockinService;
 import org.slf4j.Logger;
@@ -74,26 +73,18 @@ public class ClockinServiceImpl implements ClockinService {
         clockinRepository.delete(id);
     }
 
-    @Override
     @Transactional(readOnly = true)
-    public List<Clockin> findByEmployeeDatesBetween(Employee employee,
-        LocalDateTime start, LocalDateTime end) {
-        log.debug("Request to get Clockin : {} Between {} and {}", employee,
-            start, end);
-        List<Clockin> result = clockinRepository
-            .findByEmployeeAndDateTimeBetweenOrderByDateTime(employee, start,
-                end);
-        return result;
+    public List<Clockin> findByWorkday(Workday workday) {
+        log.debug("Request to get Clockin by Workday: {}", workday);
+        return clockinRepository.findByWorkday(workday);
     }
 
-    @Override
     @Transactional(readOnly = true)
-    public Clockin findByEmployeeAndDateTime(Employee employee,
-        LocalDateTime dateTime) {
-        log.debug("Request to get Clockin : {} DateTime {}", employee,
-            dateTime);
-        Clockin result = clockinRepository.findByEmployeeAndDateTime(employee,
-            dateTime);
-        return result;
+    public Clockin findBySequentialRegisterNumber(
+        String sequentialRegisterNumber) {
+        log.debug("Request to get Clockin by SequentialRegisterNumber : {}",
+            sequentialRegisterNumber);
+        return clockinRepository
+            .findBySequentialRegisterNumber(sequentialRegisterNumber);
     }
 }

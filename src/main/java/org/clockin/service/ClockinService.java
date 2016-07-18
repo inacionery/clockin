@@ -1,10 +1,9 @@
 package org.clockin.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.clockin.domain.Clockin;
-import org.clockin.domain.Employee;
+import org.clockin.domain.Workday;
 
 /**
  * Service Interface for managing Clockin.
@@ -41,9 +40,8 @@ public interface ClockinService {
      */
     void delete(Long id);
 
-    List<Clockin> findByEmployeeDatesBetween(Employee employee,
-        LocalDateTime start, LocalDateTime end);
+    List<Clockin> findByWorkday(Workday workday);
 
-    Clockin findByEmployeeAndDateTime(Employee employee,
-        LocalDateTime dateTime);
+    Clockin findBySequentialRegisterNumber(String valueOf);
+
 }

@@ -2,37 +2,37 @@
 
 describe('Controller Tests', function() {
 
-    describe('Employee Management Detail Controller', function() {
+    describe('Workday Management Detail Controller', function() {
         var $scope, $rootScope;
-        var MockEntity, MockEmployee, MockWorkday, MockUser;
+        var MockEntity, MockWorkday, MockEmployee, MockClockin;
         var createController;
 
         beforeEach(inject(function($injector) {
             $rootScope = $injector.get('$rootScope');
             $scope = $rootScope.$new();
             MockEntity = jasmine.createSpy('MockEntity');
-            MockEmployee = jasmine.createSpy('MockEmployee');
             MockWorkday = jasmine.createSpy('MockWorkday');
-            MockUser = jasmine.createSpy('MockUser');
+            MockEmployee = jasmine.createSpy('MockEmployee');
+            MockClockin = jasmine.createSpy('MockClockin');
             
 
             var locals = {
                 '$scope': $scope,
                 '$rootScope': $rootScope,
                 'entity': MockEntity ,
-                'Employee': MockEmployee,
                 'Workday': MockWorkday,
-                'User': MockUser
+                'Employee': MockEmployee,
+                'Clockin': MockClockin
             };
             createController = function() {
-                $injector.get('$controller')("EmployeeDetailController", locals);
+                $injector.get('$controller')("WorkdayDetailController", locals);
             };
         }));
 
 
         describe('Root Scope Listening', function() {
             it('Unregisters root scope listener upon scope destruction', function() {
-                var eventType = 'clockinApp:employeeUpdate';
+                var eventType = 'clockinApp:workdayUpdate';
 
                 createController();
                 expect($rootScope.$$listenerCount[eventType]).toEqual(1);

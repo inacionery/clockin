@@ -16,7 +16,7 @@
                 method: 'GET',
                 transformResponse: function (data) {
                     data = angular.fromJson(data);
-                    data.dateTime = DateUtils.convertDateTimeFromServer(data.dateTime);
+                    data.time = DateUtils.convertDateTimeFromServer(data.time);
                     return data;
                 }
             },

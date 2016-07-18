@@ -1,8 +1,8 @@
 {
     "relationships": [
         {
-            "relationshipName": "clockin",
-            "otherEntityName": "clockin",
+            "relationshipName": "workday",
+            "otherEntityName": "workday",
             "relationshipType": "one-to-many",
             "otherEntityRelationshipName": "employee",
             "otherEntityField": "id"

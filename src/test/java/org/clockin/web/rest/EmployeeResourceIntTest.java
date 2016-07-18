@@ -43,7 +43,6 @@ public class EmployeeResourceIntTest {
     private static final String UPDATED_SOCIAL_IDENTIFICATION_NUMBER = "BBBBB";
 
     private static final Integer DEFAULT_PLANNED_DAILY_HOURS = 1;
-    private static final Integer UPDATED_PLANNED_DAILY_HOURS = 2;
 
     @Inject
     private EmployeeRepository employeeRepository;
@@ -78,7 +77,6 @@ public class EmployeeResourceIntTest {
         employee = new Employee();
         employee.setSocialIdentificationNumber(
             DEFAULT_SOCIAL_IDENTIFICATION_NUMBER);
-        employee.setPlannedDailyHours(DEFAULT_PLANNED_DAILY_HOURS);
     }
 
     //@Test
@@ -100,8 +98,6 @@ public class EmployeeResourceIntTest {
         Employee testEmployee = employees.get(employees.size() - 1);
         assertThat(testEmployee.getSocialIdentificationNumber())
             .isEqualTo(DEFAULT_SOCIAL_IDENTIFICATION_NUMBER);
-        assertThat(testEmployee.getPlannedDailyHours())
-            .isEqualTo(DEFAULT_PLANNED_DAILY_HOURS);
     }
 
     //@Test
@@ -161,7 +157,6 @@ public class EmployeeResourceIntTest {
         updatedEmployee.setId(employee.getId());
         updatedEmployee.setSocialIdentificationNumber(
             UPDATED_SOCIAL_IDENTIFICATION_NUMBER);
-        updatedEmployee.setPlannedDailyHours(UPDATED_PLANNED_DAILY_HOURS);
 
         restEmployeeMockMvc
             .perform(put("/api/employees")
@@ -175,8 +170,6 @@ public class EmployeeResourceIntTest {
         Employee testEmployee = employees.get(employees.size() - 1);
         assertThat(testEmployee.getSocialIdentificationNumber())
             .isEqualTo(UPDATED_SOCIAL_IDENTIFICATION_NUMBER);
-        assertThat(testEmployee.getPlannedDailyHours())
-            .isEqualTo(UPDATED_PLANNED_DAILY_HOURS);
     }
 
     //@Test
@@ -196,24 +189,5 @@ public class EmployeeResourceIntTest {
         // Validate the database is empty
         List<Employee> employees = employeeRepository.findAll();
         assertThat(employees).hasSize(databaseSizeBeforeDelete - 1);
-    }
-
-    //@Test
-    @Transactional
-    public void searchEmployee() throws Exception {
-        // Initialize the database
-        employeeService.save(employee);
-
-        // Search the employee
-        restEmployeeMockMvc
-            .perform(get("/api/_search/employees?query=id:" + employee.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.[*].id")
-                .value(hasItem(employee.getId().intValue())))
-            .andExpect(jsonPath("$.[*].socialIdentificationNumber").value(
-                hasItem(DEFAULT_SOCIAL_IDENTIFICATION_NUMBER.toString())))
-            .andExpect(jsonPath("$.[*].plannedDailyHours")
-                .value(hasItem(DEFAULT_PLANNED_DAILY_HOURS)));
     }
 }

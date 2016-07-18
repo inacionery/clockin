@@ -16,10 +16,12 @@ import javax.inject.Inject;
 import org.clockin.domain.Clockin;
 import org.clockin.domain.Employee;
 import org.clockin.domain.User;
+import org.clockin.domain.Workday;
 import org.clockin.repository.UserRepository;
 import org.clockin.security.SecurityUtils;
 import org.clockin.service.ClockinService;
 import org.clockin.service.EmployeeService;
+import org.clockin.service.WorkdayService;
 import org.clockin.web.rest.dto.WorkDayDTO;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +49,9 @@ public class ClockinResource {
 
     @Inject
     private EmployeeService employeeService;
+
+    @Inject
+    private WorkdayService workdayService;
 
     @Inject
     private UserRepository userRepository;
@@ -77,10 +82,6 @@ public class ClockinResource {
         LocalDate endDate = LocalDate.of(year, month,
             startDate.lengthOfMonth());
 
-        LocalDateTime start = LocalDateTime.of(startDate, LocalTime.MIN);
-
-        LocalDateTime end = LocalDateTime.of(endDate, LocalTime.MAX);
-
         Optional<User> user = userRepository
             .findOneByLogin(SecurityUtils.getCurrentUserLogin());
         Employee employee = employeeService.findByUser(user.get());
@@ -88,24 +89,37 @@ public class ClockinResource {
         List<WorkDayDTO> workDays = new ArrayList<>();
 
         if (employee != null) {
-            List<Clockin> clockins = clockinService
-                .findByEmployeeDatesBetween(employee, start, end);
+            List<Workday> workdays = workdayService
+                .findByEmployeeAndDateBetweenOrderByDate(employee, startDate,
+                    endDate);
 
-            int clockinCount = 0;
+            int workdayCount = 0;
+            long balance = 0;
             for (int i = 1; i <= startDate.lengthOfMonth(); i++) {
                 LocalDate curDate = LocalDate.of(year, month, i);
-                WorkDayDTO workDayDTO = new WorkDayDTO(curDate, employee);
 
-                for (int j = clockinCount; j < clockins.size(); j++) {
-                    Clockin clockin = clockins.get(j);
+                WorkDayDTO workDayDTO = new WorkDayDTO(curDate);
 
-                    if (!workDayDTO.getDate().isEqual(clockin.getDate())) {
-                        clockinCount = j;
+                for (int j = workdayCount; j < workdays.size(); j++) {
+                    Workday workday = workdays.get(j);
+
+                    if (!workday.getDate().isEqual(curDate)) {
+                        workdayCount = j;
                         break;
                     }
 
-                    workDayDTO.addClockinValues(clockin);
+                    workDayDTO.setWorkDone(workday.getWorkDone());
+                    workDayDTO.setWorkPlanned(workday.getWorkPlanned());
+
+                    balance += workday.getWorkDone();
+                    workDayDTO.setBalance(balance);
+
+                    for (Clockin clockin : clockinService
+                        .findByWorkday(workday)) {
+                        workDayDTO.addClockinValues(clockin);
+                    }
                 }
+
                 workDays.add(workDayDTO);
             }
         }
@@ -139,10 +153,6 @@ public class ClockinResource {
         LocalDate endDate = LocalDate.of(year, month,
             startDate.lengthOfMonth());
 
-        LocalDateTime start = LocalDateTime.of(startDate, LocalTime.MIN);
-
-        LocalDateTime end = LocalDateTime.of(endDate, LocalTime.MAX);
-
         Optional<User> user = userRepository
             .findOneByLogin(SecurityUtils.getCurrentUserLogin());
         Employee employee = employeeService.findByUser(user.get());
@@ -156,29 +166,42 @@ public class ClockinResource {
             LocalDate previousDate = endDate.minusMonths(1);
             for (int i = 0; i < diff; i++) {
                 LocalDate curDate = previousDate.minusDays(diff - i - 1);
-                WorkDayDTO workDayDTO = new WorkDayDTO(curDate, employee);
+                WorkDayDTO workDayDTO = new WorkDayDTO(curDate);
                 workDays.add(workDayDTO);
             }
 
             if (employee != null) {
-                List<Clockin> clockins = clockinService
-                    .findByEmployeeDatesBetween(employee, start, end);
+                List<Workday> workdays = workdayService
+                    .findByEmployeeAndDateBetweenOrderByDate(employee,
+                        startDate, endDate);
 
-                int clockinCount = 0;
+                int workdayCount = 0;
+                long balance = 0;
                 for (int i = 1; i <= startDate.lengthOfMonth(); i++) {
                     LocalDate curDate = LocalDate.of(year, month, i);
-                    WorkDayDTO workDayDTO = new WorkDayDTO(curDate, employee);
 
-                    for (int j = clockinCount; j < clockins.size(); j++) {
-                        Clockin clockin = clockins.get(j);
+                    WorkDayDTO workDayDTO = new WorkDayDTO(curDate);
 
-                        if (!workDayDTO.getDate().isEqual(clockin.getDate())) {
-                            clockinCount = j;
+                    for (int j = workdayCount; j < workdays.size(); j++) {
+                        Workday workday = workdays.get(j);
+
+                        if (!workday.getDate().isEqual(curDate)) {
+                            workdayCount = j;
                             break;
                         }
 
-                        workDayDTO.addClockinValues(clockin);
+                        workDayDTO.setWorkDone(workday.getWorkDone());
+                        workDayDTO.setWorkPlanned(workday.getWorkPlanned());
+
+                        balance += workday.getWorkDone();
+                        workDayDTO.setBalance(balance);
+
+                        for (Clockin clockin : clockinService
+                            .findByWorkday(workday)) {
+                            workDayDTO.addClockinValues(clockin);
+                        }
                     }
+
                     workDays.add(workDayDTO);
                 }
             }
@@ -187,7 +210,7 @@ public class ClockinResource {
             LocalDate nextStartDate = startDate.plusMonths(1).withDayOfMonth(1);
             for (int i = 0; i < diff; i++) {
                 LocalDate curDate = nextStartDate.plusDays(i);
-                WorkDayDTO workDayDTO = new WorkDayDTO(curDate, employee);
+                WorkDayDTO workDayDTO = new WorkDayDTO(curDate);
                 workDays.add(workDayDTO);
             }
 
@@ -203,71 +226,84 @@ public class ClockinResource {
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public void createClockin(@RequestBody String employeesParam)
+    public void createClockin(@RequestBody String employeeParam)
         throws URISyntaxException, JSONException {
 
-        Employee employee = null;
-        JSONArray employeesArray = new JSONArray(employeesParam);
-        for (int i = 0; i < employeesArray.length(); i++) {
-            JSONObject employeeObject = employeesArray.getJSONObject(i);
+        JSONObject employeeObject = new JSONObject(employeeParam);
 
-            String pis = employeeObject.getString("pis");
+        String pis = employeeObject.getString("pis");
 
-            employee = checkEmployee(employee, pis);
+        Employee employee = getOrCreateEmployee(pis);
 
-            JSONArray workdaysArray = employeeObject.getJSONArray("workdays");
+        JSONArray workdaysArray = employeeObject.getJSONArray("workdays");
 
-            for (int j = 0; j < workdaysArray.length(); j++) {
-                JSONObject workdayObject = workdaysArray.getJSONObject(j);
+        for (int j = 0; j < workdaysArray.length(); j++) {
+            JSONObject workdayObject = workdaysArray.getJSONObject(j);
 
-                LocalDate date = LocalDate
-                    .parse(workdayObject.getString("date"));
+            LocalDate date = LocalDate.parse(workdayObject.getString("date"));
 
-                Long workPlanned = workdayObject.getLong("workPlanned");
+            Long workDone = workdayObject.getLong("workDone");
 
-                Long workDone = workdayObject.getLong("workDone");
+            Long workPlanned = workdayObject.getLong("workPlanned");
 
-                JSONArray clockinsArray = workdayObject
-                    .getJSONArray("clockins");
+            Workday workday = createWorkDay(employee, date, workDone,
+                workPlanned);
 
-                for (int k = 0; k < clockinsArray.length(); k++) {
-                    JSONObject clockinObject = clockinsArray.getJSONObject(k);
-                    LocalTime time = LocalTime
-                        .parse(clockinObject.getString("time"));
-                    Long id = clockinObject.getLong("id");
+            JSONArray clockinsArray = workdayObject.getJSONArray("clockins");
 
-                    addClockin(employee, date, time, id);
-                }
+            for (int k = 0; k < clockinsArray.length(); k++) {
+                JSONObject clockinObject = clockinsArray.getJSONObject(k);
+                LocalTime time = LocalTime
+                    .parse(clockinObject.getString("time"));
+                Long id = clockinObject.getLong("id");
+
+                createClockin(workday, LocalDateTime.of(date, time), id);
             }
         }
 
     }
 
-    private Employee checkEmployee(Employee employee, String pis) {
-        if (employee == null
-            || !employee.getSocialIdentificationNumber().equals(pis)) {
-            employee = employeeService.findBySocialIdentificationNumber(pis);
-            if (employee == null
-                || employee.getSocialIdentificationNumber() == null
-                || !employee.getSocialIdentificationNumber().equals(pis)) {
-                employee = new Employee();
-                employee.setSocialIdentificationNumber(pis);
-                employee = employeeService.save(employee);
-            }
+    private Employee getOrCreateEmployee(String pis) {
+
+        Employee employee = employeeService
+            .findBySocialIdentificationNumber(pis);
+
+        if (employee == null) {
+            employee = new Employee();
+            employee.setSocialIdentificationNumber(pis);
+            employee = employeeService.save(employee);
         }
+
         return employee;
     }
 
-    private void addClockin(Employee employee, LocalDate date, LocalTime time,
-        Long id) {
-        Clockin clockin = clockinService.findOne(id);
-        if (clockin == null || clockin.getId() == null
-            || !clockin.getId().equals(id)) {
-            LocalDateTime dateTime = LocalDateTime.of(date, time);
+    private Workday createWorkDay(Employee employee, LocalDate date,
+        Long workDone, Long workPlanned) {
+
+        Workday workday = workdayService.findByEmployeeAndDate(employee, date);
+
+        if (workday == null) {
+            workday = new Workday();
+            workday.setEmployee(employee);
+            workday.setDate(date);
+            workday.setWorkDone(workDone);
+            workday.setWorkPlanned(workPlanned);
+            workday = workdayService.save(workday);
+        }
+
+        return workday;
+    }
+
+    private void createClockin(Workday workday, LocalDateTime time, Long id) {
+
+        Clockin clockin = clockinService
+            .findBySequentialRegisterNumber(String.valueOf(id));
+
+        if (clockin == null) {
             clockin = new Clockin();
-            clockin.setId(id);
-            clockin.setEmployee(employee);
-            clockin.setDateTime(dateTime);
+            clockin.setSequentialRegisterNumber(String.valueOf(id));
+            clockin.setWorkday(workday);
+            clockin.setTime(time);
             clockinService.save(clockin);
         }
     }

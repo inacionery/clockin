@@ -80,12 +80,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee findByUser(User user) {
+        log.debug("Request to get Employee : {}", user);
         return employeeRepository.findByUser(user);
     }
 
     @Override
     public Employee findBySocialIdentificationNumber(
         String socialIdentificationNumber) {
+        log.debug("Request to get Employee : {}", socialIdentificationNumber);
         return employeeRepository
             .findBySocialIdentificationNumber(socialIdentificationNumber);
     }

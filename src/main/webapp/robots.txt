@@ -21,5 +21,3 @@ Disallow: /trace/
 Disallow: /v2/api-docs/
 Disallow: /configuration/
 Disallow: /protected/
-Disallow: /clockin/
-Disallow: /employee/

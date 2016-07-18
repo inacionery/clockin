@@ -8,15 +8,14 @@
     -->
     <changeSet id="20151124151638-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="employee_id"
+        <addForeignKeyConstraint baseColumnNames="workday_id"
                                  baseTableName="clockin"
-                                 constraintName="fk_clockin_employee_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="employee"/>
+                                 constraintName="fk_clockin_workday_id"
+                                 referencedColumnNames="id"      
+                                 referencedTableName="workday"/>
 
-        <addUniqueConstraint columnNames="social_identification_number"
-				             constraintName="uniq_employee_social_identification_number"
-				             tableName="employee"/>
-
+        <addUniqueConstraint columnNames="sequential_register_number"
+				             constraintName="uniq_sequential_register_number"
+				             tableName="clockin"/>
     </changeSet>
 </databaseChangeLog>

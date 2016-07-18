@@ -1,7 +1,6 @@
 package org.clockin.domain;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Objects;
@@ -10,6 +9,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -29,20 +30,22 @@ public class Clockin implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "sequential_register_number")
+    @Column(name = "sequential_register_number",
+        unique = true)
     private String sequentialRegisterNumber;
 
-    @Column(name = "date_time")
-    private LocalDateTime dateTime;
+    @Column(name = "time")
+    private LocalDateTime time;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "registry_type")
     private RegistryType registryType;
 
     @ManyToOne
-    private Employee employee;
+    private Workday workday;
 
     public Long getId() {
         return id;
@@ -60,12 +63,12 @@ public class Clockin implements Serializable {
         this.sequentialRegisterNumber = sequentialRegisterNumber;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public LocalTime getTime() {
+        return time.toLocalTime();
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setTime(LocalDateTime time) {
+        this.time = time;
     }
 
     public RegistryType getRegistryType() {
@@ -76,20 +79,12 @@ public class Clockin implements Serializable {
         this.registryType = registryType;
     }
 
-    public Employee getEmployee() {
-        return employee;
+    public Workday getWorkday() {
+        return workday;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    public LocalDate getDate() {
-        return dateTime.toLocalDate();
-    }
-
-    public LocalTime getTime() {
-        return dateTime.toLocalTime();
+    public void setWorkday(Workday workday) {
+        this.workday = workday;
     }
 
     @Override
@@ -115,7 +110,7 @@ public class Clockin implements Serializable {
     @Override
     public String toString() {
         return "Clockin{" + "id=" + id + ", sequentialRegisterNumber='"
-            + sequentialRegisterNumber + "'" + ", dateTime='" + dateTime + "'"
+            + sequentialRegisterNumber + "'" + ", time='" + time + "'"
             + ", registryType='" + registryType + "'" + '}';
     }
 }
