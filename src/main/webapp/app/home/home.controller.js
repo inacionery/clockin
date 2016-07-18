@@ -30,8 +30,8 @@
                     $rootScope.firstName = $window.localStorage.firstName = vm.account.firstName;
 
                     $state.go("clockin-table", {
-                        year: today.getFullYear(),
-                        month: today.getMonth()
+                        year: eval(today.getFullYear()).toString(),
+                        month: eval(today.getMonth() + 1).toString()
                     });
                 }
             });
