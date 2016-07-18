@@ -149,46 +149,49 @@ public class ClockinResource {
 
         List<WorkDayDTO> workDays = new ArrayList<>();
 
-        int diff = startDate.getDayOfWeek().getValue() == 7 ? 0
-            : startDate.getDayOfWeek().getValue();
-        LocalDate previousDate = endDate.minusMonths(1);
-        for (int i = 0; i < diff; i++) {
-            LocalDate curDate = previousDate.minusDays(diff - i - 1);
-            WorkDayDTO workDayDTO = new WorkDayDTO(curDate, employee);
-            workDays.add(workDayDTO);
-        }
-
         if (employee != null) {
-            List<Clockin> clockins = clockinService
-                .findByEmployeeDatesBetween(employee, start, end);
 
-            int clockinCount = 0;
-            for (int i = 1; i <= startDate.lengthOfMonth(); i++) {
-                LocalDate curDate = LocalDate.of(year, month, i);
+            int diff = startDate.getDayOfWeek().getValue() == 7 ? 0
+                : startDate.getDayOfWeek().getValue();
+            LocalDate previousDate = endDate.minusMonths(1);
+            for (int i = 0; i < diff; i++) {
+                LocalDate curDate = previousDate.minusDays(diff - i - 1);
                 WorkDayDTO workDayDTO = new WorkDayDTO(curDate, employee);
-
-                for (int j = clockinCount; j < clockins.size(); j++) {
-                    Clockin clockin = clockins.get(j);
-
-                    if (!workDayDTO.getDate().isEqual(clockin.getDate())) {
-                        clockinCount = j;
-                        break;
-                    }
-
-                    workDayDTO.addClockinValues(clockin);
-                }
                 workDays.add(workDayDTO);
             }
-        }
 
-        diff = 42 - workDays.size();
-        LocalDate nextStartDate = startDate.plusMonths(1).withDayOfMonth(1);
-        for (int i = 0; i < diff; i++) {
-            LocalDate curDate = nextStartDate.plusDays(i);
-            WorkDayDTO workDayDTO = new WorkDayDTO(curDate, employee);
-            workDays.add(workDayDTO);
-        }
+            if (employee != null) {
+                List<Clockin> clockins = clockinService
+                    .findByEmployeeDatesBetween(employee, start, end);
 
+                int clockinCount = 0;
+                for (int i = 1; i <= startDate.lengthOfMonth(); i++) {
+                    LocalDate curDate = LocalDate.of(year, month, i);
+                    WorkDayDTO workDayDTO = new WorkDayDTO(curDate, employee);
+
+                    for (int j = clockinCount; j < clockins.size(); j++) {
+                        Clockin clockin = clockins.get(j);
+
+                        if (!workDayDTO.getDate().isEqual(clockin.getDate())) {
+                            clockinCount = j;
+                            break;
+                        }
+
+                        workDayDTO.addClockinValues(clockin);
+                    }
+                    workDays.add(workDayDTO);
+                }
+            }
+
+            diff = 42 - workDays.size();
+            LocalDate nextStartDate = startDate.plusMonths(1).withDayOfMonth(1);
+            for (int i = 0; i < diff; i++) {
+                LocalDate curDate = nextStartDate.plusDays(i);
+                WorkDayDTO workDayDTO = new WorkDayDTO(curDate, employee);
+                workDays.add(workDayDTO);
+            }
+
+        }
         return workDays;
     }
 
