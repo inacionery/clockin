@@ -228,8 +228,9 @@ public class ClockinResource {
     @Timed
     public void createClockin(@RequestBody String employeeParam)
         throws URISyntaxException, JSONException {
-
         JSONObject employeeObject = new JSONObject(employeeParam);
+
+        log.debug("Request to create Clockin : {}", employeeObject);
 
         String pis = employeeObject.getString("pis");
 
@@ -289,11 +290,12 @@ public class ClockinResource {
             workday.setDate(date);
         }
 
-        if (!workDone.equals(workday.getWorkDone())) {
+        if (workDone != null && !workPlanned.equals(workday.getWorkDone())) {
             workday.setWorkDone(workDone);
         }
 
-        if (!workPlanned.equals(workday.getWorkPlanned())) {
+        if (workPlanned != null
+            && !workPlanned.equals(workday.getWorkPlanned())) {
             workday.setWorkDone(workPlanned);
         }
 
@@ -311,11 +313,11 @@ public class ClockinResource {
             clockin.setSequentialRegisterNumber(String.valueOf(id));
         }
 
-        if (!workday.equals(clockin.getWorkday())) {
+        if (workday != null && !workday.equals(clockin.getWorkday())) {
             clockin.setWorkday(workday);
         }
 
-        if (!time.equals(clockin.getTime())) {
+        if (time != null && !time.equals(clockin.getTime())) {
             clockin.setTime(time);
         }
 
