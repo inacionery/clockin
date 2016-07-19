@@ -246,7 +246,7 @@ public class ClockinResource {
 
             Long workPlanned = workdayObject.getLong("workPlanned");
 
-            Workday workday = createWorkDay(employee, date, workDone,
+            Workday workday = createOrUpdateWorkDay(employee, date, workDone,
                 workPlanned);
 
             JSONArray clockinsArray = workdayObject.getJSONArray("clockins");
@@ -257,7 +257,8 @@ public class ClockinResource {
                     .parse(clockinObject.getString("time"));
                 Long id = clockinObject.getLong("id");
 
-                createClockin(workday, LocalDateTime.of(date, time), id);
+                createOrUpdateClockin(workday, LocalDateTime.of(date, time),
+                    id);
             }
         }
 
@@ -277,7 +278,7 @@ public class ClockinResource {
         return employee;
     }
 
-    private Workday createWorkDay(Employee employee, LocalDate date,
+    private Workday createOrUpdateWorkDay(Employee employee, LocalDate date,
         Long workDone, Long workPlanned) {
 
         Workday workday = workdayService.findByEmployeeAndDate(employee, date);
@@ -286,15 +287,21 @@ public class ClockinResource {
             workday = new Workday();
             workday.setEmployee(employee);
             workday.setDate(date);
-            workday.setWorkDone(workDone);
-            workday.setWorkPlanned(workPlanned);
-            workday = workdayService.save(workday);
         }
 
-        return workday;
+        if (!workDone.equals(workday.getWorkDone())) {
+            workday.setWorkDone(workDone);
+        }
+
+        if (!workPlanned.equals(workday.getWorkPlanned())) {
+            workday.setWorkDone(workPlanned);
+        }
+
+        return workdayService.save(workday);
     }
 
-    private void createClockin(Workday workday, LocalDateTime time, Long id) {
+    private void createOrUpdateClockin(Workday workday, LocalDateTime time,
+        Long id) {
 
         Clockin clockin = clockinService
             .findBySequentialRegisterNumber(String.valueOf(id));
@@ -302,10 +309,17 @@ public class ClockinResource {
         if (clockin == null) {
             clockin = new Clockin();
             clockin.setSequentialRegisterNumber(String.valueOf(id));
-            clockin.setWorkday(workday);
-            clockin.setTime(time);
-            clockinService.save(clockin);
         }
+
+        if (!workday.equals(clockin.getWorkday())) {
+            clockin.setWorkday(workday);
+        }
+
+        if (!time.equals(clockin.getTime())) {
+            clockin.setTime(time);
+        }
+
+        clockinService.save(clockin);
     }
 
 }
