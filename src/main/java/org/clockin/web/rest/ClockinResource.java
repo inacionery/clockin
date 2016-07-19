@@ -291,13 +291,13 @@ public class ClockinResource {
         }
 
         if (workDone != null && (workday.getWorkDone() == null
-            || !workPlanned.equals(workday.getWorkDone()))) {
+            || !workDone.equals(workday.getWorkDone()))) {
             workday.setWorkDone(workDone);
         }
 
         if (workPlanned != null && (workday.getWorkPlanned() == null
             || !workPlanned.equals(workday.getWorkPlanned()))) {
-            workday.setWorkDone(workPlanned);
+            workday.setWorkPlanned(workPlanned);
         }
 
         return workdayService.save(workday);
