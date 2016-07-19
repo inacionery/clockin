@@ -17,20 +17,14 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
-import org.clockin.ClockinApp;
 import org.clockin.domain.Workday;
 import org.clockin.repository.WorkdayRepository;
 import org.clockin.service.WorkdayService;
 import org.junit.Before;
-import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -41,10 +35,10 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @see WorkdayResource
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = ClockinApp.class)
-@WebAppConfiguration
-@IntegrationTest
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@SpringApplicationConfiguration(classes = ClockinApp.class)
+//@WebAppConfiguration
+//@IntegrationTest
 public class WorkdayResourceIntTest {
 
     private static final Long DEFAULT_WORK_PLANNED = 1L;
