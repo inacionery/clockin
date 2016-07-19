@@ -3,7 +3,7 @@
       <div class="navbar-header">
          <a class="navbar-brand" href="#/"><i class="fa fa-clock-o"></i> <span translate="global.title">Clockin</span></a>
       </div>
-      <div class="navbar-collapse" uib-collapse="vm.isNavbarCollapsed" ng-switch="vm.isAuthenticated()" has-authority="ROLE_USER">
+      <div class="navbar-collapse" uib-collapse="vm.isNavbarCollapsed" ng-switch="vm.isAuthenticated()">
          <ul class="nav navbar-nav navbar-right">
             <li class="welcome-text">
                Olá, {{firstName}}
@@ -20,7 +20,7 @@
                <span class="hidden-sm" translate="global.menu.entities.list">Clockin list</span>
                </a>
             </li>
-            <li ng-class="{active: vm.$state.includes('admin')}" ng-switch-when="true" has-authority="ROLE_ADMIN" uib-dropdown class="dropdown pointer">
+            <li ng-class="{active: vm.$state.includes('admin')}"  ng-switch-when="true" has-authority="ROLE_ADMIN" uib-dropdown class="dropdown pointer">
                <a class="dropdown-toggle" uib-dropdown-toggle href="" id="admin-menu">
                <span>
                <span class="glyphicon glyphicon-cog"></span>
@@ -55,7 +55,7 @@
                   </li>
                   <li ui-sref-active="active">
                      <a ui-sref="jhi-configuration" ng-click="vm.collapseNavbar()">
-                     <span class="glyphicon glyphicon-wrench"></span>&nbsp;
+                     <span class="glyphicon glyphicon-list-alt"></span>&nbsp;
                      <span translate="global.menu.admin.configuration">Configuration</span>
                      </a>
                   </li>
@@ -67,22 +67,23 @@
                   </li>
                   <li ui-sref-active="active">
                      <a ui-sref="logs" ng-click="vm.collapseNavbar()">
-                     <span class="glyphicon glyphicon-list-alt"></span>&nbsp;
+                     <span class="glyphicon glyphicon-tasks"></span>&nbsp;
                      <span translate="global.menu.admin.logs">Logs</span>
                      </a>
                   </li>
-                  <li ng-hide="vm.inProduction" ui-sref-active="active">
+                  <li ng-hide="vm.inProduction || vm.swaggerDisabled" ui-sref-active="active">
                      <a ui-sref="docs" ng-click="vm.collapseNavbar()">
                      <span class="glyphicon glyphicon-book"></span>&nbsp;
                      <span translate="global.menu.admin.apidocs">API</span>
                      </a>
                   </li>
+                  <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
                </ul>
             </li>
             <li ui-sref-active="active">
                <a href="" ng-click="vm.logout()" id="logout">
                <span class="glyphicon glyphicon-log-out"></span>&nbsp;
-               <span class="hidden-sm"  translate="global.menu.account.logout">Sign out</span>
+               <span class="hidden-sm" translate="global.menu.account.logout">Sign out</span>
                </a>
             </li>
          </ul>

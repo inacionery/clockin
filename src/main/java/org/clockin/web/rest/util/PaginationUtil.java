@@ -1,10 +1,10 @@
 package org.clockin.web.rest.util;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
+import org.springframework.web.util.UriComponentsBuilder;
 
 /**
  * Utility class for handling pagination.
@@ -23,15 +23,13 @@ public class PaginationUtil {
         String link = "";
         if ((page.getNumber() + 1) < page.getTotalPages()) {
             link = "<"
-                + (new URI(baseUrl + "?page=" + (page.getNumber() + 1)
-                    + "&size=" + page.getSize())).toString()
+                + generateUri(baseUrl, page.getNumber() + 1, page.getSize())
                 + ">; rel=\"next\",";
         }
         // prev link
         if ((page.getNumber()) > 0) {
             link += "<"
-                + (new URI(baseUrl + "?page=" + (page.getNumber() - 1)
-                    + "&size=" + page.getSize())).toString()
+                + generateUri(baseUrl, page.getNumber() - 1, page.getSize())
                 + ">; rel=\"prev\",";
         }
         // last and first link
@@ -39,15 +37,18 @@ public class PaginationUtil {
         if (page.getTotalPages() > 0) {
             lastPage = page.getTotalPages() - 1;
         }
-        link += "<" + (new URI(
-            baseUrl + "?page=" + lastPage + "&size=" + page.getSize()))
-                .toString()
+        link += "<" + generateUri(baseUrl, lastPage, page.getSize())
             + ">; rel=\"last\",";
-        link += "<"
-            + (new URI(baseUrl + "?page=" + 0 + "&size=" + page.getSize()))
-                .toString()
+        link += "<" + generateUri(baseUrl, 0, page.getSize())
             + ">; rel=\"first\"";
         headers.add(HttpHeaders.LINK, link);
         return headers;
     }
+
+    private static String generateUri(String baseUrl, int page, int size)
+        throws URISyntaxException {
+        return UriComponentsBuilder.fromUriString(baseUrl)
+            .queryParam("page", page).queryParam("size", size).toUriString();
+    }
+
 }

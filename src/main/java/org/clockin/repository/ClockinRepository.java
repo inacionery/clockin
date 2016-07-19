@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * Spring Data JPA repository for the Clockin entity.
  */
+@SuppressWarnings("unused")
 public interface ClockinRepository extends JpaRepository<Clockin, Long> {
 
     List<Clockin> findByWorkday(Workday workday);

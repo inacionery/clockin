@@ -20,10 +20,6 @@
         {
             "fieldName": "socialIdentificationNumber",
             "fieldType": "String"
-        },
-        {
-            "fieldName": "plannedDailyHours",
-            "fieldType": "Integer"
         }
     ],
     "changelogDate": "20151124152507",

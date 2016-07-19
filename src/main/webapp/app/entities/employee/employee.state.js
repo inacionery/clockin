@@ -71,7 +71,7 @@
                     return $translate.refresh();
                 }],
                 entity: ['$stateParams', 'Employee', function($stateParams, Employee) {
-                    return Employee.get({id : $stateParams.id});
+                    return Employee.get({id : $stateParams.id}).$promise;
                 }]
             }
         })
@@ -92,7 +92,6 @@
                         entity: function () {
                             return {
                                 socialIdentificationNumber: null,
-                                plannedDailyHours: null,
                                 id: null
                             };
                         }
@@ -119,7 +118,7 @@
                     size: 'lg',
                     resolve: {
                         entity: ['Employee', function(Employee) {
-                            return Employee.get({id : $stateParams.id});
+                            return Employee.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {
@@ -143,7 +142,7 @@
                     size: 'md',
                     resolve: {
                         entity: ['Employee', function(Employee) {
-                            return Employee.get({id : $stateParams.id});
+                            return Employee.get({id : $stateParams.id}).$promise;
                         }]
                     }
                 }).result.then(function() {

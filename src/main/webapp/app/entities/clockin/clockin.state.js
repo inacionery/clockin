@@ -46,7 +46,7 @@
                         return ClockinTable.query({
                             year: $stateParams.year,
                             month: $stateParams.month
-                        });
+                        }).$promise;
                     }]
                 }
             })
@@ -85,7 +85,7 @@
                         return ClockinCalendar.query({
                             year: $stateParams.year,
                             month: $stateParams.month
-                        });
+                        }).$promise;
                     }]
                 }
             });

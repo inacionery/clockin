@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.clockin.config.Constants;
 import org.clockin.domain.Authority;
 import org.clockin.domain.User;
 import org.hibernate.validator.constraints.Email;
@@ -16,10 +17,10 @@ import org.hibernate.validator.constraints.Email;
  */
 public class UserDTO {
 
-    @Pattern(regexp = "^[a-z0-9]*$")
     @NotNull
+    @Pattern(regexp = Constants.LOGIN_REGEX)
     @Size(min = 1,
-        max = 50)
+        max = 100)
     private String login;
 
     @Size(max = 50)

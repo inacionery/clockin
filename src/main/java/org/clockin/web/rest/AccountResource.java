@@ -76,7 +76,8 @@ public class AccountResource {
         HttpHeaders textPlainHeaders = new HttpHeaders();
         textPlainHeaders.setContentType(MediaType.TEXT_PLAIN);
 
-        return userRepository.findOneByLogin(managedUserDTO.getLogin())
+        return userRepository
+            .findOneByLogin(managedUserDTO.getLogin().toLowerCase())
             .map(user -> new ResponseEntity<>("login already in use",
                 textPlainHeaders, HttpStatus.BAD_REQUEST))
             .orElseGet(

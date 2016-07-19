@@ -22,7 +22,7 @@ import ch.qos.logback.classic.LoggerContext;
  * Controller for view and managing Log Level at runtime.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/management/jhipster")
 public class LogsResource {
 
     @RequestMapping(value = "/logs",

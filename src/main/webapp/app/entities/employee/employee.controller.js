@@ -9,17 +9,19 @@
 
     function EmployeeController ($scope, $state, Employee, ParseLinks, AlertService, pagingParams, paginationConstants) {
         var vm = this;
-        vm.loadAll = loadAll;
+        
         vm.loadPage = loadPage;
         vm.predicate = pagingParams.predicate;
         vm.reverse = pagingParams.ascending;
         vm.transition = transition;
-        vm.loadAll();
+        vm.itemsPerPage = paginationConstants.itemsPerPage;
+
+        loadAll();
 
         function loadAll () {
             Employee.query({
                 page: pagingParams.page - 1,
-                size: paginationConstants.itemsPerPage,
+                size: vm.itemsPerPage,
                 sort: sort()
             }, onSuccess, onError);
             function sort() {
@@ -53,6 +55,5 @@
                 search: vm.currentSearch
             });
         }
-
     }
 })();

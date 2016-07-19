@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
+import org.clockin.config.Constants;
 import org.clockin.domain.Authority;
 import org.clockin.domain.User;
 import org.clockin.repository.AuthorityRepository;
@@ -102,7 +103,10 @@ public class UserResource {
         @RequestBody ManagedUserDTO managedUserDTO, HttpServletRequest request)
         throws URISyntaxException {
         log.debug("REST request to save User : {}", managedUserDTO);
-        if (userRepository.findOneByLogin(managedUserDTO.getLogin())
+
+        //Lowercase the user login before comparing with database
+        if (userRepository
+            .findOneByLogin(managedUserDTO.getLogin().toLowerCase())
             .isPresent()) {
             return ResponseEntity.badRequest()
                 .headers(HeaderUtil.createFailureAlert("userManagement",
@@ -159,7 +163,8 @@ public class UserResource {
                     "emailexists", "E-mail already in use"))
                 .body(null);
         }
-        existingUser = userRepository.findOneByLogin(managedUserDTO.getLogin());
+        existingUser = userRepository
+            .findOneByLogin(managedUserDTO.getLogin().toLowerCase());
         if (existingUser.isPresent()
             && (!existingUser.get().getId().equals(managedUserDTO.getId()))) {
             return ResponseEntity.badRequest()
@@ -237,7 +242,7 @@ public class UserResource {
      * @param login the login of the user to find
      * @return the ResponseEntity with status 200 (OK) and with body the "login" user, or with status 404 (Not Found)
      */
-    @RequestMapping(value = "/users/{login:[_'.@a-z0-9-]+}",
+    @RequestMapping(value = "/users/{login:" + Constants.LOGIN_REGEX + "}",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
@@ -256,7 +261,7 @@ public class UserResource {
      * @param login the login of the user to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @RequestMapping(value = "/users/{login:[_'.@a-z0-9-]+}",
+    @RequestMapping(value = "/users/{login:" + Constants.LOGIN_REGEX + "}",
         method = RequestMethod.DELETE,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed

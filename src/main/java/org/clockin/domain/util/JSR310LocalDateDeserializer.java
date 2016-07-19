@@ -58,8 +58,9 @@ public class JSR310LocalDateDeserializer extends JsonDeserializer<LocalDate> {
                     return null;
                 }
                 return LocalDate.parse(string, ISO_DATE_OPTIONAL_TIME);
+            default:
+                throw context.wrongTokenException(parser, JsonToken.START_ARRAY,
+                    "Expected array or string.");
         }
-        throw context.wrongTokenException(parser, JsonToken.START_ARRAY,
-            "Expected array or string.");
     }
 }

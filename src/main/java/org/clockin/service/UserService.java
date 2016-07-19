@@ -14,6 +14,7 @@ import org.clockin.domain.User;
 import org.clockin.repository.AuthorityRepository;
 import org.clockin.repository.PersistentTokenRepository;
 import org.clockin.repository.UserRepository;
+import org.clockin.security.AuthoritiesConstants;
 import org.clockin.security.SecurityUtils;
 import org.clockin.service.util.RandomUtil;
 import org.clockin.web.rest.dto.ManagedUserDTO;
@@ -90,7 +91,8 @@ public class UserService {
         String firstName, String lastName, String email, String langKey) {
 
         User newUser = new User();
-        Authority authority = authorityRepository.findOne("ROLE_USER");
+        Authority authority = authorityRepository
+            .findOne(AuthoritiesConstants.USER);
         Set<Authority> authorities = new HashSet<>();
         String encryptedPassword = passwordEncoder.encode(password);
         newUser.setLogin(login);

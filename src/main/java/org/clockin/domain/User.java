@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -19,8 +20,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.clockin.config.Constants;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Email;
@@ -40,6 +43,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     private Long id;
 
     @NotNull
+    @Pattern(regexp = Constants.LOGIN_REGEX)
     @Size(min = 1,
         max = 100)
     @Column(length = 100,
@@ -65,12 +69,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
         length = 50)
     private String lastName;
 
-    @NotNull
     @Email
     @Size(max = 100)
     @Column(length = 100,
-        unique = true,
-        nullable = false)
+        unique = true)
     private String email;
 
     @NotNull
@@ -127,8 +129,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
         return login;
     }
 
+    //Lowercase the login before saving it in database
     public void setLogin(String login) {
-        this.login = login;
+        this.login = login.toLowerCase(Locale.ENGLISH);
     }
 
     public String getPassword() {

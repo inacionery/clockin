@@ -263,8 +263,8 @@ public class SocialServiceIntTest {
     //@Test
     public void testCreateSocialUserShouldNotCreateUserIfEmailAlreadyExist() {
         // Setup
-        User user = createExistingUser("@OTHER_LOGIN", "mail@mail.com",
-            "OTHER_FIRST_NAME", "OTHER_LAST_NAME");
+        createExistingUser("@OTHER_LOGIN", "mail@mail.com", "OTHER_FIRST_NAME",
+            "OTHER_LAST_NAME");
         long initialUserCount = userRepository.count();
         Connection<?> connection = createConnection("@LOGIN", "mail@mail.com",
             "FIRST_NAME", "LAST_NAME", "PROVIDER");
@@ -284,9 +284,8 @@ public class SocialServiceIntTest {
     //@Test
     public void testCreateSocialUserShouldNotChangeUserIfEmailAlreadyExist() {
         // Setup
-        long initialUserCount = userRepository.count();
-        User user = createExistingUser("@OTHER_LOGIN", "mail@mail.com",
-            "OTHER_FIRST_NAME", "OTHER_LAST_NAME");
+        createExistingUser("@OTHER_LOGIN", "mail@mail.com", "OTHER_FIRST_NAME",
+            "OTHER_LAST_NAME");
         Connection<?> connection = createConnection("@LOGIN", "mail@mail.com",
             "FIRST_NAME", "LAST_NAME", "PROVIDER");
 
@@ -296,7 +295,7 @@ public class SocialServiceIntTest {
         //Verify
         User userToVerify = userRepository.findOneByEmail("mail@mail.com")
             .get();
-        assertThat(userToVerify.getLogin()).isEqualTo("@OTHER_LOGIN");
+        assertThat(userToVerify.getLogin()).isEqualTo("@other_login");
         assertThat(userToVerify.getFirstName()).isEqualTo("OTHER_FIRST_NAME");
         assertThat(userToVerify.getLastName()).isEqualTo("OTHER_LAST_NAME");
 

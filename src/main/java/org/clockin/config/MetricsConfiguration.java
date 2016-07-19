@@ -159,4 +159,5 @@ public class MetricsConfiguration extends MetricsConfigurerAdapter {
             }
         }
     }
+
 }

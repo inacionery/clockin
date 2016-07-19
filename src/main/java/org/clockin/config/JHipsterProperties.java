@@ -34,6 +34,8 @@ public class JHipsterProperties {
 
     private final Social social = new Social();
 
+    private final Ribbon ribbon = new Ribbon();
+
     public Async getAsync() {
         return async;
     }
@@ -68,6 +70,10 @@ public class JHipsterProperties {
 
     public Social getSocial() {
         return social;
+    }
+
+    public Ribbon getRibbon() {
+        return ribbon;
     }
 
     public static class Async {
@@ -491,6 +497,7 @@ public class JHipsterProperties {
                 this.queueSize = queueSize;
             }
         }
+
     }
 
     public static class Social {
@@ -505,4 +512,19 @@ public class JHipsterProperties {
             this.redirectAfterSignIn = redirectAfterSignIn;
         }
     }
+
+    public static class Ribbon {
+
+        private String[] displayOnActiveProfiles;
+
+        public String[] getDisplayOnActiveProfiles() {
+            return displayOnActiveProfiles;
+        }
+
+        public void setDisplayOnActiveProfiles(
+            String[] displayOnActiveProfiles) {
+            this.displayOnActiveProfiles = displayOnActiveProfiles;
+        }
+    }
+
 }

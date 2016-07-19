@@ -9,15 +9,20 @@
 
     function EmployeeDeleteController($uibModalInstance, entity, Employee) {
         var vm = this;
+
         vm.employee = entity;
-        vm.clear = function() {
+        vm.clear = clear;
+        vm.confirmDelete = confirmDelete;
+        
+        function clear () {
             $uibModalInstance.dismiss('cancel');
-        };
-        vm.confirmDelete = function (id) {
+        }
+
+        function confirmDelete (id) {
             Employee.delete({id: id},
                 function () {
                     $uibModalInstance.close(true);
                 });
-        };
+        }
     }
 })();

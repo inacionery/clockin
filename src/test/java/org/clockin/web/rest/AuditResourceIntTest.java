@@ -85,7 +85,8 @@ public class AuditResourceIntTest {
         auditEventRepository.save(auditEvent);
 
         // Get all the audits
-        restAuditMockMvc.perform(get("/api/audits")).andExpect(status().isOk())
+        restAuditMockMvc.perform(get("/management/jhipster/audits"))
+            .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(
                 jsonPath("$.[*].principal").value(hasItem(SAMPLE_PRINCIPAL)));
@@ -97,7 +98,9 @@ public class AuditResourceIntTest {
         auditEventRepository.save(auditEvent);
 
         // Get the audit
-        restAuditMockMvc.perform(get("/api/audits/{id}", auditEvent.getId()))
+        restAuditMockMvc
+            .perform(
+                get("/management/jhipster/audits/{id}", auditEvent.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.principal").value(SAMPLE_PRINCIPAL));
@@ -114,8 +117,8 @@ public class AuditResourceIntTest {
 
         // Get the audit
         restAuditMockMvc
-            .perform(
-                get("/api/audits?fromDate=" + fromDate + "&toDate=" + toDate))
+            .perform(get("/management/jhipster/audits?fromDate=" + fromDate
+                + "&toDate=" + toDate))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(
@@ -133,8 +136,8 @@ public class AuditResourceIntTest {
 
         // Query audits but expect no results
         restAuditMockMvc
-            .perform(
-                get("/api/audits?fromDate=" + fromDate + "&toDate=" + toDate))
+            .perform(get("/management/jhipster/audits?fromDate=" + fromDate
+                + "&toDate=" + toDate))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(header().string("X-Total-Count", "0"));
@@ -143,7 +146,8 @@ public class AuditResourceIntTest {
     //@Test
     public void getNonExistingAudit() throws Exception {
         // Get the audit
-        restAuditMockMvc.perform(get("/api/audits/{id}", Long.MAX_VALUE))
+        restAuditMockMvc
+            .perform(get("/management/jhipster/audits/{id}", Long.MAX_VALUE))
             .andExpect(status().isNotFound());
     }
 

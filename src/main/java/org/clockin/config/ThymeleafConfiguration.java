@@ -11,6 +11,7 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 @Configuration
 public class ThymeleafConfiguration {
 
+    @SuppressWarnings("unused")
     private final Logger log = LoggerFactory
         .getLogger(ThymeleafConfiguration.class);
 

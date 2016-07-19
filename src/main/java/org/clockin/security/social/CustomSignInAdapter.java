@@ -16,6 +16,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 
 public class CustomSignInAdapter implements SignInAdapter {
 
+    @SuppressWarnings("unused")
     private final Logger log = LoggerFactory
         .getLogger(CustomSignInAdapter.class);
 

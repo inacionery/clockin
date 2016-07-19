@@ -1,6 +1,7 @@
 package org.clockin.security;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,7 @@ public class UserDetailsService implements
     @Transactional
     public UserDetails loadUserByUsername(final String login) {
         log.debug("Authenticating {}", login);
-        String lowercaseLogin = login.toLowerCase();
+        String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
         Optional<User> userFromDatabase = userRepository
             .findOneByLogin(lowercaseLogin);
         return userFromDatabase.map(user -> {

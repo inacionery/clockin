@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
  * REST controller for getting the audit events.
  */
 @RestController
-@RequestMapping(value = "/api/audits",
+@RequestMapping(value = "/management/jhipster/audits",
     produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuditResource {
 

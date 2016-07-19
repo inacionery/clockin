@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 /**
  * Spring Data JPA repository for the Workday entity.
  */
+@SuppressWarnings("unused")
 public interface WorkdayRepository extends JpaRepository<Workday, Long> {
 
     Workday findByEmployeeAndDate(Employee employee, LocalDate date);

@@ -1,6 +1,7 @@
 package org.clockin.service;
 
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
@@ -66,6 +67,9 @@ public class SocialService {
         String providerId) {
         String email = userProfile.getEmail();
         String userName = userProfile.getUsername();
+        if (!StringUtils.isBlank(userName)) {
+            userName = userName.toLowerCase(Locale.ENGLISH);
+        }
         if (StringUtils.isBlank(email) && StringUtils.isBlank(userName)) {
             log.error(
                 "Cannot create social user because email and login are null");

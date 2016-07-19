@@ -11,7 +11,7 @@
         <addForeignKeyConstraint baseColumnNames="workday_id"
                                  baseTableName="clockin"
                                  constraintName="fk_clockin_workday_id"
-                                 referencedColumnNames="id"      
+                                 referencedColumnNames="id"
                                  referencedTableName="workday"/>
 
         <addUniqueConstraint columnNames="sequential_register_number"

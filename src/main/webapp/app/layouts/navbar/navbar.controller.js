@@ -5,26 +5,31 @@
         .module('clockinApp')
         .controller('NavbarController', NavbarController);
 
-    NavbarController.$inject = ['$state', 'Auth', 'Principal', 'ENV', 'LoginService', '$window', '$rootScope'];
+    NavbarController.$inject = ['$state', 'Auth', 'Principal', 'ProfileService', 'LoginService', '$window', '$rootScope'];
 
-    function NavbarController ($state, Auth, Principal, ENV, LoginService, $window, $rootScope) {
+    function NavbarController ($state, Auth, Principal, ProfileService, LoginService, $window, $rootScope) {
         var vm = this;
 
         vm.isNavbarCollapsed = true;
         vm.isAuthenticated = Principal.isAuthenticated;
-        vm.inProduction = ENV === 'prod';
+
+        ProfileService.getProfileInfo().then(function(response) {
+            vm.inProduction = response.inProduction;
+            vm.swaggerDisabled = response.swaggerDisabled;
+        });
+
         vm.login = login;
         vm.logout = logout;
         vm.toggleNavbar = toggleNavbar;
         vm.collapseNavbar = collapseNavbar;
         vm.$state = $state;
 
-        function login () {
+        function login() {
             collapseNavbar();
             LoginService.open();
         }
 
-        function logout () {
+        function logout() {
             collapseNavbar();
             Auth.logout();
 			delete $window.localStorage.firstName;
@@ -32,11 +37,11 @@
             $state.go('home');
         }
 
-        function toggleNavbar () {
+        function toggleNavbar() {
             vm.isNavbarCollapsed = !vm.isNavbarCollapsed;
         }
 
-        function collapseNavbar () {
+        function collapseNavbar() {
             vm.isNavbarCollapsed = true;
         }
     }

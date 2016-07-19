@@ -3,13 +3,14 @@
 
     var jhiItemCount = {
         template: '<div class="info">' +
-                    'Exibindo {{(($ctrl.page-1) * 20)==0 ? 1:(($ctrl.page-1) * 20)}} - ' +
-                    '{{($ctrl.page * 20) < $ctrl.queryCount ? ($ctrl.page * 20) : $ctrl.queryCount}} ' +
+                    'Exibindo {{(($ctrl.page - 1) * $ctrl.itemsPerPage) == 0 ? 1 : (($ctrl.page - 1) * $ctrl.itemsPerPage + 1)}} - ' +
+                    '{{($ctrl.page * $ctrl.itemsPerPage) < $ctrl.queryCount ? ($ctrl.page * $ctrl.itemsPerPage) : $ctrl.queryCount}} ' +
                     'de {{$ctrl.queryCount}} resultados.' +
                 '</div>',
         bindings: {
             page: '<',
-            queryCount: '<total'
+            queryCount: '<total',
+            itemsPerPage: '<'
         }
     };
 

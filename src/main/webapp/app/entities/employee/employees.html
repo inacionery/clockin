@@ -6,7 +6,7 @@
          <div class="col-xs-4 no-padding-left">
             <button class="btn btn-primary" ui-sref="employee.new" >
             <span class="glyphicon glyphicon-plus"></span>
-            <span class="hidden-xs"  translate="clockinApp.employee.home.createLabel">
+            <span  translate="clockinApp.employee.home.createLabel">
             Create new Employee
             </span>
             </button>
@@ -19,7 +19,6 @@
          <thead>
             <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
                <th jh-sort-by="socialIdentificationNumber"><span translate="clockinApp.employee.socialIdentificationNumber">Social Identification Number</span> <span class="glyphicon glyphicon-sort"></span></th>
-               <!--  <th jh-sort-by="plannedDailyHours"><span translate="clockinApp.employee.plannedDailyHours">Planned Daily Hours</span> <span class="glyphicon glyphicon-sort"></span></th> -->
                <th jh-sort-by="user.firstName"><span translate="clockinApp.employee.user">User</span> <span class="glyphicon glyphicon-sort"></span></th>
                <th></th>
             </tr>
@@ -27,7 +26,6 @@
          <tbody>
             <tr ng-repeat="employee in vm.employees track by employee.id">
                <td>{{employee.socialIdentificationNumber}}</td>
-               <!-- <td>{{employee.plannedDailyHours}}</td> -->
                <td>
                   {{employee.user.firstName}} {{employee.user.lastName}} - {{employee.user.email}}
                </td>
@@ -58,7 +56,7 @@
       </table>
    </div>
    <div class="text-center">
-      <jhi-item-count page="vm.page" total="vm.queryCount"></jhi-item-count>
+      <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
       <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
    </div>
 </div>
