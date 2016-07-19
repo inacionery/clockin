@@ -64,7 +64,7 @@ public class Clockin implements Serializable {
     }
 
     public LocalTime getTime() {
-        return time.toLocalTime();
+        return time != null ? time.toLocalTime() : null;
     }
 
     public void setTime(LocalDateTime time) {

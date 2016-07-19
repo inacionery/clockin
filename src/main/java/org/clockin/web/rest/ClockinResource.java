@@ -290,12 +290,13 @@ public class ClockinResource {
             workday.setDate(date);
         }
 
-        if (workDone != null && !workPlanned.equals(workday.getWorkDone())) {
+        if (workDone != null && (workday.getWorkDone() == null
+            || !workPlanned.equals(workday.getWorkDone()))) {
             workday.setWorkDone(workDone);
         }
 
-        if (workPlanned != null
-            && !workPlanned.equals(workday.getWorkPlanned())) {
+        if (workPlanned != null && (workday.getWorkPlanned() == null
+            || !workPlanned.equals(workday.getWorkPlanned()))) {
             workday.setWorkDone(workPlanned);
         }
 
@@ -313,11 +314,13 @@ public class ClockinResource {
             clockin.setSequentialRegisterNumber(String.valueOf(id));
         }
 
-        if (workday != null && !workday.equals(clockin.getWorkday())) {
+        if (workday != null && (clockin.getWorkday() == null
+            || !workday.equals(clockin.getWorkday()))) {
             clockin.setWorkday(workday);
         }
 
-        if (time != null && !time.equals(clockin.getTime())) {
+        if (time != null
+            && (clockin.getTime() == null || !time.equals(clockin.getTime()))) {
             clockin.setTime(time);
         }
 
