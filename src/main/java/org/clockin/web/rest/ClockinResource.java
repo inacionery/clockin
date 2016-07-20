@@ -108,16 +108,21 @@ public class ClockinResource {
                         break;
                     }
 
-                    workDayDTO.setWorkDone(workday.getWorkDone());
-                    workDayDTO.setWorkPlanned(workday.getWorkPlanned());
+                    List<Clockin> clockins = clockinService
+                        .findByWorkday(workday);
 
-                    balance += workday.getWorkDone();
-                    workDayDTO.setBalance(balance);
-
-                    for (Clockin clockin : clockinService
-                        .findByWorkday(workday)) {
+                    for (Clockin clockin : clockins) {
                         workDayDTO.addClockinValues(clockin);
                     }
+
+                    workDayDTO.setWorkPlanned(workday.getWorkPlanned());
+
+                    if (clockins.size() % 2 == 0) {
+                        workDayDTO.setWorkDone(workday.getWorkDone());
+                        balance += workday.getWorkDone();
+                        workDayDTO.setBalance(balance);
+                    }
+
                 }
 
                 workDays.add(workDayDTO);
