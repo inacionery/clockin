@@ -18,7 +18,7 @@
          <div flex-xs="grow" flex-gt-xs="grow" flex-gt-sm="50">
             <div class="table-row"
                ng-repeat="workday in vm.firstHalf(vm.workdays)" layout="row">
-               <div flex="20" layout="column" class="month-title table-header">
+               <div flex="25" layout="column" class="month-title table-header">
                   <div class="date-label {{(workday.isMissing && ((workday.date | date:'dd') != (vm.today | date:'dd'))) ? 'warning' : ''}}">
                      <p class="md-caption week-day">
                         {{workday.date | date:"EEE" | capitalize}}
@@ -37,18 +37,12 @@
                      <p class="md-body-1">{{clockin.time}}</p>
                   </md-grid-tile>
                </md-grid-list>
-               <div ng-if="workday.workPlanned > 0" flex="15">
-                  <p class="md-subhead">{{vm.balanceHours(workday.workDone)}}</p>
-               </div>
-               <div ng-if="workday.workPlanned > 0" flex="5">
-                  <p class="md-subhead">{{vm.balanceHours(workday.balance)}}</p>
-               </div>
             </div>
          </div>
          <div flex-xs="grow" flex-gt-xs="grow" flex-gt-sm="50">
             <div class="table-row"
                ng-repeat="workday in vm.lastHalf(vm.workdays)" layout="row">
-               <div flex="20" layout="column" class="month-title table-header">
+               <div flex="25" layout="column" class="month-title table-header">
                   <div class="date-label {{(workday.isMissing && ((workday.date | date:'dd') != (vm.today | date:'dd'))) ? 'warning' : ''}}">
                      <p class="md-caption week-day">
                         {{workday.date | date:"EEE" | capitalize}}
@@ -67,12 +61,6 @@
                      <p class="md-body-1">{{clockin.time}}</p>
                   </md-grid-tile>
                </md-grid-list>
-               <div ng-if="workday.workPlanned > 0" flex="15">
-                  <p class="md-subhead">{{vm.balanceHours(workday.workDone)}}</p>
-               </div>
-               <div ng-if="workday.workPlanned > 0" flex="5">
-                  <p class="md-subhead">{{vm.balanceHours(workday.balance)}}</p>
-               </div>
             </div>
          </div>
       </div>
