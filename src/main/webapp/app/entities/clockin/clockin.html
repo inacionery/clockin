@@ -73,7 +73,7 @@
                                           {{clockin.time}}
                                        </ng-repeat>
                                     </md-content>
-                                    <span ng-if="workday.workPlanned > 0" class="md-headline">Saldo: <span ng-class="workday.workDone > 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workDone)}}</span></span>
+                                    <span ng-if="workday.workPlanned > 0" class="md-headline">Saldo: <span ng-class="workday.workDone >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workDone)}}</span></span>
                                  </md-card-title-text>
                               </md-card-title>
                            </md-card>
