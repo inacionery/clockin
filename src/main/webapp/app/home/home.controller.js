@@ -29,9 +29,9 @@
                 if (vm.account) {
                     $rootScope.firstName = $window.localStorage.firstName = vm.account.firstName;
 
-                    $state.go("clockin-table", {
+                    $state.go("clockin", {
                         year: eval(today.getFullYear()).toString(),
-                        month: eval(today.getMonth() + 1).toString()
+                        semester: eval(today.getMonth() > 5 ? 1 : 0).toString()
                     });
                 }
             });

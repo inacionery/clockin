@@ -1,0 +1,126 @@
+md-tab-item.md-tab.ng-scope.ng-isolate-scope.md-ink-ripple.md-disabled {
+    opacity: 1;
+    color: rgba(0, 0, 0, 0.54);
+}
+md-tooltip ._md-content {
+    margin: -8px;
+    margin-left: -16px;
+    margin-right: -16px;
+    background-color: #d3d3d3;
+    height: auto;
+}
+md-tooltip md-card {
+    background-color: #d3d3d3;
+}
+span.glyphicon.glyphicon-chevron-left,
+span.glyphicon.glyphicon-chevron-right {
+    padding: 15px;
+}
+.warning,
+.warning:hover {
+    background: #fff173;
+}
+md-tabs-canvas,
+md-pagination-wrapper {
+    height: 80px;
+}
+.bordered {
+    border: solid 1px #eaeaea;
+}
+.date-cell {
+    width: 100%;
+    height: 100%;
+    padding-right: 10px;
+}
+.date-cell .layout-column {
+    margin: 0px 10px 5px 10px;
+}
+.date-cell .layout-row .date-more {
+    margin: 0px 0px 15px 0px;
+}
+.top-bordered {
+    border-style: solid none none none;
+    border-color: #ccc;
+    border-width: 2px;
+}
+.dateDisable {
+    color: #ccc;
+}
+.dateEnable:hover {
+    -webkit-transition-delay: 192ms;
+    /* Safari */
+    
+    transition-delay: 192ms;
+    background-color: #78ddfa;
+    transition: all 400ms ease-out 50ms;
+}
+md-grid-tile {
+    transition: all 400ms ease-out 50ms;
+}
+.dialogdemoBasicUsage #popupContainer {
+    position: relative;
+}
+.dialogdemoBasicUsage .footer {
+    width: 100%;
+    text-align: center;
+    margin-left: 20px;
+}
+.dialogdemoBasicUsage .footer,
+.dialogdemoBasicUsage .footer > code {
+    font-size: 0.8em;
+    margin-top: 50px;
+}
+.dialogdemoBasicUsage button {
+    width: 200px;
+}
+.dialogdemoBasicUsage div#status {
+    color: #c60008;
+}
+.month-title {
+    text-align: center;
+    margin-top: -20px;
+}
+.month-changer {
+    font-size: 20px;
+    cursor: pointer;
+    color: #0F95BF;
+}
+body .dates p {
+    font-size: 1.2em;
+}
+.bg form > ._md,
+md-tabs.md-default-theme md-ink-bar,
+md-tabs md-ink-bar {
+    background: #00c0ef;
+}
+.md-button.btn.btn-info {
+    width: 190px;
+    font-weight: 600;
+    background-color: #00c0ef!important;
+}
+.date-warning {
+    position: absolute;
+    top: 10px;
+    left: 13px;
+    background: transparent!important;
+    font-size: 0.81em;
+    opacity: 0.8;
+}
+md-tabs.md-default-theme .md-tab.md-active,
+md-tabs .md-tab.md-active,
+md-tabs.md-default-theme .md-tab.md-active md-icon,
+md-tabs .md-tab.md-active md-icon,
+md-tabs.md-default-theme .md-tab.md-focused,
+md-tabs .md-tab.md-focused,
+md-tabs.md-default-theme .md-tab.md-focused md-icon,
+md-tabs .md-tab.md-focused md-icon,
+md-tabs.md-default-theme md-ink-bar,
+md-tabs md-ink-bar {
+    color: #00c0ef;
+}
+#month-prev::before {
+    content: '\25c2';
+}
+#month-next::before {
+    content: '\25b8';
+}

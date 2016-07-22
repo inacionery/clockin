@@ -22,6 +22,7 @@ import org.clockin.security.SecurityUtils;
 import org.clockin.service.ClockinService;
 import org.clockin.service.EmployeeService;
 import org.clockin.service.WorkdayService;
+import org.clockin.web.rest.dto.MonthDTO;
 import org.clockin.web.rest.dto.WorkDayDTO;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,133 +58,68 @@ public class ClockinResource {
     private UserRepository userRepository;
 
     /**
-     * GET /workdays/ /workdays/{year}/{month} -> get all workdays.
+     * GET /clockin/{year}/{semester} -> get all workdays by year and semester.
      * @throws ParseException
      */
-    @RequestMapping(value = { "/workdays/{year}/{month}" },
+    @RequestMapping(value = { "/clockin/{year}/{semester}" },
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<WorkDayDTO> getWorkDaysByYearMonthToTable(
+    public List<MonthDTO> getWorkDaysByYearSemester(
         @PathVariable(value = "year") Optional<Integer> yearParam,
-        @PathVariable(value = "month") Optional<Integer> monthParam)
+        @PathVariable(value = "semester") Optional<Integer> semesterParam)
         throws URISyntaxException, ParseException {
 
         int year = LocalDate.now().getYear();
-        int month = LocalDate.now().getMonth().getValue();
+        int semester = LocalDate.now().getMonth().getValue() > 6 ? 1 : 0;
 
         if (yearParam.isPresent()) {
             year = yearParam.get();
         }
-        if (monthParam.isPresent()) {
-            month = monthParam.get();
+        if (semesterParam.isPresent()) {
+            semester = semesterParam.get();
         }
-        LocalDate startDate = LocalDate.of(year, month, 1);
-        LocalDate endDate = LocalDate.of(year, month,
-            startDate.lengthOfMonth());
 
+        int[] months;
+        if (semester == 0) {
+            months = new int[] { 1, 2, 3, 4, 5, 6 };
+        }
+        else {
+            months = new int[] { 7, 8, 9, 10, 11, 12 };
+        }
+
+        List<MonthDTO> monthList = new ArrayList<>();
         Optional<User> user = userRepository
             .findOneByLogin(SecurityUtils.getCurrentUserLogin());
         Employee employee = employeeService.findByUser(user.get());
 
-        List<WorkDayDTO> workDays = new ArrayList<>();
-
         if (employee != null) {
-            List<Workday> workdays = workdayService
-                .findByEmployeeAndDateBetweenOrderByDate(employee, startDate,
-                    endDate);
+            for (int i = 0; i < months.length; i++) {
+                int month = months[i];
 
-            int workdayCount = 0;
-            long balance = 0;
-            for (int i = 1; i <= startDate.lengthOfMonth(); i++) {
-                LocalDate curDate = LocalDate.of(year, month, i);
+                LocalDate startDate = LocalDate.of(year, month, 1);
+                LocalDate endDate = LocalDate.of(year, month,
+                    startDate.lengthOfMonth());
 
-                WorkDayDTO workDayDTO = new WorkDayDTO(curDate);
+                MonthDTO monthDTO = new MonthDTO(startDate);
 
-                for (int j = workdayCount; j < workdays.size(); j++) {
-                    Workday workday = workdays.get(j);
-
-                    if (!workday.getDate().isEqual(curDate)) {
-                        workdayCount = j;
-                        break;
-                    }
-
-                    List<Clockin> clockins = clockinService
-                        .findByWorkday(workday);
-
-                    for (Clockin clockin : clockins) {
-                        workDayDTO.addClockinValues(clockin);
-                    }
-
-                    workDayDTO.setWorkPlanned(workday.getWorkPlanned());
-
-                    if (clockins.size() % 2 == 0) {
-                        workDayDTO.setWorkDone(workday.getWorkDone());
-                        balance += workday.getWorkDone();
-                        workDayDTO.setBalance(balance);
-                    }
-
+                int diff = startDate.getDayOfWeek().getValue() == 7 ? 0
+                    : startDate.getDayOfWeek().getValue();
+                LocalDate previousDate = endDate.minusMonths(1);
+                for (int l = 0; l < diff; l++) {
+                    LocalDate curDate = previousDate.minusDays(diff - l - 1);
+                    WorkDayDTO workDayDTO = new WorkDayDTO(curDate);
+                    monthDTO.addWorkDay(workDayDTO);
                 }
 
-                workDays.add(workDayDTO);
-            }
-        }
-
-        return workDays;
-    }
-
-    /**
-     * GET -> get all workdays.
-     * @throws ParseException
-     */
-    @RequestMapping(value = { "/workdays-calendar/{year}/{month}" },
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public List<WorkDayDTO> getWorkDaysByYearMonthToCalendar(
-        @PathVariable(value = "year") Optional<Integer> yearParam,
-        @PathVariable(value = "month") Optional<Integer> monthParam)
-        throws URISyntaxException, ParseException {
-
-        int year = LocalDate.now().getYear();
-        int month = LocalDate.now().getMonth().getValue();
-
-        if (yearParam.isPresent()) {
-            year = yearParam.get();
-        }
-        if (monthParam.isPresent()) {
-            month = monthParam.get();
-        }
-        LocalDate startDate = LocalDate.of(year, month, 1);
-        LocalDate endDate = LocalDate.of(year, month,
-            startDate.lengthOfMonth());
-
-        Optional<User> user = userRepository
-            .findOneByLogin(SecurityUtils.getCurrentUserLogin());
-        Employee employee = employeeService.findByUser(user.get());
-
-        List<WorkDayDTO> workDays = new ArrayList<>();
-
-        if (employee != null) {
-
-            int diff = startDate.getDayOfWeek().getValue() == 7 ? 0
-                : startDate.getDayOfWeek().getValue();
-            LocalDate previousDate = endDate.minusMonths(1);
-            for (int i = 0; i < diff; i++) {
-                LocalDate curDate = previousDate.minusDays(diff - i - 1);
-                WorkDayDTO workDayDTO = new WorkDayDTO(curDate);
-                workDays.add(workDayDTO);
-            }
-
-            if (employee != null) {
                 List<Workday> workdays = workdayService
                     .findByEmployeeAndDateBetweenOrderByDate(employee,
                         startDate, endDate);
 
                 int workdayCount = 0;
-                long balance = 0;
-                for (int i = 1; i <= startDate.lengthOfMonth(); i++) {
-                    LocalDate curDate = LocalDate.of(year, month, i);
+                long hours = 0;
+                for (int k = 1; k <= startDate.lengthOfMonth(); k++) {
+                    LocalDate curDate = LocalDate.of(year, month, k);
 
                     WorkDayDTO workDayDTO = new WorkDayDTO(curDate);
 
@@ -195,32 +131,36 @@ public class ClockinResource {
                             break;
                         }
 
-                        workDayDTO.setWorkDone(workday.getWorkDone());
                         workDayDTO.setWorkPlanned(workday.getWorkPlanned());
 
-                        balance += workday.getWorkDone();
-                        workDayDTO.setBalance(balance);
+                        List<Clockin> clockins = clockinService
+                            .findByWorkday(workday);
 
-                        for (Clockin clockin : clockinService
-                            .findByWorkday(workday)) {
-                            workDayDTO.addClockinValues(clockin);
+                        workDayDTO.setClockinValues(clockins);
+
+                        if (clockins.size() % 2 == 0) {
+                            workDayDTO.setWorkDone(workday.getWorkDone());
+                            hours += workday.getWorkDone();
+                            monthDTO.setHours(hours);
                         }
                     }
-
-                    workDays.add(workDayDTO);
+                    monthDTO.addWorkDay(workDayDTO);
                 }
-            }
 
-            diff = 42 - workDays.size();
-            LocalDate nextStartDate = startDate.plusMonths(1).withDayOfMonth(1);
-            for (int i = 0; i < diff; i++) {
-                LocalDate curDate = nextStartDate.plusDays(i);
-                WorkDayDTO workDayDTO = new WorkDayDTO(curDate);
-                workDays.add(workDayDTO);
-            }
+                diff = 42 - monthDTO.getWorkDays().size();
+                LocalDate nextStartDate = startDate.plusMonths(1)
+                    .withDayOfMonth(1);
+                for (int l = 0; l < diff; l++) {
+                    LocalDate curDate = nextStartDate.plusDays(l);
+                    WorkDayDTO workDayDTO = new WorkDayDTO(curDate);
+                    monthDTO.addWorkDay(workDayDTO);
+                }
 
+                monthList.add(monthDTO);
+            }
         }
-        return workDays;
+
+        return monthList;
     }
 
     /**

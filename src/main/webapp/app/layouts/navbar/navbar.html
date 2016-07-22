@@ -9,15 +9,9 @@
                Olá, {{firstName}}
             </li>
             <li ui-sref-active="active" >
-               <a ui-sref="clockin-calendar" ng-click="vm.collapseNavbar()">
+               <a ui-sref="clockin" ng-click="vm.collapseNavbar()">
                <span class="glyphicon glyphicon-calendar"></span>&nbsp;
-               <span class="hidden-sm" translate="global.menu.entities.calendar">Clockin calendar</span>
-               </a>
-            </li>
-            <li ui-sref-active="active" >
-               <a ui-sref="clockin-table" ng-click="vm.collapseNavbar()">
-               <span class="glyphicon glyphicon-list-alt"></span>&nbsp;
-               <span class="hidden-sm" translate="global.menu.entities.list">Clockin list</span>
+               <span class="hidden-sm" translate="global.menu.entities.calendar">Clockin</span>
                </a>
             </li>
             <li ng-class="{active: vm.$state.includes('admin')}"  ng-switch-when="true" has-authority="ROLE_ADMIN" uib-dropdown class="dropdown pointer">

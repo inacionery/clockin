@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 @SuppressWarnings("unused")
 public interface ClockinRepository extends JpaRepository<Clockin, Long> {
 
-    List<Clockin> findByWorkday(Workday workday);
+    List<Clockin> findByWorkdayOrderByTime(Workday workday);
 
     Clockin findBySequentialRegisterNumber(String sequentialRegisterNumber);
 

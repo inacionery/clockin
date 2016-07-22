@@ -11,55 +11,16 @@
 
     function stateConfig($stateProvider) {
         $stateProvider
-            .state('clockin-table', {
+            .state('clockin', {
                 parent: 'entity',
-                url: '/workdays/{year}/{month}',
+                url: '/clockin/{year}/{semester}',
                 params: {
                     year: {
                         value: eval(today.getFullYear()).toString(),
                         squash: false,
                     },
-                    month: {
-                        value: eval(today.getMonth() + 1).toString(),
-                        squash: false,
-                    },
-                },
-                data: {
-                    authorities: ['ROLE_USER'],
-                    pageTitle: 'clockinApp.clockin.home.title'
-                },
-                views: {
-                    'content@': {
-                        templateUrl: 'app/entities/clockin/clockin-table.html',
-                        controller: 'ClockinTableController',
-                        controllerAs: 'vm'
-                    }
-                },
-                resolve: {
-                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('clockin');
-                        $translatePartialLoader.addPart('registryType');
-                        $translatePartialLoader.addPart('global');
-                        return $translate.refresh();
-                    }],
-                    entity: ['$stateParams', 'ClockinTable', function($stateParams, ClockinTable) {
-                        return ClockinTable.query({
-                            year: $stateParams.year,
-                            month: $stateParams.month
-                        }).$promise;
-                    }]
-                }
-            })
-            .state('clockin-calendar', {
-                parent: 'entity',
-                url: '/workdays-calendar/{year}/{month}',
-                params: {
-                    year: {
-                        value: eval(today.getFullYear()).toString(),
-                        squash: false,
-                    },
-                    month: {
-                        value: eval(today.getMonth() + 1).toString(),
+                    semester: {
+                        value: eval(today.getMonth() > 5 ? 1 : 0).toString(),
                         squash: false,
                     },
                 },
@@ -69,8 +30,8 @@
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'app/entities/clockin/clockin-calendar.html',
-                        controller: 'ClockinCalendarController',
+                        templateUrl: 'app/entities/clockin/clockin.html',
+                        controller: 'ClockinController',
                         controllerAs: 'vm'
                     }
                 },
@@ -81,10 +42,10 @@
                         $translatePartialLoader.addPart('global');
                         return $translate.refresh();
                     }],
-                    entity: ['$stateParams', 'ClockinCalendar', function($stateParams, ClockinCalendar) {
-                        return ClockinCalendar.query({
+                    entity: ['$stateParams', 'Clockin', function($stateParams, Clockin) {
+                        return Clockin.query({
                             year: $stateParams.year,
-                            month: $stateParams.month
+                            semester: $stateParams.semester
                         }).$promise;
                     }]
                 }

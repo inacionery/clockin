@@ -2,19 +2,21 @@
     'use strict';
     angular
         .module('clockinApp')
-        .factory('ClockinTable', ClockinTable)
-    	.factory('ClockinCalendar', ClockinCalendar);
+        .factory('Clockin', Clockin);
 
-    ClockinTable.$inject = ['$resource', 'DateUtils'];
+    Clockin.$inject = ['$resource', 'DateUtils'];
 
-    function ClockinTable ($resource, DateUtils) {
-        var resourceUrl =  'api/workdays/:year/:month';
+    function Clockin($resource, DateUtils) {
+        var resourceUrl = 'api/clockin/:year/:semester';
 
         return $resource(resourceUrl, {}, {
-            'query': { method: 'GET', isArray: true},
+            'query': {
+                method: 'GET',
+                isArray: true
+            },
             'get': {
                 method: 'GET',
-                transformResponse: function (data) {
+                transformResponse: function(data) {
                     if (data) {
                         data = angular.fromJson(data);
                         data.time = DateUtils.convertDateTimeFromServer(data.time);
@@ -22,28 +24,9 @@
                     return data;
                 }
             },
-            'update': { method:'PUT' }
+            'update': {
+                method: 'PUT'
+            }
         });
-    };
-
-    ClockinCalendar.$inject = ['$resource', 'DateUtils'];
-    
-    function ClockinCalendar ($resource, DateUtils) {
-    	var resourceUrl =  'api/workdays-calendar/:year/:month';
-    	
-    	return $resource(resourceUrl, {}, {
-    		'query': { method: 'GET', isArray: true},
-    		'get': {
-    			method: 'GET',
-    			transformResponse: function (data) {
-    				if (data) {
-                        data = angular.fromJson(data);
-                        data.time = DateUtils.convertDateTimeFromServer(data.time);
-                    }
-    				return data;
-    			}
-    		},
-    		'update': { method:'PUT' }
-    	});
     }
 })();

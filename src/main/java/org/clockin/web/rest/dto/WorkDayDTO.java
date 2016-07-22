@@ -20,20 +20,10 @@ public class WorkDayDTO {
 
     private Long workDone;
     private Long workPlanned;
-    private Long balance;
 
     public WorkDayDTO(LocalDate date) {
         this.date = date;
         this.clockins = new ArrayList<>();
-    }
-
-    public void addClockinValues(Clockin... clockins) {
-
-        if (clockins != null) {
-            for (Clockin Clockin : clockins) {
-                this.clockins.add(Clockin);
-            }
-        }
     }
 
     public boolean getIsMissing() {
@@ -71,13 +61,4 @@ public class WorkDayDTO {
     public Long getWorkDone() {
         return workDone;
     }
-
-    public Long getBalance() {
-        return balance;
-    }
-
-    public void setBalance(Long balance) {
-        this.balance = balance;
-    }
-
 }

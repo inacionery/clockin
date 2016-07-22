@@ -76,7 +76,7 @@ public class ClockinServiceImpl implements ClockinService {
     @Transactional(readOnly = true)
     public List<Clockin> findByWorkday(Workday workday) {
         log.debug("Request to get Clockin by Workday: {}", workday);
-        return clockinRepository.findByWorkday(workday);
+        return clockinRepository.findByWorkdayOrderByTime(workday);
     }
 
     @Transactional(readOnly = true)
