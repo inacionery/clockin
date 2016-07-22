@@ -68,12 +68,12 @@
                            <md-card>
                               <md-card-title>
                                  <md-card-title-text layout-align="center center">
-                                    <span ng-if="workday.workPlanned > 0" class="md-headline">Saldo do dia: {{vm.balanceHours(workday.workDone)}}</span>
                                     <md-content ng-if="workday.clockinValues.length > 0" class="md-headline" flex layout-padding>
                                        <ng-repeat ng-repeat="clockin in workday.clockinValues track by clockin.id">
                                           {{clockin.time}}
                                        </ng-repeat>
                                     </md-content>
+                                    <span ng-if="workday.workPlanned > 0" class="md-headline">Saldo: <span ng-class="workday.workDone > 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workDone)}}</span></span>
                                  </md-card-title-text>
                               </md-card-title>
                            </md-card>
@@ -86,7 +86,7 @@
                <md-tab-label>
                   <div hide-xs hide-sm hide-md >
                      <p>Total do Período</p>
-                     <span> {{vm.semesterHours(vm.months)}}</span>
+                     <span>{{vm.semesterHours(vm.months)}}</span>
                   </div>
                </md-tab-label>
             </md-tab>

@@ -1,4 +1,13 @@
-md-tab-item.md-tab.ng-scope.ng-isolate-scope.md-ink-ripple.md-disabled {
+.font-green{
+	color: #77d55a;
+}
+.font-red{
+	color: #e64545;
+}
+md-content {
+	font-size: 0.8em;
+}
+md-tab-item.md-tab.md-ink-ripple.md-disabled {
     opacity: 1;
     color: rgba(0, 0, 0, 0.54);
 }
@@ -6,11 +15,16 @@ md-tooltip ._md-content {
     margin: -8px;
     margin-left: -16px;
     margin-right: -16px;
-    background-color: #d3d3d3;
+    background-color: #FFFFFF;
     height: auto;
 }
 md-tooltip md-card {
-    background-color: #d3d3d3;
+    background-color: #FFFFFF;
+}
+md-content.md-headline,
+span.md-headline {
+	font-size: 1.5em;
+	background-color: #FFFFFF;
 }
 span.glyphicon.glyphicon-chevron-left,
 span.glyphicon.glyphicon-chevron-right {
@@ -84,9 +98,6 @@ md-grid-tile {
     font-size: 20px;
     cursor: pointer;
     color: #0F95BF;
-}
-body .dates p {
-    font-size: 1.2em;
 }
 .bg form > ._md,
 md-tabs.md-default-theme md-ink-bar,
