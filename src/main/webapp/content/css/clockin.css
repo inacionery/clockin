@@ -135,3 +135,9 @@ md-tabs md-ink-bar {
 #month-next::before {
     content: '\25b8';
 }
+.tooltip-days-content {
+    flex-wrap: wrap;
+    overflow: initial;
+    text-align: center;
+    width: 250px;
+}
