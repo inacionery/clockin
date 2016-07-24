@@ -32,7 +32,7 @@
                   </md-grid-list>
                   <md-grid-list
                      md-cols="7"
-                     md-row-height-gt-lg="7:3" md-row-height-gt-md="3:2" md-row-height="2:1"
+                     md-row-height-gt-lg="7:3" md-row-height-gt-md="4:2" md-row-height="2:1"
                      md-gutter="0px">
                      <md-grid-tile 
                         ng-repeat="workday in month.workDays"
@@ -43,22 +43,24 @@
                            <div layout="row" layout-align="end start">
                               <div>{{workday.date | date:"dd" }}</div>
                            </div>
-                           <div hide-xs hide-sm layout="row" layout-align="center center">
-                              <div ng-class="$index == 1 ? 'hide-md' : ''" layout="column" ng-repeat="clockin in vm.firstClockin(workday.clockinValues) track by clockin.id">
-                                 {{clockin.time}}
+                           <div layout="column" class="date-cell" layout-align="center center">
+                              <div hide-xs hide-sm layout="row" layout-align="center center">
+                                 <div ng-class="$index == 1 ? 'hide-md' : ''" layout="column" ng-repeat="clockin in vm.firstClockin(workday.clockinValues) track by clockin.id">
+                                    {{clockin.time}}
+                                 </div>
                               </div>
-                           </div>
-                           <div layout="row" layout-align="center center">
-                              <div hide-xs hide-sm hide-md class="date-more" layout="column" ng-if="workday.clockinValues.length > 4">
-                                 ...
+                              <div layout="row" layout-align="center center">
+                                 <div hide-xs hide-sm hide-md class="date-more" layout="column" ng-if="workday.clockinValues.length > 4">
+                                    ...
+                                 </div>
+                                 <div hide-xs hide-sm hide-lg hide-gt-md class="date-more" layout="column" ng-if="workday.clockinValues.length > 1">
+                                    ...
+                                 </div>
                               </div>
-                              <div hide-xs hide-sm hide-lg hide-gt-md class="date-more" layout="column" ng-if="workday.clockinValues.length > 1">
-                                 ...
-                              </div>
-                           </div>
-                           <div hide-xs hide-sm layout="row" layout-align="center center">
-                              <div ng-class="$index == 0 ? 'hide-md' : ''" layout="column" ng-repeat="clockin in vm.lastClockin(workday.clockinValues) track by clockin.id">
-                                 {{clockin.time}}
+                              <div hide-xs hide-sm layout="row" layout-align="center center">
+                                 <div ng-class="$index == 0 ? 'hide-md' : ''" layout="column" ng-repeat="clockin in vm.lastClockin(workday.clockinValues) track by clockin.id">
+                                    {{clockin.time}}
+                                 </div>
                               </div>
                            </div>
                         </div>
