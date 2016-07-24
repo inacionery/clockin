@@ -95,6 +95,7 @@ md-tabs md-ink-bar {
 }
 .md-button.btn.btn-info {
     width: 190px;
+    max-width: 90%;
     font-weight: 600;
     background-color: #00c0ef!important;
 }

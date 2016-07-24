@@ -42,8 +42,9 @@ body.bg-dark footer {
     display: block;
 }
 .login-box {
-    width: 50%;
-    margin: 28vh auto 10vh;
+    width: 700px;
+    max-width: 90%;
+    margin: 20vh auto 10vh;
 }
 .clockins .md-button {
     border-radius: 0;
