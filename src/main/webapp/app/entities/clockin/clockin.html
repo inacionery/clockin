@@ -36,7 +36,7 @@
                      md-gutter="0px">
                      <md-grid-tile 
                         ng-repeat="workday in month.workDays"
-                        class="bordered {{ workday.clockinValues.length > 0 ? 'dateEnable' : 'dateDisable' }} dates">
+                        class="bordered {{ workday.clockinValues.length > 0 ? 'dateEnable' : 'dateDisable' }} dates {{((workday.date | date:'dd') == (vm.today | date:'dd')) ? 'today': ''}}">
                         <div flex="5" layout="column" class="date-cell" ng-class="{'warning bordered': (workday.isMissing || (workday.workPlanned > 0 && (workday.workPlanned == (workday.workDone * -1)))) && ((workday.date | date:'dd') < (vm.today | date:'dd'))}">
                         </div>
                         <div flex="95" layout="column" class="date-cell">
