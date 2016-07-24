@@ -60,17 +60,6 @@ md-pagination-wrapper {
 .dateDisable {
     color: #ccc;
 }
-.dateEnable:hover {
-    -webkit-transition-delay: 192ms;
-    /* Safari */
-    
-    transition-delay: 192ms;
-    background-color: #78ddfa;
-    transition: all 400ms ease-out 50ms;
-}
-md-grid-tile {
-    transition: all 400ms ease-out 50ms;
-}
 .dialogdemoBasicUsage #popupContainer {
     position: relative;
 }

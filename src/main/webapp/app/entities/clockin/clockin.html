@@ -16,7 +16,7 @@
                <md-tab-label>
                   <p hide-xs hide-sm hide-md>{{month.date | date:'MMMM' | capitalize}}</p>
                   <p hide-lg hide-gt-md>{{month.date | date:'MMM'}}</p>
-                  <p hide-xs hide-sm>{{vm.balanceHours(month.hours)}}</p>
+                  <p hide-xs>{{vm.balanceHours(month.hours)}}</p>
                </md-tab-label>
                <md-tab-body>
                   <md-grid-list
@@ -31,14 +31,12 @@
                      </md-grid-tile>
                   </md-grid-list>
                   <md-grid-list
-                     md-cols-xs="7" md-cols-sm="7" md-cols-md="7" md-cols-gt-md="7"
-                     md-row-height-gt-md="10:1" md-row-height="10:1" md-row-height-xs="5:1"
-                     md-gutter="0px" md-gutter-gt-sm="0px" >
+                     md-cols="7"
+                     md-row-height-gt-lg="7:3" md-row-height-gt-md="3:2" md-row-height="2:1"
+                     md-gutter="0px">
                      <md-grid-tile 
                         ng-repeat="workday in month.workDays"
-                        class="bordered {{ workday.clockinValues.length > 0 ? 'dateEnable' : 'dateDisable' }} dates"
-                        md-rowspan="4" sm-rowspan="4" xs-rowspan="1"
-                        md-colspan="1" md-colspan-sm="1" md-colspan-xs="1">
+                        class="bordered {{ workday.clockinValues.length > 0 ? 'dateEnable' : 'dateDisable' }} dates">
                         <div flex="5" layout="column" class="date-cell" ng-class="{'warning bordered': (workday.isMissing || (workday.workPlanned > 0 && (workday.workPlanned == (workday.workDone * -1)))) && ((workday.date | date:'dd') < (vm.today | date:'dd'))}">
                         </div>
                         <div flex="95" layout="column" class="date-cell">
@@ -84,8 +82,8 @@
             </md-tab>
             <md-tab ng-disabled="true">
                <md-tab-label>
-                  <div hide-xs hide-sm hide-md >
-                     <p>Total do Período</p>
+                  <div hide-xs>
+                     <p>Total</p>
                      <span>{{vm.semesterHours(vm.months)}}</span>
                   </div>
                </md-tab-label>
