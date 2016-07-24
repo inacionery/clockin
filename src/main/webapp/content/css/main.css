@@ -27,6 +27,7 @@ body.bg-dark footer {
     color: #fff;
     font-size: 0.8em;
     margin: 15px 20px 0;
+    float: right;
 }
 .clockins .layout-row div {
     text-align: center;
