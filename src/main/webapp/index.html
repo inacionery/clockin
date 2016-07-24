@@ -29,11 +29,9 @@
     <!--[if lt IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <div ui-view="navbar" ng-show="firstName" ng-cloak></div>
+    <div ui-view="navbar" ng-cloak></div>
     <div class="container">
-
-		<div class="well" ui-view="content" ng-class="{'login-box': !firstName}"></div>
-
+        <div class="well" ui-view="content" ng-class="vm.isAuthenticated() == false ? 'login-box': ''"></div>
     </div>
 
     <!-- Google Analytics: uncomment and change UA-XXXXX-X to be your site's ID.
