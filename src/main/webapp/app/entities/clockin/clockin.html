@@ -36,12 +36,12 @@
                      md-gutter="0px">
                      <md-grid-tile 
                         ng-repeat="workday in month.workDays"
-                        class="bordered {{ workday.clockinValues.length > 0 ? 'dateEnable' : 'dateDisable' }} dates {{((workday.date | date:'shortDate') == (vm.today | date:'shortDate')) ? 'today': ''}}">
-                        <div flex="5" layout="column" class="date-cell" ng-class="{'warning bordered': (workday.isMissing || (workday.workPlanned > 0 && (workday.workPlanned == (workday.workDone * -1)))) && ((workday.date | date:'shortDate') < (vm.today | date:'shortDate'))}">
+                        class="bordered {{workday.clockinValues.length > 0 ? 'dateEnable' : 'dateDisable'}} dates {{workday.isToday ? 'today': ''}}">
+                        <div flex="5" layout="column" class="date-cell" ng-class="{'warning bordered': ((workday.isClockinMissing || workday.isDayMissing) && workday.isBeforeToday)}">
                         </div>
                         <div flex="95" layout="column" class="date-cell">
                            <div layout="row" layout-align="end start">
-                              <div>{{workday.date | date:"dd" }}</div>
+                              <div>{{workday.date | date:"dd"}}</div>
                            </div>
                            <div layout="column" class="date-cell" layout-align="center center">
                               <div hide-xs hide-sm layout="row" layout-align="center center">
@@ -73,7 +73,7 @@
                                           {{clockin.time}}
                                        </ng-repeat>
                                     </md-content>
-                                    <span ng-if="workday.workPlanned > 0" class="md-headline">Saldo: <span ng-class="workday.workDone >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workDone)}}</span></span>
+                                    <span ng-if="workday.workPlanned > 0 && !workday.isClockinMissing " class="md-headline">Saldo: <span ng-class="workday.workDone >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workDone)}}</span></span>
                                  </md-card-title-text>
                               </md-card-title>
                            </md-card>

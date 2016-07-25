@@ -26,8 +26,25 @@ public class WorkDayDTO {
         this.clockins = new ArrayList<>();
     }
 
-    public boolean getIsMissing() {
-        return (clockins.size() % 2 != 0);
+    public boolean getIsBeforeToday() {
+        LocalDate now = LocalDate.now();
+
+        return date.isBefore(now);
+    }
+
+    public boolean getIsToday() {
+        LocalDate now = LocalDate.now();
+
+        return date.isEqual(now);
+    }
+
+    public boolean getIsClockinMissing() {
+        return clockins.size() % 2 != 0;
+    }
+
+    public boolean getIsDayMissing() {
+        return workPlanned != null && workDone != null && workPlanned > 0
+            && workPlanned == (workDone * -1);
     }
 
     public LocalDate getDate() {
