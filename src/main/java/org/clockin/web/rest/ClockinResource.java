@@ -70,8 +70,9 @@ public class ClockinResource {
         @PathVariable(value = "semester") Optional<Integer> semesterParam)
         throws URISyntaxException, ParseException {
 
-        int year = LocalDate.now().getYear();
-        int semester = LocalDate.now().getMonth().getValue() > 6 ? 1 : 0;
+        LocalDate now = LocalDate.now();
+        int year = now.getYear();
+        int semester = now.getMonth().getValue() > 6 ? 1 : 0;
 
         if (yearParam.isPresent()) {
             year = yearParam.get();
@@ -131,12 +132,16 @@ public class ClockinResource {
                             break;
                         }
 
-                        workDayDTO.setWorkPlanned(workday.getWorkPlanned());
-
                         List<Clockin> clockins = clockinService
                             .findByWorkday(workday);
 
                         workDayDTO.setClockinValues(clockins);
+
+                        if (curDate.isAfter(now) || curDate.isEqual(now)) {
+                            break;
+                        }
+
+                        workDayDTO.setWorkPlanned(workday.getWorkPlanned());
 
                         if (clockins.size() % 2 == 0) {
                             workDayDTO.setWorkDone(workday.getWorkDone());
