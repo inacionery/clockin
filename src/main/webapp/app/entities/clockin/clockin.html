@@ -37,7 +37,7 @@
                      <md-grid-tile 
                         ng-repeat="workday in month.workDays"
                         class="bordered {{workday.clockinValues.length > 0 ? 'dateEnable' : 'dateDisable'}} dates {{workday.isToday ? 'today': ''}}">
-                        <div flex="5" layout="column" class="date-cell" ng-class="{'warning bordered': ((workday.isClockinMissing || workday.isDayMissing) && workday.isBeforeToday)}">
+                        <div flex="5" layout="column" class="date-warning {{((workday.isClockinMissing || workday.isDayMissing) && workday.isBeforeToday) ? 'warning bordered' : ''}} {{workday.justification ? 'justification bordered': ''}}">
                         </div>
                         <div flex="95" layout="column" class="date-cell">
                            <div layout="row" layout-align="end start">
@@ -68,12 +68,13 @@
                            <md-card>
                               <md-card-title>
                                  <md-card-title-text layout-align="center center">
-                                    <md-content ng-if="workday.clockinValues.length > 0" class="md-headline tooltip-days-content flex layout-padding">
-                                       <ng-repeat ng-repeat="clockin in workday.clockinValues track by clockin.id" class="tooltip-days-entry">
+                                    <md-content ng-if="workday.clockinValues.length > 0 || workday.justification" class="md-headline tooltip-days-content flex layout-padding">
+                                       <span ng-repeat="clockin in workday.clockinValues track by clockin.id" class="tooltip-days-entry {{clockin.justification ? 'font-orange' : ''}}">
                                           {{clockin.time}}
-                                       </ng-repeat>
+                                       </span>
                                     </md-content>
-                                    <span ng-if="workday.workPlanned > 0 && !workday.isClockinMissing " class="md-headline">Saldo: <span ng-class="workday.workDone >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workDone)}}</span></span>
+                                    <span ng-if="workday.justification" class="md-headline">{{workday.justification}}</span>
+                                    <span ng-if="workday.workPlanned > 0 && !workday.isClockinMissing" class="md-headline">Saldo: <span ng-class="workday.workDone >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workDone)}}</span></span>
                                  </md-card-title-text>
                               </md-card-title>
                            </md-card>

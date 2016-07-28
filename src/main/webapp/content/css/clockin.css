@@ -7,6 +7,9 @@
 .font-red{
 	color: #e64545;
 }
+.font-orange{
+	color: #f76e05;
+}
 md-content {
 	font-size: 0.8em;
 }
@@ -36,6 +39,10 @@ span.glyphicon.glyphicon-chevron-right {
 .warning,
 .warning:hover {
     background: #fff173;
+}
+.justification,
+.justification:hover {
+    background: #f76e05;
 }
 md-tabs-canvas,
 md-pagination-wrapper {
@@ -103,12 +110,8 @@ md-tabs md-ink-bar {
     background-color: #00c0ef!important;
 }
 .date-warning {
-    position: absolute;
-    top: 10px;
-    left: 13px;
-    background: transparent!important;
-    font-size: 0.81em;
-    opacity: 0.8;
+    height: 100%;
+    padding-right: 10px;
 }
 md-tabs.md-default-theme .md-tab.md-active,
 md-tabs .md-tab.md-active,
