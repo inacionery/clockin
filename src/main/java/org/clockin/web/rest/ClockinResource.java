@@ -142,6 +142,7 @@ public class ClockinResource {
                         }
 
                         workDayDTO.setWorkPlanned(workday.getWorkPlanned());
+                        workDayDTO.setJustification(workday.getJustification());
 
                         if (clockins.size() % 2 == 0) {
                             workDayDTO.setWorkDone(workday.getWorkDone());
@@ -197,8 +198,11 @@ public class ClockinResource {
 
             Long workPlanned = workdayObject.getLong("workPlanned");
 
+            String workDayJustification = workdayObject
+                .getString("justification");
+
             Workday workday = createOrUpdateWorkDay(employee, date, workDone,
-                workPlanned);
+                workPlanned, workDayJustification);
 
             JSONArray clockinsArray = workdayObject.getJSONArray("clockins");
 
@@ -207,9 +211,11 @@ public class ClockinResource {
                 LocalTime time = LocalTime
                     .parse(clockinObject.getString("time"));
                 Long id = clockinObject.getLong("id");
+                String clockinJustification = clockinObject
+                    .getString("justification");
 
-                createOrUpdateClockin(workday, LocalDateTime.of(date, time),
-                    id);
+                createOrUpdateClockin(workday, LocalDateTime.of(date, time), id,
+                    clockinJustification);
             }
         }
 
@@ -230,7 +236,7 @@ public class ClockinResource {
     }
 
     private Workday createOrUpdateWorkDay(Employee employee, LocalDate date,
-        Long workDone, Long workPlanned) {
+        Long workDone, Long workPlanned, String justification) {
 
         Workday workday = workdayService.findByEmployeeAndDate(employee, date);
 
@@ -250,11 +256,16 @@ public class ClockinResource {
             workday.setWorkPlanned(workPlanned);
         }
 
+        if (justification != null && (workday.getJustification() == null
+            || !justification.equals(workday.getJustification()))) {
+            workday.setJustification(justification);
+        }
+
         return workdayService.save(workday);
     }
 
     private void createOrUpdateClockin(Workday workday, LocalDateTime time,
-        Long id) {
+        Long id, String justification) {
 
         Clockin clockin = clockinService
             .findBySequentialRegisterNumber(String.valueOf(id));
@@ -272,6 +283,11 @@ public class ClockinResource {
         if (time != null
             && (clockin.getTime() == null || !time.equals(clockin.getTime()))) {
             clockin.setTime(time);
+        }
+
+        if (justification != null && (clockin.getJustification() == null
+            || !justification.equals(clockin.getJustification()))) {
+            clockin.setJustification(justification);
         }
 
         clockinService.save(clockin);

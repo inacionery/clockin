@@ -20,6 +20,7 @@ public class WorkDayDTO {
 
     private Long workDone;
     private Long workPlanned;
+    private String justification;
 
     public WorkDayDTO(LocalDate date) {
         this.date = date;
@@ -61,6 +62,14 @@ public class WorkDayDTO {
 
     public void setClockinValues(List<Clockin> clockinValues) {
         this.clockins = clockinValues;
+    }
+
+    public String getJustification() {
+        return justification;
+    }
+
+    public void setJustification(String justification) {
+        this.justification = justification;
     }
 
     public Long getWorkPlanned() {
