@@ -50,6 +50,8 @@ public class WorkdayResourceIntTest {
     private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE = LocalDate
         .now(ZoneId.systemDefault());
+    private static final String DEFAULT_JUSTIFICATION = "AAAAA";
+    private static final String UPDATED_JUSTIFICATION = "BBBBB";
 
     @Inject
     private WorkdayRepository workdayRepository;
@@ -85,6 +87,7 @@ public class WorkdayResourceIntTest {
         workday.setWorkPlanned(DEFAULT_WORK_PLANNED);
         workday.setWorkDone(DEFAULT_WORK_DONE);
         workday.setDate(DEFAULT_DATE);
+        workday.setJustification(DEFAULT_JUSTIFICATION);
     }
 
     //@Test
@@ -108,6 +111,8 @@ public class WorkdayResourceIntTest {
             .isEqualTo(DEFAULT_WORK_PLANNED);
         assertThat(testWorkday.getWorkDone()).isEqualTo(DEFAULT_WORK_DONE);
         assertThat(testWorkday.getDate()).isEqualTo(DEFAULT_DATE);
+        assertThat(testWorkday.getJustification())
+            .isEqualTo(DEFAULT_JUSTIFICATION);
     }
 
     //@Test
@@ -127,7 +132,9 @@ public class WorkdayResourceIntTest {
             .andExpect(jsonPath("$.[*].workDone")
                 .value(hasItem(DEFAULT_WORK_DONE.intValue())))
             .andExpect(
-                jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())));
+                jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
+            .andExpect(jsonPath("$.[*].justification")
+                .value(hasItem(DEFAULT_JUSTIFICATION.toString())));
     }
 
     //@Test
@@ -145,7 +152,9 @@ public class WorkdayResourceIntTest {
                 .value(DEFAULT_WORK_PLANNED.intValue()))
             .andExpect(
                 jsonPath("$.workDone").value(DEFAULT_WORK_DONE.intValue()))
-            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()));
+            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
+            .andExpect(jsonPath("$.justification")
+                .value(DEFAULT_JUSTIFICATION.toString()));
     }
 
     //@Test
@@ -185,6 +194,8 @@ public class WorkdayResourceIntTest {
             .isEqualTo(UPDATED_WORK_PLANNED);
         assertThat(testWorkday.getWorkDone()).isEqualTo(UPDATED_WORK_DONE);
         assertThat(testWorkday.getDate()).isEqualTo(UPDATED_DATE);
+        assertThat(testWorkday.getJustification())
+            .isEqualTo(UPDATED_JUSTIFICATION);
     }
 
     //@Test

@@ -25,6 +25,10 @@
         {
             "fieldName": "date",
             "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "justification",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20160718022911",

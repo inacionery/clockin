@@ -21,7 +21,6 @@ import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import org.clockin.domain.Clockin;
-import org.clockin.domain.enumeration.RegistryType;
 import org.clockin.repository.ClockinRepository;
 import org.clockin.service.ClockinService;
 import org.junit.Before;
@@ -58,8 +57,8 @@ public class ClockinResourceIntTest {
     private static final String DEFAULT_TIME_STR = dateTimeFormatter
         .format(DEFAULT_TIME);
 
-    private static final RegistryType DEFAULT_REGISTRY_TYPE = RegistryType.TYPE_1;
-    private static final RegistryType UPDATED_REGISTRY_TYPE = RegistryType.TYPE_2;
+    private static final String DEFAULT_JUSTIFICATION = "AAAAA";
+    private static final String UPDATED_JUSTIFICATION = "BBBBB";
 
     @Inject
     private ClockinRepository clockinRepository;
@@ -94,7 +93,7 @@ public class ClockinResourceIntTest {
         clockin = new Clockin();
         clockin.setSequentialRegisterNumber(DEFAULT_SEQUENTIAL_REGISTER_NUMBER);
         clockin.setTime(DEFAULT_TIME);
-        clockin.setRegistryType(DEFAULT_REGISTRY_TYPE);
+        clockin.setJustification(DEFAULT_JUSTIFICATION);
     }
 
     //@Test
@@ -117,8 +116,8 @@ public class ClockinResourceIntTest {
         assertThat(testClockin.getSequentialRegisterNumber())
             .isEqualTo(DEFAULT_SEQUENTIAL_REGISTER_NUMBER);
         assertThat(testClockin.getTime()).isEqualTo(DEFAULT_TIME);
-        assertThat(testClockin.getRegistryType())
-            .isEqualTo(DEFAULT_REGISTRY_TYPE);
+        assertThat(testClockin.getJustification())
+            .isEqualTo(DEFAULT_JUSTIFICATION);
     }
 
     //@Test
@@ -136,8 +135,8 @@ public class ClockinResourceIntTest {
             .andExpect(jsonPath("$.[*].sequentialRegisterNumber")
                 .value(hasItem(DEFAULT_SEQUENTIAL_REGISTER_NUMBER.toString())))
             .andExpect(jsonPath("$.[*].time").value(hasItem(DEFAULT_TIME_STR)))
-            .andExpect(jsonPath("$.[*].registryType")
-                .value(hasItem(DEFAULT_REGISTRY_TYPE.toString())));
+            .andExpect(jsonPath("$.[*].justification")
+                .value(hasItem(DEFAULT_JUSTIFICATION.toString())));
     }
 
     //@Test
@@ -154,8 +153,8 @@ public class ClockinResourceIntTest {
             .andExpect(jsonPath("$.sequentialRegisterNumber")
                 .value(DEFAULT_SEQUENTIAL_REGISTER_NUMBER.toString()))
             .andExpect(jsonPath("$.time").value(DEFAULT_TIME_STR))
-            .andExpect(jsonPath("$.registryType")
-                .value(DEFAULT_REGISTRY_TYPE.toString()));
+            .andExpect(jsonPath("$.justification")
+                .value(DEFAULT_JUSTIFICATION.toString()));
     }
 
     //@Test
@@ -180,7 +179,7 @@ public class ClockinResourceIntTest {
         updatedClockin
             .setSequentialRegisterNumber(UPDATED_SEQUENTIAL_REGISTER_NUMBER);
         updatedClockin.setTime(UPDATED_TIME);
-        updatedClockin.setRegistryType(UPDATED_REGISTRY_TYPE);
+        updatedClockin.setJustification(UPDATED_JUSTIFICATION);
 
         restClockinMockMvc
             .perform(
@@ -195,9 +194,8 @@ public class ClockinResourceIntTest {
         assertThat(testClockin.getSequentialRegisterNumber())
             .isEqualTo(UPDATED_SEQUENTIAL_REGISTER_NUMBER);
         assertThat(testClockin.getTime()).isEqualTo(UPDATED_TIME);
-        assertThat(testClockin.getRegistryType())
-            .isEqualTo(UPDATED_REGISTRY_TYPE);
-
+        assertThat(testClockin.getJustification())
+            .isEqualTo(UPDATED_JUSTIFICATION);
     }
 
     //@Test

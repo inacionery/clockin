@@ -18,9 +18,8 @@
             "fieldType": "ZonedDateTime"
         },
         {
-            "fieldName": "registryType",
-            "fieldType": "RegistryType",
-            "fieldValues": "TYPE_1,TYPE_2,TYPE_3,TYPE_4,TYPE_5"
+            "fieldName": "justification",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20151124151638",

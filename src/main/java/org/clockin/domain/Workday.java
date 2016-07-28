@@ -43,6 +43,9 @@ public class Workday implements Serializable {
     @Column(name = "date")
     private LocalDate date;
 
+    @Column(name = "justification")
+    private String justification;
+
     @ManyToOne
     private Employee employee;
 
@@ -81,6 +84,14 @@ public class Workday implements Serializable {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public String getJustification() {
+        return justification;
+    }
+
+    public void setJustification(String justification) {
+        this.justification = justification;
     }
 
     public Employee getEmployee() {
@@ -122,6 +133,7 @@ public class Workday implements Serializable {
     @Override
     public String toString() {
         return "Workday{" + "id=" + id + ", workPlanned='" + workPlanned + "'"
-            + ", workDone='" + workDone + "'" + ", date='" + date + "'" + '}';
+            + ", workDone='" + workDone + "'" + ", date='" + date + "'"
+            + ", justification='" + justification + "'" + '}';
     }
 }

@@ -19,6 +19,7 @@
             "workPlanned": "Work Planned",
             "workDone": "Work Done",
             "date": "Date",
+            "justification": "Justification",
             "employee": "Employee",
             "clockin": "Clockin"
         }

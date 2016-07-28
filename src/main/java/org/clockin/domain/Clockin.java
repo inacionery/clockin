@@ -7,15 +7,12 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.clockin.domain.enumeration.RegistryType;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -40,9 +37,8 @@ public class Clockin implements Serializable {
     @Column(name = "time")
     private LocalDateTime time;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "registry_type")
-    private RegistryType registryType;
+    @Column(name = "justification")
+    private String justification;
 
     @ManyToOne
     private Workday workday;
@@ -71,12 +67,12 @@ public class Clockin implements Serializable {
         this.time = time;
     }
 
-    public RegistryType getRegistryType() {
-        return registryType;
+    public String getJustification() {
+        return justification;
     }
 
-    public void setRegistryType(RegistryType registryType) {
-        this.registryType = registryType;
+    public void setJustification(String justification) {
+        this.justification = justification;
     }
 
     public Workday getWorkday() {
@@ -111,6 +107,6 @@ public class Clockin implements Serializable {
     public String toString() {
         return "Clockin{" + "id=" + id + ", sequentialRegisterNumber='"
             + sequentialRegisterNumber + "'" + ", time='" + time + "'"
-            + ", registryType='" + registryType + "'" + '}';
+            + ", justification='" + justification + "'" + '}';
     }
 }

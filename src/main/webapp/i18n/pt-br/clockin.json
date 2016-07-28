@@ -18,7 +18,7 @@
             },
             "sequentialRegisterNumber": "Sequential Register Number",
             "time": "Time",
-            "registryType": "Registry Type",
+            "justification": "Justification",
             "workday": "Workday"
         }
     }
