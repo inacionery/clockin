@@ -1,6 +1,6 @@
 {
     "social": {
-        "btnLabel": "Logar com {{ label }}",
+        "btnLabel": "ENTRAR",
         "register": {
             "title": "Cadastrar com {{ label }}",
             "errorTitle": "Cadastrar com uma conta externa",

@@ -13,9 +13,7 @@
                Welcome "{{vm.account.firstName}}".
             </div>
             <div ng-switch-when="false">
-               <md-button ng-if="!vm.isAuthenticated()" class="md-raised md-primary btn btn-info" ng-click="vm.login()">
-                  <span translate="global.menu.account.login" class="ng-scope ng-binding">Sign in</span>
-               </md-button>
+               <jh-social ng-provider="google"></jh-social>
             </div>
          </div>
       </div>

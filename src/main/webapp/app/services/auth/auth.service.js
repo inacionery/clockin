@@ -5,9 +5,9 @@
         .module('clockinApp')
         .factory('Auth', Auth);
 
-    Auth.$inject = ['$rootScope', '$state', '$sessionStorage', '$q', '$translate', 'Principal', 'AuthServerProvider', 'Account', 'LoginService', 'Register', 'Activate', 'Password', 'PasswordResetInit', 'PasswordResetFinish'];
+    Auth.$inject = ['$rootScope', '$state', '$sessionStorage', '$q', '$translate', 'Principal', 'AuthServerProvider', 'Account', 'Register', 'Activate', 'Password', 'PasswordResetInit', 'PasswordResetFinish'];
 
-    function Auth ($rootScope, $state, $sessionStorage, $q, $translate, Principal, AuthServerProvider, Account, LoginService, Register, Activate, Password, PasswordResetInit, PasswordResetFinish) {
+    function Auth ($rootScope, $state, $sessionStorage, $q, $translate, Principal, AuthServerProvider, Account, Register, Activate, Password, PasswordResetInit, PasswordResetFinish) {
         var service = {
             activateAccount: activateAccount,
             authorize: authorize,
@@ -47,7 +47,7 @@
 
                 // an authenticated user can't access to login and register pages
                 if (isAuthenticated && $rootScope.toState.parent === 'account' && ($rootScope.toState.name === 'login' || $rootScope.toState.name === 'register')) {
-                    $state.go('clockin');
+                    $state.go('home');
                 }
 
                 // recover and clear previousState after external login redirect (e.g. oauth2)
@@ -68,9 +68,7 @@
                         storePreviousState($rootScope.toState.name, $rootScope.toStateParams);
 
                         // now, send them to the signin state so they can log in
-                        $state.go('home').then(function() {
-                            LoginService.open();
-                        });
+                        $state.go('home');
                     }
                 }
             }

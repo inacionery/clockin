@@ -5,9 +5,9 @@
         .module('clockinApp')
         .controller('NavbarController', NavbarController);
 
-    NavbarController.$inject = ['$state', 'Auth', 'Principal', 'ProfileService', 'LoginService', '$window', '$rootScope'];
+    NavbarController.$inject = ['$state', 'Auth', 'Principal', 'ProfileService', '$window', '$rootScope'];
 
-    function NavbarController ($state, Auth, Principal, ProfileService, LoginService, $window, $rootScope) {
+    function NavbarController ($state, Auth, Principal, ProfileService, $window, $rootScope) {
         var vm = this;
 
         vm.isNavbarCollapsed = true;
@@ -18,16 +18,10 @@
             vm.swaggerDisabled = response.swaggerDisabled;
         });
 
-        vm.login = login;
         vm.logout = logout;
         vm.toggleNavbar = toggleNavbar;
         vm.collapseNavbar = collapseNavbar;
         vm.$state = $state;
-
-        function login() {
-            collapseNavbar();
-            LoginService.open();
-        }
 
         function logout() {
             collapseNavbar();

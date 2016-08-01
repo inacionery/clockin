@@ -5,9 +5,9 @@
         .module('clockinApp')
         .controller('SocialRegisterController', SocialRegisterController);
 
-    SocialRegisterController.$inject = ['$filter', '$stateParams'];
+    SocialRegisterController.$inject = ['$filter', '$stateParams', '$state', 'Principal'];
 
-    function SocialRegisterController ($filter, $stateParams) {
+    function SocialRegisterController ($filter, $stateParams, $state, Principal) {
         var vm = this;
 
         vm.success = $stateParams.success;
@@ -15,5 +15,11 @@
         vm.provider = $stateParams.provider;
         vm.providerLabel = $filter('capitalize')(vm.provider);
         vm.success = $stateParams.success;
+
+        var isAuthenticated = Principal.isAuthenticated();
+
+        if (isAuthenticated) {
+            $state.go('home');
+        }
     }
 })();

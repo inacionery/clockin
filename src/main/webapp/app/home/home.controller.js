@@ -5,15 +5,14 @@
         .module('clockinApp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state', '$window', '$rootScope'];
+    HomeController.$inject = ['$scope', 'Principal', '$state', '$window', '$rootScope'];
 
-    function HomeController($scope, Principal, LoginService, $state, $window, $rootScope) {
+    function HomeController($scope, Principal, $state, $window, $rootScope) {
         var vm = this;
         var today = new Date();
 
         vm.account = null;
         vm.isAuthenticated = null;
-        vm.login = LoginService.open;
         vm.register = register;
         $scope.$on('authenticationSuccess', function() {
             getAccount();
