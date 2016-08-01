@@ -12,7 +12,6 @@
                 "list": "Lista",
                 "employee": "Funcionário",
                 "workday": "Workday",
-                "clockin": "Clockin",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
