@@ -4,6 +4,7 @@
 
 package org.clockin.web.rest.dto;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +47,34 @@ public class WorkDayDTO {
     public boolean getIsDayMissing() {
         return workPlanned != null && workDone != null && workPlanned > 0
             && workPlanned == (workDone * -1);
+    }
+
+    public boolean getIsMissingBreak() {
+        if (clockins.size() % 2 == 0) {
+            long work = 0;
+            boolean interval = false;
+            for (int i = 0; i < clockins.size() - 1; i++) {
+
+                Clockin start = clockins.get(i);
+                Clockin end = clockins.get(i + 1);
+
+                long minutes = Duration.between(start.getTime(), end.getTime())
+                    .toMinutes();
+                if (i % 2 == 0) {
+                    work += minutes;
+                    if (minutes >= 360) {
+                        return true;
+                    }
+                }
+                else if (!interval) {
+                    interval = minutes >= 60;
+                }
+            }
+            if (work >= 480 && !interval) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public LocalDate getDate() {
