@@ -46,4 +46,6 @@ public interface EmployeeService {
 
     Employee findBySocialIdentificationNumber(
         String socialIdentificationNumber);
+
+    Page<Employee> findByHiddenIsFalse(Pageable pageable);
 }

@@ -2,13 +2,25 @@
    <h2 translate="clockinApp.employee.home.title">Employees</h2>
    <jhi-alert></jhi-alert>
    <div class="container-fluid">
-      <div class="row">
-         <div class="col-xs-4 no-padding-left">
-            <button class="btn btn-primary" ui-sref="employee.new" >
-            <span class="glyphicon glyphicon-plus"></span>
-            <span  translate="clockinApp.employee.home.createLabel">
-            Create new Employee
-            </span>
+      <div class="row right">
+         <div class="col-xs-2 no-padding-left">
+            <button type="submit"
+            	ng-if="vm.hidden == 0"
+            	ui-sref="employee({hidden:1})"
+            	class="btn btn-primary" >
+	            <span class="glyphicon glyphicon-eye-open"></span>
+	            <span>
+	            	Mostrar Ocultos
+	            </span>
+            </button>
+            <button type="submit"
+            	ng-if="vm.hidden == 1"
+            	ui-sref="employee({hidden:0})"
+            	class="btn btn-primary" >
+	            <span class="glyphicon glyphicon-eye-open"></span>
+	            <span>
+	            	Esconder Ocultos
+	            </span>
             </button>
          </div>
       </div>
@@ -20,6 +32,7 @@
             <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
                <th jh-sort-by="socialIdentificationNumber"><span translate="clockinApp.employee.socialIdentificationNumber">Social Identification Number</span> <span class="glyphicon glyphicon-sort"></span></th>
                <th jh-sort-by="user.firstName"><span translate="clockinApp.employee.user">User</span> <span class="glyphicon glyphicon-sort"></span></th>
+               <th jh-sort-by="hidden"><span translate="clockinApp.employee.hidden">Hidden</span> <span class="glyphicon glyphicon-sort"></span></th>
                <th></th>
             </tr>
          </thead>
@@ -29,6 +42,7 @@
                <td>
                   {{employee.user.firstName}} {{employee.user.lastName}} - {{employee.user.email}}
                </td>
+               <td>{{employee.hidden | yesNo}}</td>
                <td class="text-right">
                   <div class="btn-group flex-btn-group-container">
                      <button type="submit"
@@ -42,12 +56,6 @@
                         class="btn btn-primary btn-sm">
                      <span class="glyphicon glyphicon-pencil"></span>
                      <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
-                     </button>
-                     <button type="submit"
-                        ui-sref="employee.delete({id:employee.id})"
-                        class="btn btn-danger btn-sm">
-                     <span class="glyphicon glyphicon-remove-circle"></span>
-                     <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
                      </button>
                   </div>
                </td>

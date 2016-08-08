@@ -1,8 +1,14 @@
 package org.clockin.repository;
 
+import java.util.List;
+
 import org.clockin.domain.Employee;
 import org.clockin.domain.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  * Spring Data JPA repository for the Employee entity.
@@ -13,4 +19,13 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     Employee findBySocialIdentificationNumber(
         String socialIdentificationNumber);
+
+    Page<Employee> findByHiddenIsFalse(Pageable pageable);
+
+    @Query("select distinct employee from Employee employee left join fetch employee.managers")
+    List<Employee> findAllWithEagerRelationships();
+
+    @Query("select employee from Employee employee left join fetch employee.managers where employee.id =:id")
+    Employee findOneWithEagerRelationships(@Param("id") Long id);
+
 }

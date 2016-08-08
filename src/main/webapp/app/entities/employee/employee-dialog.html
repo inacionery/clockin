@@ -20,6 +20,16 @@
             <option value=""></option>
          </select>
       </div>
+      <div class="form-group">
+         <label translate="clockinApp.employee.manager" for="field_manager">Manager</label>
+         <select class="form-control" id="field_manager" multiple name="manager" ng-model="vm.employee.managers" ng-options="user as user.email for user in vm.users track by user.id"></select>
+      </div>
+      <div class="form-group">
+         <label class="control-label" translate="clockinApp.employee.hidden" for="field_hidden">Hidden</label>
+         <input type="checkbox" class="no-padding-left" name="hidden" id="field_hidden"
+            ng-model="vm.employee.hidden"
+            />
+      </div>
    </div>
    <div class="modal-footer">
       <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">

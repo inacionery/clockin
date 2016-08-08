@@ -11,7 +11,7 @@
         $stateProvider
         .state('employee', {
             parent: 'entity',
-            url: '/employee?page&sort&search',
+            url: '/employee?hidden&page&sort&search',
             data: {
                 authorities: ['ROLE_ADMIN'],
                 pageTitle: 'clockinApp.employee.home.title'
@@ -24,9 +24,13 @@
                 }
             },
             params: {
-                page: {
-                    value: '1',
+            	hidden: {
+                    value: '0',
                     squash: true
+                },
+                page: {
+                	value: '1',
+                	squash: true
                 },
                 sort: {
                     value: 'socialIdentificationNumber,asc',
@@ -37,6 +41,7 @@
             resolve: {
                 pagingParams: ['$stateParams', 'PaginationUtil', function ($stateParams, PaginationUtil) {
                     return {
+                    	hidden: $stateParams.hidden,
                         page: PaginationUtil.parsePage($stateParams.page),
                         sort: $stateParams.sort,
                         predicate: PaginationUtil.parsePredicate($stateParams.sort),
@@ -75,34 +80,6 @@
                 }]
             }
         })
-        .state('employee.new', {
-            parent: 'employee',
-            url: '/new',
-            data: {
-                authorities: ['ROLE_ADMIN']
-            },
-            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
-                $uibModal.open({
-                    templateUrl: 'app/entities/employee/employee-dialog.html',
-                    controller: 'EmployeeDialogController',
-                    controllerAs: 'vm',
-                    backdrop: 'static',
-                    size: 'lg',
-                    resolve: {
-                        entity: function () {
-                            return {
-                                socialIdentificationNumber: null,
-                                id: null
-                            };
-                        }
-                    }
-                }).result.then(function() {
-                    $state.go('employee', null, { reload: true });
-                }, function() {
-                    $state.go('employee');
-                });
-            }]
-        })
         .state('employee.edit', {
             parent: 'employee',
             url: '/{id}/edit',
@@ -116,30 +93,6 @@
                     controllerAs: 'vm',
                     backdrop: 'static',
                     size: 'lg',
-                    resolve: {
-                        entity: ['Employee', function(Employee) {
-                            return Employee.get({id : $stateParams.id}).$promise;
-                        }]
-                    }
-                }).result.then(function() {
-                    $state.go('employee', null, { reload: true });
-                }, function() {
-                    $state.go('^');
-                });
-            }]
-        })
-        .state('employee.delete', {
-            parent: 'employee',
-            url: '/{id}/delete',
-            data: {
-                authorities: ['ROLE_ADMIN']
-            },
-            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
-                $uibModal.open({
-                    templateUrl: 'app/entities/employee/employee-delete-dialog.html',
-                    controller: 'EmployeeDeleteController',
-                    controllerAs: 'vm',
-                    size: 'md',
                     resolve: {
                         entity: ['Employee', function(Employee) {
                             return Employee.get({id : $stateParams.id}).$promise;

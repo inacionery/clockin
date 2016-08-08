@@ -18,10 +18,10 @@
             },
             "email": "E-mail",
             "socialIdentificationNumber": "PIS",
-            "plannedDailyHours": "Jornada",
-            "clockin": "Clockin",
+            "hidden": "Oculto",
+            "workday": "Jornada",
             "user": "Usuário",
-            "workday": "Workday"
+            "manager": "Gestor"
         }
     }
 }

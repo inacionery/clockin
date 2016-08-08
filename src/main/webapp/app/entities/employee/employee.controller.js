@@ -20,6 +20,7 @@
 
         function loadAll () {
             Employee.query({
+                hidden: pagingParams.hidden,
                 page: pagingParams.page - 1,
                 size: vm.itemsPerPage,
                 sort: sort()
@@ -37,6 +38,7 @@
                 vm.queryCount = vm.totalItems;
                 vm.employees = data;
                 vm.page = pagingParams.page;
+                vm.hidden = pagingParams.hidden;
             }
             function onError(error) {
                 AlertService.error(error.data.message);
@@ -50,6 +52,7 @@
 
         function transition () {
             $state.transitionTo($state.$current, {
+                hidden: vm.hidden,
                 page: vm.page,
                 sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
                 search: vm.currentSearch

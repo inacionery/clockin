@@ -7,17 +7,20 @@
         <dd>
             <span>{{vm.employee.socialIdentificationNumber}}</span>
         </dd>
-        <hr>
-        <!-- <dt><span translate="clockinApp.employee.plannedDailyHours">Planned Daily Hours</span></dt>
-        <dd>
-            <span>{{vm.employee.plannedDailyHours}} Hrs</span>
-        </dd>
-        <hr> -->
         <dt><span translate="clockinApp.employee.email">E-mail</span></dt>
         <dd>
             {{vm.employee.user.email}}
         </dd>
-        <hr>
+        <dt><span translate="clockinApp.employee.manager">Manager</span></dt>
+        <dd>
+            <span ng-repeat="manager in vm.employee.managers">
+                {{manager.email}}{{$last ? '' : ', '}}
+            </span>
+        </dd>
+        <dt><span translate="clockinApp.employee.hidden">Hidden</span></dt>
+        <dd>
+            <span>{{vm.employee.hidden | yesNo }}</span>
+        </dd>
     </dl>
 
     <button type="submit"

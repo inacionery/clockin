@@ -13,9 +13,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -38,6 +41,10 @@ public class Employee implements Serializable {
         unique = true)
     private String socialIdentificationNumber;
 
+    @Column(name = "hidden")
+    @NotNull
+    private Boolean hidden = false;
+
     @OneToMany(mappedBy = "employee")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -46,6 +53,15 @@ public class Employee implements Serializable {
     @OneToOne
     @JoinColumn(unique = true)
     private User user;
+
+    @ManyToMany
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "employee_manager",
+        joinColumns = @JoinColumn(name = "employees_id",
+            referencedColumnName = "ID"),
+        inverseJoinColumns = @JoinColumn(name = "managers_id",
+            referencedColumnName = "ID"))
+    private Set<User> managers = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -64,6 +80,14 @@ public class Employee implements Serializable {
         this.socialIdentificationNumber = socialIdentificationNumber;
     }
 
+    public Boolean isHidden() {
+        return hidden;
+    }
+
+    public void setHidden(Boolean hidden) {
+        this.hidden = hidden;
+    }
+
     public Set<Workday> getWorkdays() {
         return workdays;
     }
@@ -78,6 +102,14 @@ public class Employee implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Set<User> getManagers() {
+        return managers;
+    }
+
+    public void setManagers(Set<User> users) {
+        this.managers = users;
     }
 
     @Override
@@ -103,6 +135,7 @@ public class Employee implements Serializable {
     @Override
     public String toString() {
         return "Employee{" + "id=" + id + ", socialIdentificationNumber='"
-            + socialIdentificationNumber + "'" + '}';
+            + socialIdentificationNumber + "'" + ", hidden='" + hidden + "'"
+            + '}';
     }
 }

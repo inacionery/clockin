@@ -14,12 +14,23 @@
             "otherEntityField": "email",
             "ownerSide": true,
             "otherEntityRelationshipName": "employee"
+        },
+        {
+            "relationshipName": "manager",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-many",
+            "otherEntityField": "email",
+            "ownerSide": true
         }
     ],
     "fields": [
         {
             "fieldName": "socialIdentificationNumber",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "hidden",
+            "fieldType": "Boolean"
         }
     ],
     "changelogDate": "20151124152507",

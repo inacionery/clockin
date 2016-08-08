@@ -42,7 +42,8 @@ public class EmployeeResourceIntTest {
     private static final String DEFAULT_SOCIAL_IDENTIFICATION_NUMBER = "AAAAA";
     private static final String UPDATED_SOCIAL_IDENTIFICATION_NUMBER = "BBBBB";
 
-    private static final Integer DEFAULT_PLANNED_DAILY_HOURS = 1;
+    private static final Boolean DEFAULT_HIDDEN = false;
+    private static final Boolean UPDATED_HIDDEN = true;
 
     @Inject
     private EmployeeRepository employeeRepository;
@@ -77,6 +78,7 @@ public class EmployeeResourceIntTest {
         employee = new Employee();
         employee.setSocialIdentificationNumber(
             DEFAULT_SOCIAL_IDENTIFICATION_NUMBER);
+        employee.setHidden(DEFAULT_HIDDEN);
     }
 
     //@Test
@@ -98,6 +100,7 @@ public class EmployeeResourceIntTest {
         Employee testEmployee = employees.get(employees.size() - 1);
         assertThat(testEmployee.getSocialIdentificationNumber())
             .isEqualTo(DEFAULT_SOCIAL_IDENTIFICATION_NUMBER);
+        assertThat(testEmployee.isHidden()).isEqualTo(DEFAULT_HIDDEN);
     }
 
     //@Test
@@ -114,8 +117,8 @@ public class EmployeeResourceIntTest {
                 .value(hasItem(employee.getId().intValue())))
             .andExpect(jsonPath("$.[*].socialIdentificationNumber").value(
                 hasItem(DEFAULT_SOCIAL_IDENTIFICATION_NUMBER.toString())))
-            .andExpect(jsonPath("$.[*].plannedDailyHours")
-                .value(hasItem(DEFAULT_PLANNED_DAILY_HOURS)));
+            .andExpect(jsonPath("$.[*].hidden")
+                .value(hasItem(DEFAULT_HIDDEN.booleanValue())));
     }
 
     //@Test
@@ -132,8 +135,8 @@ public class EmployeeResourceIntTest {
             .andExpect(jsonPath("$.id").value(employee.getId().intValue()))
             .andExpect(jsonPath("$.socialIdentificationNumber")
                 .value(DEFAULT_SOCIAL_IDENTIFICATION_NUMBER.toString()))
-            .andExpect(jsonPath("$.plannedDailyHours")
-                .value(DEFAULT_PLANNED_DAILY_HOURS));
+            .andExpect(
+                jsonPath("$.hidden").value(DEFAULT_HIDDEN.booleanValue()));
     }
 
     //@Test
@@ -157,6 +160,7 @@ public class EmployeeResourceIntTest {
         updatedEmployee.setId(employee.getId());
         updatedEmployee.setSocialIdentificationNumber(
             UPDATED_SOCIAL_IDENTIFICATION_NUMBER);
+        updatedEmployee.setHidden(UPDATED_HIDDEN);
 
         restEmployeeMockMvc
             .perform(put("/api/employees")
@@ -170,6 +174,7 @@ public class EmployeeResourceIntTest {
         Employee testEmployee = employees.get(employees.size() - 1);
         assertThat(testEmployee.getSocialIdentificationNumber())
             .isEqualTo(UPDATED_SOCIAL_IDENTIFICATION_NUMBER);
+        assertThat(testEmployee.isHidden()).isEqualTo(UPDATED_HIDDEN);
     }
 
     //@Test

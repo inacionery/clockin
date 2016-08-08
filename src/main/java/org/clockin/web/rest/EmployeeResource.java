@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -142,13 +143,28 @@ public class EmployeeResource {
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
     @RequestMapping(value = "/employees",
+        params = "hidden",
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Employee>> getAllEmployees(Pageable pageable)
-        throws URISyntaxException {
+    public ResponseEntity<List<Employee>> getAllEmployees(
+        @RequestParam(value = "hidden") Optional<Integer> hiddenParam,
+        Pageable pageable) throws URISyntaxException {
         log.debug("REST request to get a page of Employees");
-        Page<Employee> page = employeeService.findAll(pageable);
+
+        int hidden = 0;
+        if (hiddenParam.isPresent()) {
+            hidden = hiddenParam.get();
+        }
+
+        Page<Employee> page;
+        if (hidden == 0) {
+            page = employeeService.findByHiddenIsFalse(pageable);
+        }
+        else {
+            page = employeeService.findAll(pageable);
+        }
+
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page,
             "/api/employees");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
@@ -170,26 +186,6 @@ public class EmployeeResource {
         return Optional.ofNullable(employee)
             .map(result -> new ResponseEntity<>(result, HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    /**
-     * DELETE  /employees/:id : delete the "id" employee.
-     *
-     * @param id the id of the employee to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    @RequestMapping(value = "/employees/{id}",
-        method = RequestMethod.DELETE,
-        produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed
-    public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
-        log.debug("REST request to delete Employee : {}", id);
-        Employee employee = employeeService.delete(id);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityDeletionAlert("employee",
-                employee.getUser() != null ? employee.getUser().getFirstName()
-                    + " " + employee.getUser().getLastName() : ""))
-            .build();
     }
 
 }

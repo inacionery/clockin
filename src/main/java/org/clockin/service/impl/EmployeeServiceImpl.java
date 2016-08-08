@@ -60,7 +60,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional(readOnly = true)
     public Employee findOne(Long id) {
         log.debug("Request to get Employee : {}", id);
-        Employee employee = employeeRepository.findOne(id);
+        Employee employee = employeeRepository
+            .findOneWithEagerRelationships(id);
         return employee;
     }
 
@@ -90,5 +91,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         log.debug("Request to get Employee : {}", socialIdentificationNumber);
         return employeeRepository
             .findBySocialIdentificationNumber(socialIdentificationNumber);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<Employee> findByHiddenIsFalse(Pageable pageable) {
+        log.debug("Request to get all Employees by hidden false");
+        Page<Employee> result = employeeRepository
+            .findByHiddenIsFalse(pageable);
+        return result;
     }
 }
