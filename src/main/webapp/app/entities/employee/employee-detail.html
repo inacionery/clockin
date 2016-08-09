@@ -14,7 +14,7 @@
         <dt><span translate="clockinApp.employee.manager">Manager</span></dt>
         <dd>
             <span ng-repeat="manager in vm.employee.managers">
-                {{manager.email}}{{$last ? '' : ', '}}
+                 {{manager.firstName}} {{manager.lastName}} - {{manager.email}}{{$last ? '' : ', '}}
             </span>
         </dd>
         <dt><span translate="clockinApp.employee.hidden">Hidden</span></dt>
