@@ -23,7 +23,7 @@
         }
 
         function getProviderURL (provider) {
-            return 'signin/' + provider;
+            return '/signin/' + provider;
         }
 
         function getCSRF () {
