@@ -16,10 +16,6 @@
         vm.providerLabel = $filter('capitalize')(vm.provider);
         vm.success = $stateParams.success;
 
-        var isAuthenticated = Principal.isAuthenticated();
-
-        if (isAuthenticated) {
-            $state.go('home');
-        }
+        $state.go('home');
     }
 })();
