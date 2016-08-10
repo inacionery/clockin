@@ -663,3 +663,7 @@ button.left {
 button.right {
     float: right;
 }
+.constants {
+	display: initial;
+	width: auto;
+}

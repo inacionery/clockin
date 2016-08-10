@@ -8,6 +8,7 @@
     <include file="classpath:config/liquibase/changelog/20151124151638_added_entity_Clockin.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160718022911_added_entity_Workday.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20151124152507_added_entity_Employee.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160810015018_added_entity_Email.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="classpath:config/liquibase/changelog/20151124151638_added_entity_constraints_Clockin.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160718022911_added_entity_constraints_Workday.xml" relativeToChangelogFile="false"/>

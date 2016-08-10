@@ -12,6 +12,7 @@
                 "list": "Lista",
                 "employee": "Funcionário",
                 "workday": "Workday",
+                "email": "Email",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

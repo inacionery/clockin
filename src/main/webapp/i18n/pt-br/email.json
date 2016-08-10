@@ -1,0 +1,23 @@
+{
+    "clockinApp": {
+        "email" : {
+            "home": {
+                "title": "Modelos de e-mail",
+                "createLabel": "Criar novo modelo",
+                "createOrEditLabel": "Criar ou editar modelo",
+                "search": "Pesquisar por modelo"
+            },
+            "created": "Um novo modelo foi criado",
+            "updated": "Um modelo foi atualizado",
+            "deleted": "Um modelo foi deletado",
+            "delete": {
+                "question": "Tem certeza de que deseja excluir o modelo?"
+            },
+            "detail": {
+                "title": "Modelo de e-mail"
+            },
+            "subject": "Assunto",
+            "content": "Conteúdo"
+        }
+    }
+}
