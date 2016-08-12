@@ -17,18 +17,12 @@
             </li>
             <li ui-sref-active="active" >
                <a ui-sref="clockin" ng-click="vm.collapseNavbar()">
-               <span class="glyphicon glyphicon-calendar"></span>&nbsp;
-               <span class="hidden-sm" translate="global.menu.entities.calendar">Clockin</span>
+               <span class="glyphicon glyphicon-time"></span>&nbsp;
+               <span class="hidden-sm" translate="global.menu.entities.clockin">Clockin</span>
                </a>
             </li>
-            <li ng-class="{active: vm.$state.includes('email')}" has-authority="ROLE_ADMIN">
-               <a ui-sref="email" ng-click="vm.collapseNavbar()">
-               <span class="glyphicon glyphicon-envelope"></span>&nbsp;
-               <span class="hidden-sm" translate="global.menu.entities.email">Email</span>
-               </a>
-            </li>
-            <li ng-class="{active: vm.$state.includes('admin')}" has-authority="ROLE_ADMIN" uib-dropdown class="dropdown pointer">
-               <a class="dropdown-toggle" uib-dropdown-toggle href="" id="admin-menu">
+            <li ng-class="{active: vm.$state.includes('manager')}" has-authority="ROLE_ADMIN" uib-dropdown class="dropdown pointer">
+               <a class="dropdown-toggle" uib-dropdown-toggle href="" id="manager-menu">
                <span>
                <span class="glyphicon glyphicon-cog"></span>
                <span class="hidden-sm" translate="global.menu.admin.main">Administration</span>
@@ -36,9 +30,15 @@
                </span>
                </a>
                <ul class="dropdown-menu" uib-dropdown-menu>
+                  <li ui-sref-active="active" has-authority="ROLE_ADMIN">
+                     <a ui-sref="email" ng-click="vm.collapseNavbar()">
+                     <span class="glyphicon glyphicon-envelope"></span>&nbsp;
+                     <span translate="global.menu.entities.email">Email</span>
+                     </a>
+                  </li>
                   <li ui-sref-active="active" >
                      <a ui-sref="employee" ng-click="vm.collapseNavbar()">
-                     <span class="glyphicon glyphicon-info-sign"></span>&nbsp;
+                     <span class="glyphicon glyphicon-education"></span>&nbsp;
                      <span translate="global.menu.admin.employeeManagement">Employee management</span>
                      </a>
                   </li>
@@ -48,6 +48,17 @@
                      <span translate="global.menu.admin.userManagement">User management</span>
                      </a>
                   </li>
+               </ul>
+            </li>
+            <li ng-class="{active: vm.$state.includes('admin')}" has-authority="ROLE_ADMIN" uib-dropdown class="dropdown pointer">
+               <a class="dropdown-toggle" uib-dropdown-toggle href="" id="admin-menu">
+               <span>
+               <span class="glyphicon glyphicon-wrench"></span>
+               <span class="hidden-sm" translate="global.menu.admin.main">Administration</span>
+               <b class="caret"></b>
+               </span>
+               </a>
+               <ul class="dropdown-menu" uib-dropdown-menu>
                   <li ui-sref-active="active">
                      <a ui-sref="jhi-metrics" ng-click="vm.collapseNavbar()">
                      <span class="glyphicon glyphicon-dashboard"></span>&nbsp;

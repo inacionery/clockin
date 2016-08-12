@@ -1,33 +1,26 @@
-
 <form name="editForm" role="form" novalidate ng-submit="vm.save()">
-
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                ng-click="vm.clear()">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="vm.clear()">&times;</button>
         <h4 class="modal-title" id="myEmailLabel" translate="clockinApp.email.home.createOrEditLabel">Create or edit a Email</h4>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group">
             <label class="control-label" translate="clockinApp.email.subject" for="field_subject">Subject</label>
-            <input type="text" class="form-control" name="subject" id="field_subject"
-                    ng-model="vm.email.subject"
-                     />
+            <input type="text" class="form-control" name="subject" id="field_subject" ng-model="vm.email.subject"/>
         </div>
         <div class="form-group">
             <label class="control-label" translate="clockinApp.email.content" for="field_content">Content</label>
-                <textarea class="form-control" name="content" ng-keyup="autoExpand($event)" id="field_content"
-                    ng-model="vm.email.content"  />
+            <textarea class="form-control" name="content" ng-keyup="autoExpand($event)" id="field_content" ng-model="vm.email.content"/>
         </div>
-
         <div class="form-group">
             <label class="control-label" for="field_constants">Constantes</label>
-                <div class="form-group">
-                    <input type="text" class="form-control constants" name="firstName" id="field_firstName" value="{PRIMEIRO_NOME}" readonly />
-                    <input type="text" class="form-control constants" name="lastName" id="field_lastName" value="{ULTIMO_NOME}" readonly />
-                    <input type="text" class="form-control constants" name="monthHours" id="field_monthHours" value="{HORAS_MES}" readonly />
-                    <input type="text" class="form-control constants" name="totalHours" id="field_totalHours" value="{HORAS_PERIODO}" readonly />
-                </div>
+            <div class="form-group">
+                <span class="label label-info">{PRIMEIRO_NOME}</span>
+                <span class="label label-info">{ULTIMO_NOME}</span>
+                <span class="label label-info">{HORAS_MES}</span>
+                <span class="label label-info">{HORAS_PERIODO}</span>
+            </div>
         </div>
     </div>
     <div class="modal-footer">

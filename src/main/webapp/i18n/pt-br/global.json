@@ -8,11 +8,9 @@
             "entities": {
                 "main": "Entidades",
                 "clockin": "Folha de ponto",
-                "calendar": "Calendário",
-                "list": "Lista",
                 "employee": "Funcionário",
                 "workday": "Workday",
-                "email": "Email",
+                "email": "Modelos de e-mail",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
@@ -26,8 +24,8 @@
             },
             "admin": {
                 "main": "Administração",
-                "userManagement": "Gerenciamento de usuários",
-                "employeeManagement": "Gerenciamento de funcionários",
+                "userManagement": "Usuários",
+                "employeeManagement": "Funcionários",
                 "tracker": "Rastreamento de usuário",
                 "metrics": "Métricas",
                 "health": "Estado do Sistema",

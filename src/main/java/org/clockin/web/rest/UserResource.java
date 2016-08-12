@@ -208,6 +208,7 @@ public class UserResource {
     @Transactional(readOnly = true)
     public ResponseEntity<List<ManagedUserDTO>> getAllUsers(Pageable pageable)
         throws URISyntaxException {
+        log.debug("REST request to get a page of User");
         Page<User> page = userRepository.findAll(pageable);
         List<ManagedUserDTO> managedUserDTOs = page.getContent().stream()
             .map(ManagedUserDTO::new).collect(Collectors.toList());
@@ -230,6 +231,7 @@ public class UserResource {
     @Transactional(readOnly = true)
     public ResponseEntity<List<ManagedUserDTO>> getAllUsers()
         throws URISyntaxException {
+        log.debug("REST request to find all User by Activated is true");
         List<User> users = userRepository.findAllByActivatedIsTrue();
         List<ManagedUserDTO> managedUserDTOs = users.stream()
             .map(ManagedUserDTO::new).collect(Collectors.toList());
