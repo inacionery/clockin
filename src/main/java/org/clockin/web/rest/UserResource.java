@@ -239,6 +239,32 @@ public class UserResource {
     }
 
     /**
+     * GET  /users : get all users has authoritc manager.
+     * 
+     * @param pageable the pagination information
+     * @return the ResponseEntity with status 200 (OK) and with body all users
+     * @throws URISyntaxException if the pagination headers couldnt be generated
+     */
+    @RequestMapping(value = "/users/manager",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    @Transactional(readOnly = true)
+    public ResponseEntity<List<ManagedUserDTO>> getAllUsersManager()
+        throws URISyntaxException {
+        log.debug("REST request to find all User by Authority is MANAGER");
+
+        Authority authority = authorityRepository
+            .findByName(AuthoritiesConstants.MANAGER);
+
+        List<User> users = userRepository.findAllByAuthority(authority);
+
+        List<ManagedUserDTO> managedUserDTOs = users.stream()
+            .map(ManagedUserDTO::new).collect(Collectors.toList());
+        return new ResponseEntity<>(managedUserDTOs, HttpStatus.OK);
+    }
+
+    /**
      * GET  /users/:login : get the "login" user.
      *
      * @param login the login of the user to find

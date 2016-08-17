@@ -11,6 +11,7 @@
         var service = $resource('api/users/:login', {}, {
             'query': {method: 'GET', isArray: true},
             'queryAll': { method: 'GET', isArray: true, url: 'api/users/all'},
+            'queryManager': { method: 'GET', isArray: true, url: 'api/users/manager'},
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {
