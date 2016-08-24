@@ -22,10 +22,15 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     Page<Employee> findByHiddenIsFalse(Pageable pageable);
 
+    List<Employee> findByHiddenIsFalse();
+
     @Query("select distinct employee from Employee employee left join fetch employee.managers")
     List<Employee> findAllWithEagerRelationships();
 
     @Query("select employee from Employee employee left join fetch employee.managers where employee.id =:id")
     Employee findOneWithEagerRelationships(@Param("id") Long id);
+
+    @Query("select distinct employee from Employee employee inner join fetch employee.managers as managers where managers = :manager")
+    List<Employee> findByManager(@Param("manager") User manager);
 
 }

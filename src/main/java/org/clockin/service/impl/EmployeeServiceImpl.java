@@ -1,5 +1,7 @@
 package org.clockin.service.impl;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.clockin.domain.Employee;
@@ -99,5 +101,17 @@ public class EmployeeServiceImpl implements EmployeeService {
         Page<Employee> result = employeeRepository
             .findByHiddenIsFalse(pageable);
         return result;
+    }
+
+    @Transactional(readOnly = true)
+    public List<Employee> findByHiddenIsFalse() {
+        log.debug("Request to get all Employees by hidden false");
+        return employeeRepository.findByHiddenIsFalse();
+    }
+
+    @Transactional(readOnly = true)
+    public List<Employee> findByManager(User manage) {
+        log.debug("Request to get all Employees by manager : {}", manage);
+        return employeeRepository.findByManager(manage);
     }
 }

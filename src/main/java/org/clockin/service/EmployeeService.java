@@ -1,5 +1,7 @@
 package org.clockin.service;
 
+import java.util.List;
+
 import org.clockin.domain.Employee;
 import org.clockin.domain.User;
 import org.springframework.data.domain.Page;
@@ -48,4 +50,8 @@ public interface EmployeeService {
         String socialIdentificationNumber);
 
     Page<Employee> findByHiddenIsFalse(Pageable pageable);
+
+    List<Employee> findByHiddenIsFalse();
+
+    List<Employee> findByManager(User manager);
 }
