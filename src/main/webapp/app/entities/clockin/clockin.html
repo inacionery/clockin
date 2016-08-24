@@ -1,6 +1,6 @@
 <div ng-switch="!!vm.months.length">
    <div ng-switch-when="false">
-      <div class="center-txt">
+      <div class="center-align">
          Por favor, solicite ao RH seu cadastro no sistema.
       </div>
    </div>
@@ -72,7 +72,7 @@
                                     <span ng-if="workday.justification" class="md-headline">{{workday.justification}}</span>
                                     <md-content ng-if="workday.clockinValues.length > 0 || workday.justification" class="md-headline tooltip-days-content flex layout-padding">
                                        <span ng-repeat="clockin in workday.clockinValues track by clockin.id" class="tooltip-days-entry {{clockin.justification ? 'font-orange' : ''}}">
-                                          {{clockin.time}}
+                                       {{clockin.time}}
                                        </span>
                                     </md-content>
                                     <span ng-if="workday.workPlanned > 0 && !workday.isClockinMissing" class="md-headline">Saldo: <span ng-class="workday.workDone >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workDone)}}</span></span>
