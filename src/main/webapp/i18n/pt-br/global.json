@@ -11,6 +11,7 @@
                 "employee": "Funcionário",
                 "workday": "Workday",
                 "email": "Modelos de e-mail",
+                "report": "Relatórios",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

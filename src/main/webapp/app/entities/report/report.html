@@ -1,0 +1,62 @@
+<div>
+   <jhi-alert></jhi-alert>
+   <div ng-cloak>
+      <md-content>
+         <md-tabs md-no-pagination md-selected="selectedIndex" md-stretch-tabs="always" md-center-tabs md-dynamic-height md-border-bottom>
+            <md-tab md-on-select="vm.selectMonth(6)" ui-sref="report({year: vm.previousYear, semester: vm.previousSemester})">
+               <md-tab-label>
+                  <span class="glyphicon glyphicon-chevron-left"></span>
+               </md-tab-label>
+            </md-tab>
+            <md-tab class="month-title" ng-repeat="report in vm.reports">
+               <md-tab-label>
+                  <p hide-xs hide-sm hide-md>{{report.month | date:'MMMM' | capitalize}}</p>
+                  <p hide-lg hide-gt-md>{{report.month | date:'MMM'}}</p>
+               </md-tab-label>
+               <md-tab-body>
+                  <md-grid-list
+                     md-cols="3"
+                     md-row-height="10:1" 
+                     md-gutter="0px">
+                     <md-grid-tile
+                        rowspan="1" colspan="1">
+                        <p class="md-headline">Funcionário</p>
+                     </md-grid-tile>
+                     <md-grid-tile
+                        rowspan="1" colspan="1">
+                        <p class="md-headline">Horas do mês</p>
+                     </md-grid-tile>
+                     <md-grid-tile
+                        rowspan="1" colspan="1">
+                        <p class="md-headline">Horas acumuladas</p>
+                     </md-grid-tile>
+                  </md-grid-list>
+                  <md-grid-list
+                     ng-repeat="employee in report.employees"
+                     md-cols="3"
+                     md-row-height="15:1" 
+                     md-gutter="0px">
+                     <md-grid-tile 
+                        rowspan="1" colspan="1">
+                        {{employee.employee.socialIdentificationNumber}} - {{employee.employee.user.firstName}} {{employee.employee.user.lastName}}
+                     </md-grid-tile>
+                     <md-grid-tile
+                        rowspan="1" colspan="1">
+                        {{vm.balanceHours(employee.hour)}}
+                     </md-grid-tile>
+                     <md-grid-tile 
+                        rowspan="1" colspan="1">
+                        {{vm.balanceHours(employee.hourCumulative)}}	       
+                     </md-grid-tile>
+                  </md-grid-list>
+               </md-tab-body>
+            </md-tab>
+            <md-tab md-on-select="vm.selectMonth(1)" ui-sref="report({year: vm.nextYear, semester: vm.nextSemester})">
+               <md-tab-label>
+                  <span class="glyphicon glyphicon-chevron-right"></span>
+               </md-tab-label>
+            </md-tab>
+         </md-tabs>
+      </md-content>
+   </div>
+</div>
