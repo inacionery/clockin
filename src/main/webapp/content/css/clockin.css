@@ -13,6 +13,12 @@
 md-content {
 	font-size: 0.8em;
 }
+md-tooltip .md-content {
+    overflow: initial;
+}
+md-tooltip.md-default-theme .md-content, md-tooltip .md-content {
+    background-color: transparent;
+}
 md-tab-item.md-tab.md-ink-ripple.md-disabled {
     opacity: 1;
     color: rgba(0, 0, 0, 0.54);
