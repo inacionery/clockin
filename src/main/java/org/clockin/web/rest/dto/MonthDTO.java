@@ -16,7 +16,7 @@ public class MonthDTO {
     private List<WorkDayDTO> workDays;
 
     private LocalDate date;
-    private long hours;
+    private long hours = 0;
 
     public MonthDTO(LocalDate date) {
         this.date = date;
@@ -39,8 +39,8 @@ public class MonthDTO {
         return hours;
     }
 
-    public void setHours(long hours) {
-        this.hours = hours;
+    public void addHours(long hours) {
+        this.hours += hours;
     }
 
 }

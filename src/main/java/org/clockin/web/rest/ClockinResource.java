@@ -71,6 +71,7 @@ public class ClockinResource {
         throws URISyntaxException, ParseException {
 
         LocalDate now = LocalDate.now();
+
         int year = now.getYear();
         int semester = now.getMonth().getValue() > 6 ? 1 : 0;
 
@@ -118,9 +119,8 @@ public class ClockinResource {
                         startDate, endDate);
 
                 int workdayCount = 0;
-                long hours = 0;
-                for (int k = 1; k <= startDate.lengthOfMonth(); k++) {
-                    LocalDate curDate = LocalDate.of(year, month, k);
+                for (int k = 0; k < startDate.lengthOfMonth(); k++) {
+                    LocalDate curDate = startDate.plusDays(k);
 
                     WorkDayDTO workDayDTO = new WorkDayDTO(curDate);
 
@@ -145,9 +145,9 @@ public class ClockinResource {
                         workDayDTO.setJustification(workday.getJustification());
 
                         if (clockins.size() % 2 == 0) {
-                            workDayDTO.setWorkDone(workday.getWorkDone());
-                            hours += workday.getWorkDone();
-                            monthDTO.setHours(hours);
+                            Long workDone = workday.getWorkDone();
+                            workDayDTO.setWorkDone(workDone);
+                            monthDTO.addHours(workDone);
                         }
                     }
                     monthDTO.addWorkDay(workDayDTO);
