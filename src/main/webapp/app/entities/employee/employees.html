@@ -2,12 +2,12 @@
    <h2 translate="clockinApp.employee.home.title">Employees</h2>
    <jhi-alert></jhi-alert>
    <div class="container-fluid">
-      <div class="row right">
-         <div class="col-xs-2 no-padding-left">
+      <div class="row">
+         <div class="col-xs-12 no-padding-left">
             <button type="submit"
             	ng-if="vm.hidden == 0"
             	ui-sref="employee({hidden:1})"
-            	class="btn btn-primary" >
+            	class="btn btn-primary right" >
 	            <span class="glyphicon glyphicon-eye-open"></span>
 	            <span>
 	            	Mostrar Ocultos
@@ -16,7 +16,7 @@
             <button type="submit"
             	ng-if="vm.hidden == 1"
             	ui-sref="employee({hidden:0})"
-            	class="btn btn-primary" >
+            	class="btn btn-primary right" >
 	            <span class="glyphicon glyphicon-eye-close"></span>
 	            <span>
 	            	Esconder Ocultos

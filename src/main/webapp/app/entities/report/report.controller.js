@@ -54,5 +54,8 @@
              minutes = minutes < 10 ? '0' + minutes : minutes;
              return minus + hours + ":" + minutes;
          };
+
+         vm.predicate = "employee.socialIdentificationNumber";
+         vm.reverse = true;
      }
 })();

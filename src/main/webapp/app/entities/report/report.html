@@ -14,41 +14,37 @@
                   <p hide-lg hide-gt-md>{{report.month | date:'MMM'}}</p>
                </md-tab-label>
                <md-tab-body>
-                  <md-grid-list
-                     md-cols="3"
-                     md-row-height="10:1" 
-                     md-gutter="0px">
-                     <md-grid-tile
-                        rowspan="1" colspan="1">
-                        <p class="md-headline">Funcionário</p>
-                     </md-grid-tile>
-                     <md-grid-tile
-                        rowspan="1" colspan="1">
-                        <p class="md-headline">Horas do mês</p>
-                     </md-grid-tile>
-                     <md-grid-tile
-                        rowspan="1" colspan="1">
-                        <p class="md-headline">Horas acumuladas</p>
-                     </md-grid-tile>
-                  </md-grid-list>
-                  <md-grid-list
-                     ng-repeat="employee in report.employees"
-                     md-cols="3"
-                     md-row-height="15:1" 
-                     md-gutter="0px">
-                     <md-grid-tile 
-                        rowspan="1" colspan="1">
-                        {{employee.employee.socialIdentificationNumber}} - {{employee.employee.user.firstName}} {{employee.employee.user.lastName}}
-                     </md-grid-tile>
-                     <md-grid-tile
-                        rowspan="1" colspan="1">
-                        {{vm.balanceHours(employee.hour)}}
-                     </md-grid-tile>
-                     <md-grid-tile 
-                        rowspan="1" colspan="1">
-                        {{vm.balanceHours(employee.hourCumulative)}}	       
-                     </md-grid-tile>
-                  </md-grid-list>
+                  <div class="row pad">
+                     <div class="col-xs-12">
+                        <button type="submit"
+                           class="btn btn-success right" >
+                        <span class="glyphicon glyphicon-envelope"></span>
+                        <span>Enviar Email</span>
+                        </button>
+                     </div>
+                  </div>
+                  <div class="table-responsive">
+                     <table class="jh-table table table-striped">
+                        <thead>
+                           <tr jh-sort="vm.predicate" ascending="vm.reverse">
+                              <th><input type="checkbox" ng-model="selectAll"></th>
+                              <th jh-sort-by="employee.socialIdentificationNumber">PIS<span class="glyphicon glyphicon-sort"></span></th>
+                              <th jh-sort-by="employee.user.firstName">Funcionário<span class="glyphicon glyphicon-sort"></span></th>
+                              <th jh-sort-by="hour">Horas do mês <span class="glyphicon glyphicon-sort"></span></th>
+                              <th jh-sort-by="hourCumulative">Horas acumuladas <span class="glyphicon glyphicon-sort"></span></th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr ng-repeat="employee in report.employees | orderBy:vm.predicate:!vm.reverse">
+                              <td><input type="checkbox" value="{{employee.employee.id}}" ng-checked="selectAll"></td>
+                              <td>{{employee.employee.socialIdentificationNumber}}</td>
+                              <td>{{employee.employee.user.firstName}} {{employee.employee.user.lastName}}</td>
+                              <td>{{vm.balanceHours(employee.hour)}}</td>
+                              <td>{{vm.balanceHours(employee.hourCumulative)}}</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
                </md-tab-body>
             </md-tab>
             <md-tab md-on-select="vm.selectMonth(1)" ui-sref="report({year: vm.nextYear, semester: vm.nextSemester})">
