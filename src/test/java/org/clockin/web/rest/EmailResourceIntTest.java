@@ -19,7 +19,6 @@ import org.clockin.domain.Email;
 import org.clockin.repository.EmailRepository;
 import org.clockin.service.EmailService;
 import org.junit.Before;
-import org.junit.Test;
 import org.mockito.MockitoAnnotations;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.http.MediaType;
