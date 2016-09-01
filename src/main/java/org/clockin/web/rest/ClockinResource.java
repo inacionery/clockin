@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -100,14 +101,15 @@ public class ClockinResource {
                 int month = months[i];
 
                 LocalDate startDate = LocalDate.of(year, month, 1);
-                LocalDate endDate = LocalDate.of(year, month,
-                    startDate.lengthOfMonth());
+                LocalDate endDate = startDate
+                    .with(TemporalAdjusters.lastDayOfMonth());
 
                 MonthDTO monthDTO = new MonthDTO(startDate);
 
                 int diff = startDate.getDayOfWeek().getValue() == 7 ? 0
                     : startDate.getDayOfWeek().getValue();
-                LocalDate previousDate = endDate.minusMonths(1);
+                LocalDate previousDate = endDate.minusMonths(1)
+                    .with(TemporalAdjusters.lastDayOfMonth());
                 for (int l = 0; l < diff; l++) {
                     LocalDate curDate = previousDate.minusDays(diff - l - 1);
                     WorkDayDTO workDayDTO = new WorkDayDTO(curDate);
