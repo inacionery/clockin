@@ -125,7 +125,7 @@ public class WorkDayDTO {
     public boolean getIsMissingBreak() {
         if (clockins.size() % 2 == 0) {
             long work = 0;
-            boolean interval = false;
+            long interval = 0;
             for (int i = 0; i < clockins.size() - 1; i++) {
 
                 Clockin start = clockins.get(i);
@@ -135,15 +135,13 @@ public class WorkDayDTO {
                     .toMinutes();
                 if (i % 2 == 0) {
                     work += minutes;
-                    if (minutes >= 360) {
-                        return true;
-                    }
                 }
-                else if (!interval) {
-                    interval = minutes >= 60;
+                else if (minutes > interval) {
+                    interval = minutes;
                 }
             }
-            if (work >= 480 && !interval) {
+            if ((work > 240 && work <= 360 && interval < 15)
+                || (work > 360 && interval < 60)) {
                 return true;
             }
         }
