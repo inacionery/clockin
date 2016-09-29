@@ -138,12 +138,12 @@ public class ClockinResource {
                             .findByWorkday(workday);
 
                         workDayDTO.setClockinValues(clockins);
+                        workDayDTO.setWorkPlanned(workday.getWorkPlanned());
 
                         if (curDate.isAfter(now) || curDate.isEqual(now)) {
                             break;
                         }
 
-                        workDayDTO.setWorkPlanned(workday.getWorkPlanned());
                         workDayDTO.setJustification(workday.getJustification());
 
                         if (clockins.size() % 2 == 0) {
