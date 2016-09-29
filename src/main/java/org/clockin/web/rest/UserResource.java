@@ -18,7 +18,6 @@ import org.clockin.domain.User;
 import org.clockin.repository.AuthorityRepository;
 import org.clockin.repository.UserRepository;
 import org.clockin.security.AuthoritiesConstants;
-import org.clockin.service.MailService;
 import org.clockin.service.UserService;
 import org.clockin.web.rest.dto.ManagedUserDTO;
 import org.clockin.web.rest.util.HeaderUtil;
@@ -73,9 +72,6 @@ public class UserResource {
     private UserRepository userRepository;
 
     @Inject
-    private MailService mailService;
-
-    @Inject
     private AuthorityRepository authorityRepository;
 
     @Inject
@@ -122,13 +118,6 @@ public class UserResource {
         }
         else {
             User newUser = userService.createUser(managedUserDTO);
-            String baseUrl = request.getScheme() + // "http"
-                "://" + // "://"
-                request.getServerName() + // "myhost"
-                ":" + // ":"
-                request.getServerPort() + // "80"
-                request.getContextPath(); // "/myContextPath" or "" if deployed in root context
-            mailService.sendCreationEmail(newUser, baseUrl);
             return ResponseEntity
                 .created(new URI("/api/users/" + newUser.getLogin()))
                 .headers(HeaderUtil.createAlert("userManagement.created",

@@ -125,7 +125,8 @@
         "emailexists": "Este email já está cadastrado!",
         "idexists": "Novo(a) {{entityName}} não pode ter uma ID",
         "useralreadyassociated": "Usuário já está associado a um {{entityName}}",
-        "socialidentificationnumberreadyassociated": "Este PIS já está associado a um {{entityName}}"
+        "socialidentificationnumberreadyassociated": "Este PIS já está associado a um {{entityName}}",
+        "emailsenterror": "Ocorreu um erro ao enviar os emails"
     },
     "footer": "Este é o seu rodapé"
 }

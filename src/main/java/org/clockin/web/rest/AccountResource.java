@@ -17,7 +17,6 @@ import org.clockin.domain.User;
 import org.clockin.repository.PersistentTokenRepository;
 import org.clockin.repository.UserRepository;
 import org.clockin.security.SecurityUtils;
-import org.clockin.service.MailService;
 import org.clockin.service.UserService;
 import org.clockin.web.rest.dto.KeyAndPasswordDTO;
 import org.clockin.web.rest.dto.ManagedUserDTO;
@@ -54,9 +53,6 @@ public class AccountResource {
     @Inject
     private PersistentTokenRepository persistentTokenRepository;
 
-    @Inject
-    private MailService mailService;
-
     /**
      * POST  /register : register the user.
      *
@@ -86,21 +82,6 @@ public class AccountResource {
                         "e-mail address already in use", textPlainHeaders,
                         HttpStatus.BAD_REQUEST))
                     .orElseGet(() -> {
-                        User user = userService.createUserInformation(
-                            managedUserDTO.getLogin(),
-                            managedUserDTO.getPassword(),
-                            managedUserDTO.getFirstName(),
-                            managedUserDTO.getLastName(),
-                            managedUserDTO.getEmail().toLowerCase(),
-                            managedUserDTO.getLangKey());
-                        String baseUrl = request.getScheme() + // "http"
-                        "://" + // "://"
-                        request.getServerName() + // "myhost"
-                        ":" + // ":"
-                        request.getServerPort() + // "80"
-                        request.getContextPath(); // "/myContextPath" or "" if deployed in root context
-
-                        mailService.sendActivationEmail(user, baseUrl);
                         return new ResponseEntity<>(HttpStatus.CREATED);
                     }));
     }
@@ -250,29 +231,6 @@ public class AccountResource {
                     .findAny().ifPresent(
                         t -> persistentTokenRepository.delete(decodedSeries));
             });
-    }
-
-    /**
-     * POST   /account/reset_password/init : Send an e-mail to reset the password of the user
-     *
-     * @param mail the mail of the user
-     * @param request the HTTP request
-     * @return the ResponseEntity with status 200 (OK) if the e-mail was sent, or status 400 (Bad Request) if the e-mail address is not registred
-     */
-    @RequestMapping(value = "/account/reset_password/init",
-        method = RequestMethod.POST,
-        produces = MediaType.TEXT_PLAIN_VALUE)
-    @Timed
-    public ResponseEntity<?> requestPasswordReset(@RequestBody String mail,
-        HttpServletRequest request) {
-        return userService.requestPasswordReset(mail).map(user -> {
-            String baseUrl = request.getScheme() + "://"
-                + request.getServerName() + ":" + request.getServerPort()
-                + request.getContextPath();
-            mailService.sendPasswordResetMail(user, baseUrl);
-            return new ResponseEntity<>("e-mail was sent", HttpStatus.OK);
-        }).orElse(new ResponseEntity<>("e-mail address not registered",
-            HttpStatus.BAD_REQUEST));
     }
 
     /**

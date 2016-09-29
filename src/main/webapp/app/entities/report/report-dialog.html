@@ -1,0 +1,26 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()">
+   <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+         ng-click="vm.clear()">&times;</button>
+      <h4 class="modal-title" id="myEmployeeLabel">Enviar Email</h4>
+   </div>
+   <div class="modal-body">
+      <jhi-alert-error></jhi-alert-error>
+      <div class="form-group">
+      </div>
+      <div class="form-group">
+         <label for="field_template">Template</label>
+         <select class="form-control" id="field_template" name="template" ng-model="vm.report.email" ng-options="email as email.subject for email in vm.email track by email.id">
+            <option value=""></option>
+         </select>
+      </div>
+   </div>
+   <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+      <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span translate="entity.action.cancel">Cancel</span>
+      </button>
+      <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+      <span class="glyphicon glyphicon-send"></span><span>&nbsp;Enviar</span>
+      </button>
+   </div>
+</form>

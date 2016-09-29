@@ -3,7 +3,8 @@
         "report" : {
             "home": {
                 "title": "Relatórios"
-            }
+            },
+            "updated" : "Emails enviados com sucesso"
         }
     }
 }

@@ -17,9 +17,10 @@
                   <div class="row pad">
                      <div class="col-xs-12">
                         <button type="submit"
+                           ui-sref="report.send({report:report})"
                            class="btn btn-success right" >
                         <span class="glyphicon glyphicon-envelope"></span>
-                        <span>Enviar Email</span>
+                        <span>&nbsp;Enviar Email</span>
                         </button>
                      </div>
                   </div>
@@ -27,7 +28,7 @@
                      <table class="jh-table table table-striped">
                         <thead>
                            <tr jh-sort="vm.predicate" ascending="vm.reverse">
-                              <th><input type="checkbox" ng-model="selectAll"></th>
+                              <th><input type="checkbox" ng-click="vm.toggleAll(report.employees)" ng-model="vm.isAllSelected"></th>
                               <th jh-sort-by="employee.socialIdentificationNumber">PIS<span class="glyphicon glyphicon-sort"></span></th>
                               <th jh-sort-by="employee.user.firstName">Funcionário<span class="glyphicon glyphicon-sort"></span></th>
                               <th jh-sort-by="hour">Horas do mês <span class="glyphicon glyphicon-sort"></span></th>
@@ -36,7 +37,7 @@
                         </thead>
                         <tbody>
                            <tr ng-repeat="employee in report.employees | orderBy:vm.predicate:!vm.reverse">
-                              <td><input type="checkbox" value="{{employee.employee.id}}" ng-checked="selectAll"></td>
+                              <td><input type="checkbox" ng-model="employee.check" ng-change="vm.optionToggled(report.employees)"></td>
                               <td>{{employee.employee.socialIdentificationNumber}}</td>
                               <td>{{employee.employee.user.firstName}} {{employee.employee.user.lastName}}</td>
                               <td>{{vm.balanceHours(employee.hour)}}</td>

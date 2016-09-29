@@ -60,8 +60,6 @@ public class SocialServiceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        doNothing().when(mockMailService)
-            .sendSocialRegistrationValidationEmail(anyObject(), anyString());
         doNothing().when(mockConnectionRepository).addConnection(anyObject());
         when(mockUsersConnectionRepository
             .createConnectionRepository(anyString()))
@@ -311,10 +309,6 @@ public class SocialServiceIntTest {
 
         // Exercise
         socialService.createSocialUser(connection, "fr");
-
-        //Verify
-        verify(mockMailService, times(1))
-            .sendSocialRegistrationValidationEmail(anyObject(), anyString());
 
         // Teardown
         User userToDelete = userRepository.findOneByEmail("mail@mail.com")
