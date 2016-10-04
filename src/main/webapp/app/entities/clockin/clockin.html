@@ -75,7 +75,8 @@
                                        {{clockin.time}}
                                        </span>
                                        <span ng-if="workday.isToday" ng-repeat="clockin in workday.predictions" class="tooltip-days-entry font-lightPurple">
-                                           {{clockin.time}}
+                                          {{clockin.time}}
+                                          <ng-if ng-if="workday.isToday && workday.predictions.length > 0  ? vm.notifyMe(clockin.time) : false"></ng-if>
                                        </span>
                                     </md-content>
                                     <span ng-if="workday.workPlanned > 0 && !workday.isClockinMissing && !workday.isToday && !workday.isAfterToday" class="md-headline">Saldo: <span ng-class="workday.workDone >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workDone)}}</span></span>

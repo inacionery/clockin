@@ -38,7 +38,7 @@
         }
 
         if (year == vm.today.getFullYear() && ((vm.today.getMonth() > 5 ? 1 : 0) == semester)) {
-        	$scope.selectedIndex = vm.today.getMonth() - (5 * semester);
+            $scope.selectedIndex = vm.today.getMonth() - (5 * semester);
         }
 
         vm.semesterHours = function semesterHours(months) {
@@ -97,5 +97,40 @@
                 return [];
             }
         };
+
+        vm.isNotify = false;
+        vm.notifyMe = function notifyMe(time) {
+            if (vm.isNotify) {
+                return;
+            }
+            var now = new Date();
+            var hoursDiff = time.split(":")[0] - now.getHours();
+            var minutesDiff = time.split(":")[1] - now.getMinutes();
+            if ((hoursDiff >= 0) && (minutesDiff >= 0)) {
+                var remainTime = ((hoursDiff * 60) + (minutesDiff) - (5));
+                vm.time = time;
+                vm.isNotify = true;
+                if (remainTime > 0) {
+                    setTimeout(notifyClockin, remainTime * 60000);
+                } else {
+                    notifyClockin();
+                }
+            }
+
+        }
+
+        function notifyClockin() {
+            if (!("Notification" in window)) {
+                alert("Você deveria bater o ponto as: " + vm.time);
+            } else if (Notification.permission === "granted") {
+                var notification = new Notification("Você deveria bater o ponto as: " + vm.time);
+            } else if (Notification.permission !== 'denied') {
+                Notification.requestPermission(function(permission) {
+                    if (permission === "granted") {
+                        var notification = new Notification("Você deveria bater o ponto as: " + vm.time);
+                    }
+                });
+            }
+        }
     }
 })();
