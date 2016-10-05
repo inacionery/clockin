@@ -3,6 +3,7 @@
 
     angular
         .module('clockinApp', [
+            'textAngular',
             'ngStorage',
             'ngMaterial',
             'tmh.dynamicLocale',
