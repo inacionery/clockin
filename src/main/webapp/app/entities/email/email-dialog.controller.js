@@ -18,7 +18,6 @@
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();
-            $timeout(expand, 0);
         });
 
         function clear () {
@@ -43,16 +42,5 @@
         function onSaveError () {
             vm.isSaving = false;
         }
-
-        $scope.autoExpand = function(e) {
-            var element = typeof e === 'object' ? e.target : document.getElementById(e);
-            var scrollHeight = element.scrollHeight -60; // replace 60 by the sum of padding-top and padding-bottom
-            element.style.height =  scrollHeight + "px";    
-        };
-
-        function expand() {
-            $scope.autoExpand('field_content');
-        }
-
     }
 })();

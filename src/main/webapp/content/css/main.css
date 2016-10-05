@@ -667,3 +667,6 @@ button.right {
 	display: initial;
 	width: auto;
 }
+text-angular#field_content {
+    height: auto;
+}
