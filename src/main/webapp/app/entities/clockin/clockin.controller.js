@@ -100,6 +100,8 @@
 
         vm.isNotify = false;
         vm.notifyMe = function notifyMe(time) {
+        	Notification.requestPermission();
+
             if (vm.isNotify) {
                 return;
             }
