@@ -109,7 +109,7 @@
             var hoursDiff = time.split(":")[0] - now.getHours();
             var minutesDiff = time.split(":")[1] - now.getMinutes();
             if ((hoursDiff >= 0) && (minutesDiff >= 0)) {
-                var remainTime = ((hoursDiff * 60) + (minutesDiff) - (5));
+                var remainTime = ((hoursDiff * 60) + (minutesDiff) - (6));
                 vm.time = time;
                 vm.isNotify = true;
                 if (remainTime > 0) {
