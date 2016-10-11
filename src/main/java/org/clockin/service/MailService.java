@@ -32,7 +32,7 @@ public class MailService {
     @Inject
     private SocialUserConnectionRepository socialUserConnectionRepository;
 
-    public boolean sendEmail(User user, String to, String[] bcc, String subject,
+    public boolean sendEmail(User user, String to, String[] cc, String subject,
         String content, boolean isMultipart, boolean isHtml) {
         log.debug(
             "Send e-mail[multipart '{}' and html '{}'] to '{}' with subject '{}' and content={}",
@@ -50,7 +50,7 @@ public class MailService {
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage,
                 isMultipart, CharEncoding.UTF_8);
             message.setTo(to);
-            message.setBcc(bcc);
+            message.setCc(cc);
             message.setFrom(user.getEmail());
             message.setSubject(subject);
             message.setText(content, isHtml);
