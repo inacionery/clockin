@@ -79,7 +79,7 @@
                                           <ng-if ng-if="workday.isToday && workday.predictions.length > 0  ? vm.notifyMe(clockin.time) : false"></ng-if>
                                        </span>
                                     </md-content>
-                                    <span ng-if="!workday.isClockinMissing && !workday.isToday && !workday.isAfterToday" class="md-headline">Saldo: <span ng-class="workday.workDone >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workDone)}}</span></span>
+                                    <span ng-if="workday.clockinValues.length > 0 && !workday.isClockinMissing && !workday.isToday && !workday.isAfterToday" class="md-headline">Saldo: <span ng-class="workday.workDone >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workDone)}}</span></span>
                                  </md-card-title-text>
                               </md-card-title>
                            </md-card>

@@ -36,6 +36,9 @@ md-tooltip .md-content {
 md-tooltip md-card {
     background-color: #FFFFFF;
 }
+.md-content._md.md-show {
+    opacity: 1;
+}
 md-content.md-headline,
 span.md-headline {
 	font-size: 1.5em;
