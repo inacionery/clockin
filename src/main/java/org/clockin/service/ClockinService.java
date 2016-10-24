@@ -39,9 +39,14 @@ public interface ClockinService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+    
+    void delete(List<Clockin> clockins);
 
     List<Clockin> findByWorkday(Workday workday);
 
     Clockin findBySequentialRegisterNumber(String valueOf);
+
+    List<Clockin> findByWorkdayAndJustificationNotLike(Workday workday,
+        String justification);
 
 }

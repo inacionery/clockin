@@ -206,6 +206,8 @@ public class ClockinResource {
             Workday workday = createOrUpdateWorkDay(employee, date, workDone,
                 workPlanned, workDayJustification);
 
+            removeAllManualClockin(workday);
+
             JSONArray clockinsArray = workdayObject.getJSONArray("clockins");
 
             for (int k = 0; k < clockinsArray.length(); k++) {
@@ -235,6 +237,15 @@ public class ClockinResource {
         }
 
         return employee;
+    }
+
+    private void removeAllManualClockin(Workday workday) {
+        List<Clockin> clockins = clockinService
+            .findByWorkdayAndJustificationNotLike(workday, "");
+
+        if (clockins != null && !clockins.isEmpty()) {
+            clockinService.delete(clockins);
+        }
     }
 
     private Workday createOrUpdateWorkDay(Employee employee, LocalDate date,

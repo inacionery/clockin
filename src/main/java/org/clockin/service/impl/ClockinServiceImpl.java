@@ -72,6 +72,14 @@ public class ClockinServiceImpl implements ClockinService {
         log.debug("Request to delete Clockin : {}", id);
         clockinRepository.delete(id);
     }
+    /**
+     *  Delete the clockin by clockins.
+     *  
+     */
+    public void delete(List<Clockin> clockins) {
+        log.debug("Request to delete Clockins : {}", clockins);
+        clockinRepository.delete(clockins);
+    }
 
     @Transactional(readOnly = true)
     public List<Clockin> findByWorkday(Workday workday) {
@@ -86,5 +94,14 @@ public class ClockinServiceImpl implements ClockinService {
             sequentialRegisterNumber);
         return clockinRepository
             .findBySequentialRegisterNumber(sequentialRegisterNumber);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Clockin> findByWorkdayAndJustificationNotLike(Workday workday,
+        String justification) {
+        log.debug("Request to get Clockin by workday : {} and justification",
+            workday, justification);
+        return clockinRepository.findByWorkdayAndJustificationNotLike(workday,
+            justification);
     }
 }
