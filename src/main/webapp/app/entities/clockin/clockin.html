@@ -68,8 +68,8 @@
                            <md-card>
                               <md-card-title>
                                  <md-card-title-text layout-align="center center">
-                                    <span ng-if="workday.isMissingBreak" class="md-headline">Está faltando o intervalo</span>
-                                    <span ng-if="workday.justification" class="md-headline">{{workday.justification}}</span>
+                                    <span ng-if="workday.isMissingBreak && !workday.isToday && !workday.isAfterToday" class="md-headline">Está faltando o intervalo</span>
+                                    <span ng-if="workday.justification && !workday.isToday && !workday.isAfterToday" class="md-headline">{{workday.justification}}</span>
                                     <md-content ng-if="workday.clockinValues.length > 0 || workday.justification" class="md-headline tooltip-days-content flex layout-padding">
                                        <span ng-repeat="clockin in workday.clockinValues track by clockin.id" class="tooltip-days-entry {{clockin.justification ? 'font-orange' : ''}}">
                                        {{clockin.time}}
