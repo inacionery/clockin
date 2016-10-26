@@ -18,7 +18,6 @@
                      <table class="jh-table table table-striped">
                         <thead>
                            <tr jh-sort="vm.predicate" ascending="vm.reverse">
-                              <th><input type="checkbox" ng-click="vm.toggleAll(report.employees)" ng-model="vm.isAllSelected"></th>
                               <th jh-sort-by="employee.user.firstName">Funcionário<span class="glyphicon glyphicon-sort"></span></th>
                               <th jh-sort-by="hour">Horas do mês<span class="glyphicon glyphicon-sort"></span></th>
                               <th jh-sort-by="hourCumulative">Horas acumuladas<span class="glyphicon glyphicon-sort"></span></th>
@@ -27,7 +26,6 @@
                         </thead>
                         <tbody>
                            <tr ng-repeat="employee in report.employees | orderBy:vm.predicate:!vm.reverse">
-                              <td><input type="checkbox" ng-model="employee.check" ng-change="vm.optionToggled(report.employees)"></td>
                               <td>{{employee.employee.user.firstName}} {{employee.employee.user.lastName}}</td>
                               <td>{{vm.balanceHours(employee.hour)}}</td>
                               <td>{{vm.balanceHours(employee.hourCumulative)}}</td>
