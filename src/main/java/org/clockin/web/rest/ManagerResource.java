@@ -93,6 +93,13 @@ public class ManagerResource {
             LocalDate endDate = LocalDate.of(year, months[5], 1)
                 .with(TemporalAdjusters.lastDayOfMonth());
 
+            if (startDate.equals(now) || startDate.isAfter(now)) {
+                continue;
+            }
+            else if (endDate.equals(now) || endDate.isAfter(now)) {
+                endDate = now.minusDays(1);
+            }
+
             long hourCumulative = 0;
 
             for (Object[] work : workdayRepository
