@@ -9,15 +9,14 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.inject.Inject;
 
-import org.clockin.domain.Authority;
+import org.clockin.domain.Clockin;
 import org.clockin.domain.Employee;
 import org.clockin.domain.User;
 import org.clockin.domain.Workday;
-import org.clockin.repository.AuthorityRepository;
+import org.clockin.repository.ClockinRepository;
 import org.clockin.repository.UserRepository;
 import org.clockin.repository.WorkdayRepository;
 import org.clockin.security.AuthoritiesConstants;
@@ -52,7 +51,7 @@ public class ManagerResource {
     private UserRepository userRepository;
 
     @Inject
-    private AuthorityRepository authorityRepository;
+    private ClockinRepository clockinRepository;
 
     @RequestMapping(value = { "/manager/{year}/{semester}" },
         method = RequestMethod.GET,
@@ -92,30 +91,23 @@ public class ManagerResource {
             getReportDTO(reportDTOList, LocalDate.of(year, month, 1));
         }
 
-        Optional<User> userOpt = userRepository
+        Optional<User> user = userRepository
             .findOneByLogin(SecurityUtils.getCurrentUserLogin());
 
-        if (!userOpt.isPresent()) {
+        if (!user.isPresent()) {
             return reportDTOList;
         }
 
-        User user = userOpt.get();
-
-        Set<Authority> authorities = user.getAuthorities();
-
-        Authority manager = authorityRepository
-            .findByName(AuthoritiesConstants.MANAGER);
-
-        Authority admin = authorityRepository
-            .findByName(AuthoritiesConstants.ADMIN);
+        boolean isAdmin = SecurityUtils
+            .isCurrentUserInRole(AuthoritiesConstants.ADMIN);
 
         List<Employee> employees;
 
-        if (authorities.contains(manager) && authorities.contains(admin)) {
+        if (isAdmin) {
             employees = employeeService.findByHiddenIsFalse();
         }
         else {
-            employees = employeeService.findByManager(user);
+            employees = employeeService.findByManager(user.get());
         }
 
         for (Employee employee : employees) {
@@ -151,21 +143,18 @@ public class ManagerResource {
 
                     int missing = 0;
 
-                    List<Workday> workdays = workdayRepository
+                    for (Workday workday : workdayRepository
                         .findByEmployeeAndDateBetweenOrderByDate(employee,
-                            start, end);
+                            start, end)) {
 
-                    if (workdays != null) {
-                        for (Workday workday : workdays) {
-                            if ((workday.getWorkPlanned() > 0
-                                && workday.getClockins() == null)
-                                || (workday.getClockins().size() % 2 != 0)
-                                || (workday.getClockins().size() == 0
-                                    && workday.getWorkPlanned() > 0)) {
+                        int countByWorkday = clockinRepository
+                            .countByWorkday(workday);
 
-                                missing++;
-                                hour += (workday.getWorkPlanned() / 60);
-                            }
+                        if (countByWorkday % 2 != 0 || (countByWorkday == 0
+                            && workday.getWorkPlanned() > 0)
+                            && workday.getJustification().equals("")) {
+                            missing++;
+                            hour += workday.getWorkPlanned();
                         }
                     }
 
