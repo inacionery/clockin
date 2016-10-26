@@ -16,6 +16,7 @@ import javax.inject.Inject;
 import org.clockin.domain.Authority;
 import org.clockin.domain.Employee;
 import org.clockin.domain.User;
+import org.clockin.domain.Workday;
 import org.clockin.repository.AuthorityRepository;
 import org.clockin.repository.UserRepository;
 import org.clockin.repository.WorkdayRepository;
@@ -142,8 +143,26 @@ public class ManagerResource {
                     LocalDate end = LocalDate.of(year, (Integer) work[1], 1)
                         .with(TemporalAdjusters.lastDayOfMonth());
 
-                    ReportDTO reportDTO = getReportDTO(reportDTOList, start);
+                    if (end.equals(now) || end.isAfter(now)) {
+                        end = now.minusDays(1);
+                    }
+
                     Long hour = (Long) work[0];
+
+                    int missing = 0;
+
+                    for (Workday workday : workdayRepository
+                        .findByEmployeeAndDateBetweenOrderByDate(employee,
+                            start, end)) {
+                        if (workday.getClockins().size() % 2 != 0
+                            || (workday.getClockins().size() == 0
+                                && workday.getWorkPlanned() > 0)) {
+                            missing++;
+                            hour += (workday.getWorkPlanned() / 60);
+                        }
+                    }
+
+                    ReportDTO reportDTO = getReportDTO(reportDTOList, start);
 
                     hourCumulative += hour;
 
@@ -155,6 +174,10 @@ public class ManagerResource {
                             employee, start, end)) {
                         employeeDTO.putOccurrence(occurrences[0],
                             occurrences[1]);
+                    }
+
+                    if (missing > 0) {
+                        employeeDTO.putOccurrence("Faltando batidas", missing);
                     }
 
                     reportDTO.addEmployee(employeeDTO);
