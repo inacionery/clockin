@@ -151,14 +151,21 @@ public class ManagerResource {
 
                     int missing = 0;
 
-                    for (Workday workday : workdayRepository
+                    List<Workday> workdays = workdayRepository
                         .findByEmployeeAndDateBetweenOrderByDate(employee,
-                            start, end)) {
-                        if (workday.getClockins().size() % 2 != 0
-                            || (workday.getClockins().size() == 0
-                                && workday.getWorkPlanned() > 0)) {
-                            missing++;
-                            hour += (workday.getWorkPlanned() / 60);
+                            start, end);
+
+                    if (workdays != null) {
+                        for (Workday workday : workdays) {
+                            if ((workday.getWorkPlanned() > 0
+                                && workday.getClockins() == null)
+                                || (workday.getClockins().size() % 2 != 0)
+                                || (workday.getClockins().size() == 0
+                                    && workday.getWorkPlanned() > 0)) {
+
+                                missing++;
+                                hour += (workday.getWorkPlanned() / 60);
+                            }
                         }
                     }
 
