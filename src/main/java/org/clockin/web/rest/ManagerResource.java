@@ -9,13 +9,17 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.inject.Inject;
 
+import org.clockin.domain.Authority;
 import org.clockin.domain.Employee;
 import org.clockin.domain.User;
+import org.clockin.repository.AuthorityRepository;
 import org.clockin.repository.UserRepository;
 import org.clockin.repository.WorkdayRepository;
+import org.clockin.security.AuthoritiesConstants;
 import org.clockin.security.SecurityUtils;
 import org.clockin.service.EmployeeService;
 import org.clockin.web.rest.dto.EmployeeDTO;
@@ -45,6 +49,9 @@ public class ManagerResource {
 
     @Inject
     private UserRepository userRepository;
+
+    @Inject
+    private AuthorityRepository authorityRepository;
 
     @RequestMapping(value = { "/manager/{year}/{semester}" },
         method = RequestMethod.GET,
@@ -84,10 +91,33 @@ public class ManagerResource {
             getReportDTO(reportDTOList, LocalDate.of(year, month, 1));
         }
 
-        Optional<User> user = userRepository
+        Optional<User> userOpt = userRepository
             .findOneByLogin(SecurityUtils.getCurrentUserLogin());
 
-        for (Employee employee : employeeService.findByManager(user.get())) {
+        if (!userOpt.isPresent()) {
+            return reportDTOList;
+        }
+
+        User user = userOpt.get();
+
+        Set<Authority> authorities = user.getAuthorities();
+
+        Authority manager = authorityRepository
+            .findByName(AuthoritiesConstants.MANAGER);
+
+        Authority admin = authorityRepository
+            .findByName(AuthoritiesConstants.ADMIN);
+
+        List<Employee> employees;
+
+        if (authorities.contains(manager) && authorities.contains(admin)) {
+            employees = employeeService.findByHiddenIsFalse();
+        }
+        else {
+            employees = employeeService.findByManager(user);
+        }
+
+        for (Employee employee : employees) {
 
             LocalDate startDate = LocalDate.of(year, months[0], 1);
             LocalDate endDate = LocalDate.of(year, months[5], 1)
