@@ -6,7 +6,7 @@
          </h1>
          <div ng-switch="vm.isAuthenticated()">
             <div ng-switch-when="false">
-               <p>Para acompanhar suas horas, é necessário logar-se</p>
+               <p>Controle de ponto eletrônico</p>
             </div>
             <br>
             <div ng-switch-when="true" class="alert alert-success" translate="home.logged.message" translate-values="{username: '{{vm.account.firstName}}'}">
