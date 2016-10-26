@@ -12,7 +12,7 @@
     function stateConfig($stateProvider) {
         $stateProvider
             .state('clockin', {
-                parent: 'entity',
+                parent: 'app',
                 url: '/clockin/{year}/{semester}',
                 params: {
                     year: {

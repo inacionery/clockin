@@ -16,13 +16,19 @@
                Olá, {{firstName}}
             </li>
             <li ui-sref-active="active" >
-               <a ui-sref="clockin" ng-click="vm.collapseNavbar()">
+               <a ui-sref="clockin" has-not-authority="ROLE_MANAGER" ng-click="vm.collapseNavbar()">
                <span class="glyphicon glyphicon-time"></span>&nbsp;
                <span class="hidden-sm" translate="global.menu.entities.clockin">Clockin</span>
                </a>
             </li>
-            <li ng-class="{active: vm.$state.includes('manager')}" has-authority="ROLE_ADMIN" uib-dropdown class="dropdown pointer">
-               <a class="dropdown-toggle" uib-dropdown-toggle href="" id="manager-menu">
+            <li ui-sref-active="active" has-authority="ROLE_MANAGER" >
+               <a ui-sref="manager" ng-click="vm.collapseNavbar()">
+               <span class="glyphicon glyphicon-list-alt"></span>&nbsp;
+               <span class="hidden-sm" translate="global.menu.entities.manager">Manager</span>
+               </a>
+            </li>
+            <li ng-class="{active: vm.$state.includes('entity')}" has-authority="ROLE_ADMIN" uib-dropdown class="dropdown pointer">
+               <a class="dropdown-toggle" uib-dropdown-toggle href="" id="entity-menu">
                <span>
                <span class="glyphicon glyphicon-cog"></span>
                <span class="hidden-sm" translate="global.menu.admin.main">Administration</span>

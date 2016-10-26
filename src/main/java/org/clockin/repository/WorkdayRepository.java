@@ -20,6 +20,11 @@ public interface WorkdayRepository extends JpaRepository<Workday, Long> {
     List<Workday> findByEmployeeAndDateBetweenOrderByDate(Employee employee,
         LocalDate start, LocalDate end);
 
+    @Query("SELECT workday.justification, count(workday.justification) FROM Workday workday where workday.date between :start and :end and workday.employee = :employee and workday.justification not like '' GROUP BY workday.justification")
+    List<Object[]> findByEmployeeAndDateBetweenGroupByJustification(
+        @Param("employee") Employee employee, @Param("start") LocalDate start,
+        @Param("end") LocalDate end);
+
     @Query("SELECT sum(workday.workDone) as workDone, MONTH(workday.date) FROM Workday workday where workday.date between :start and :end and workday.employee = :employee GROUP BY MONTH(workday.date)")
     List<Object[]> getSumWorkDoneByEmployeeAndDateBetween(
         @Param("employee") Employee employee, @Param("start") LocalDate start,

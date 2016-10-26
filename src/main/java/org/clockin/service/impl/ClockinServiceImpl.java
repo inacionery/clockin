@@ -72,6 +72,7 @@ public class ClockinServiceImpl implements ClockinService {
         log.debug("Request to delete Clockin : {}", id);
         clockinRepository.delete(id);
     }
+
     /**
      *  Delete the clockin by clockins.
      *  

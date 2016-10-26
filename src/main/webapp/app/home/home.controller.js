@@ -26,12 +26,23 @@
                 vm.isAuthenticated = Principal.isAuthenticated;
 
                 if (vm.account) {
-                    $rootScope.firstName = $window.localStorage.firstName = vm.account.firstName;
 
-                    $state.go("clockin", {
-                        year: eval(today.getFullYear()).toString(),
-                        semester: eval(today.getMonth() > 5 ? 1 : 0).toString()
-                    });
+                    $rootScope.firstName = $window.localStorage.firstName = vm.account.firstName;
+                    
+                    Principal.hasAuthority("ROLE_MANAGER")
+	                    .then(function (result) {
+	                        if (result) {
+	                        	$state.go("manager", {
+	                                year: eval(today.getFullYear()).toString(),
+	                                semester: eval(today.getMonth() > 5 ? 1 : 0).toString()
+	                            });
+	                        } else {
+	                        	$state.go("clockin", {
+	                                year: eval(today.getFullYear()).toString(),
+	                                semester: eval(today.getMonth() > 5 ? 1 : 0).toString()
+	                            });
+	                        }
+	                    });
                 }
             });
         }

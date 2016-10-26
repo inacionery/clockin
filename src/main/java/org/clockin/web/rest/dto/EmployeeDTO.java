@@ -4,6 +4,9 @@
 
 package org.clockin.web.rest.dto;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.clockin.domain.Employee;
 
 /**
@@ -16,6 +19,7 @@ public class EmployeeDTO {
     private Long hourCumulative;
     private boolean check;
     private boolean sent;
+    private Map<Object, Object> occurrence = new HashMap<>();
 
     public EmployeeDTO() {
     }
@@ -38,6 +42,10 @@ public class EmployeeDTO {
         return hourCumulative;
     }
 
+    public Map<Object, Object> getOccurrence() {
+        return occurrence;
+    }
+
     public boolean isCheck() {
         return check;
     }
@@ -50,9 +58,14 @@ public class EmployeeDTO {
         this.sent = sent;
     }
 
+    public void putOccurrence(Object key, Object value) {
+        this.occurrence.put(key, value);
+    }
+
     @Override
     public String toString() {
         return "EmployeeDTO [employee=" + employee + ", hour=" + hour
-            + ", hourCumulative=" + hourCumulative + ", check=" + check + "]";
+            + ", occurrence=" + occurrence + ", hourCumulative="
+            + hourCumulative + ", check=" + check + "]";
     }
 }
