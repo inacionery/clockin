@@ -3,6 +3,7 @@
 
     angular
         .module('clockinApp', [
+            'timer',
             'textAngular',
             'ngStorage',
             'ngMaterial',
