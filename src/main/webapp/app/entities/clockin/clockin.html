@@ -79,12 +79,8 @@
                                           <ng-if ng-if="workday.isToday && workday.predictions.length > 0  ? vm.notifyMe(clockin.time) : false"></ng-if>
                                        </span>
                                     </md-content>
-                                    <span ng-if="(workday.isToday && workday.clockinValues.length % 2 != 0)" class="md-headline">
-                                    	Horas Trabalhadas: <timer start-time="vm.workRealTime(workday)">{{hhours}}:{{mminutes}}</timer>
-                                    </span>
-                                    <span ng-if="(workday.isToday && workday.clockinValues.length % 2 == 0)" class="md-headline">
-                                    	Horas Trabalhadas: {{vm.balanceHours(workday.workMinute)}}
-                                    </span>
+                                    <span ng-if="(workday.isToday && workday.clockinValues.length % 2 != 0)" class="md-headline">Saldo: <span class="font-lightPurple"><timer start-time="vm.workRealTime(workday)">{{hhours}}:{{mminutes}}:{{sseconds}}</timer></span></span>
+                                    <span ng-if="(workday.isToday && workday.clockinValues.length % 2 == 0)" class="md-headline">Saldo: <span class="font-lightPurple">{{vm.balanceHours(workday.workMinute)}}</span></span>
                                     <span ng-if="(workday.workPlanned > 0 || workday.clockinValues.length > 0) && !workday.isClockinMissing && !workday.isToday && !workday.isAfterToday" class="md-headline">Saldo: <span ng-class="workday.workDone >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workDone)}}</span></span>
                                  </md-card-title-text>
                               </md-card-title>
