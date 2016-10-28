@@ -22,6 +22,8 @@ public class WorkDayDTO {
 
     private Long workDone;
     private Long workPlanned;
+    private long workMinute;
+    private long intervalMinute;
     private String justification;
 
     public WorkDayDTO(LocalDate date) {
@@ -51,25 +53,51 @@ public class WorkDayDTO {
         return clockins.size() % 2 != 0;
     }
 
+    public long getWorkMinute() {
+        if (workMinute == 0) {
+            for (int i = 0; i < clockins.size() - 1; i++) {
+                Clockin start = clockins.get(i);
+                Clockin end = clockins.get(i + 1);
+
+                long minutes = Duration.between(start.getTime(), end.getTime())
+                    .toMinutes();
+                if (i % 2 == 0) {
+                    workMinute += minutes;
+                }
+                else {
+                    intervalMinute += minutes;
+                }
+            }
+        }
+
+        return workMinute;
+    }
+
+    public long getIntervalMinute() {
+        if (intervalMinute == 0) {
+            for (int i = 0; i < clockins.size() - 1; i++) {
+                Clockin start = clockins.get(i);
+                Clockin end = clockins.get(i + 1);
+
+                long minutes = Duration.between(start.getTime(), end.getTime())
+                    .toMinutes();
+                if (i % 2 == 0) {
+                    workMinute += minutes;
+                }
+                else {
+                    intervalMinute += minutes;
+                }
+            }
+        }
+
+        return intervalMinute;
+    }
+
     public List<Clockin> getPredictions() {
         List<Clockin> predictionClokins = new ArrayList<>();
 
-        long work = 0;
-        long interval = 0;
-        for (int i = 0; i < clockins.size() - 1; i++) {
-
-            Clockin start = clockins.get(i);
-            Clockin end = clockins.get(i + 1);
-
-            long minutes = Duration.between(start.getTime(), end.getTime())
-                .toMinutes();
-            if (i % 2 == 0) {
-                work += minutes;
-            }
-            else {
-                interval += minutes;
-            }
-        }
+        long work = getWorkMinute();
+        long interval = getIntervalMinute();
 
         if (clockins.size() == 1) {
             Clockin clockin = clockins.get(0);
