@@ -55,19 +55,7 @@ public class WorkDayDTO {
 
     public long getWorkMinute() {
         if (workMinute == 0) {
-            for (int i = 0; i < clockins.size() - 1; i++) {
-                Clockin start = clockins.get(i);
-                Clockin end = clockins.get(i + 1);
-
-                long minutes = Duration.between(start.getTime(), end.getTime())
-                    .toMinutes();
-                if (i % 2 == 0) {
-                    workMinute += minutes;
-                }
-                else {
-                    intervalMinute += minutes;
-                }
-            }
+            calculateTime();
         }
 
         return workMinute;
@@ -75,29 +63,34 @@ public class WorkDayDTO {
 
     public long getIntervalMinute() {
         if (intervalMinute == 0) {
-            for (int i = 0; i < clockins.size() - 1; i++) {
-                Clockin start = clockins.get(i);
-                Clockin end = clockins.get(i + 1);
+            calculateTime();
+        }
+        return intervalMinute;
+    }
 
-                long minutes = Duration.between(start.getTime(), end.getTime())
-                    .toMinutes();
-                if (i % 2 == 0) {
-                    workMinute += minutes;
-                }
-                else {
-                    intervalMinute += minutes;
-                }
+    private void calculateTime() {
+        workMinute = 0;
+        intervalMinute = 0;
+
+        for (int i = 0; i < clockins.size() - 1; i++) {
+            Clockin start = clockins.get(i);
+            Clockin end = clockins.get(i + 1);
+
+            long minutes = Duration.between(start.getTime(), end.getTime())
+                .toMinutes();
+            if (i % 2 == 0) {
+                workMinute += minutes;
+            }
+            else {
+                intervalMinute += minutes;
             }
         }
-
-        return intervalMinute;
     }
 
     public List<Clockin> getPredictions() {
         List<Clockin> predictionClokins = new ArrayList<>();
 
-        long work = getWorkMinute();
-        long interval = getIntervalMinute();
+        calculateTime();
 
         if (clockins.size() == 1) {
             Clockin clockin = clockins.get(0);
@@ -123,8 +116,8 @@ public class WorkDayDTO {
         else if (clockins.size() == 2) {
             Clockin clockin = clockins.get(0);
             Clockin pd1 = new Clockin();
-            pd1.setTime(
-                LocalDateTime.of(date, clockin.getTime().plusMinutes(work)));
+            pd1.setTime(LocalDateTime.of(date,
+                clockin.getTime().plusMinutes(workMinute)));
             if (workPlanned > 240 && workPlanned <= 360) {
                 pd1.setTime(
                     LocalDateTime.of(date, pd1.getTime().plusMinutes(15)));
@@ -136,17 +129,18 @@ public class WorkDayDTO {
             predictionClokins.add(pd1);
             Clockin pd2 = new Clockin();
             pd2.setTime(LocalDateTime.of(date,
-                pd1.getTime().plusMinutes(workPlanned - work)));
+                pd1.getTime().plusMinutes(workPlanned - workMinute)));
             predictionClokins.add(pd2);
         }
         else if (clockins.size() % 2 != 0) {
             Clockin clockin = clockins.get(0);
             Clockin pd1 = new Clockin();
-            pd1.setTime(
-                LocalDateTime.of(date, clockin.getTime().plusMinutes(work)));
-            pd1.setTime(
-                LocalDateTime.of(date, pd1.getTime().plusMinutes(interval)));
-            if (workPlanned > 240 && workPlanned <= 360 && interval < 15) {
+            pd1.setTime(LocalDateTime.of(date,
+                clockin.getTime().plusMinutes(workMinute)));
+            pd1.setTime(LocalDateTime.of(date,
+                pd1.getTime().plusMinutes(intervalMinute)));
+            if (workPlanned > 240 && workPlanned <= 360
+                && intervalMinute < 15) {
                 pd1.setTime(
                     LocalDateTime.of(date, pd1.getTime().plusMinutes(1)));
                 predictionClokins.add(pd1);
@@ -156,10 +150,10 @@ public class WorkDayDTO {
                 predictionClokins.add(pd2);
                 Clockin pd3 = new Clockin();
                 pd3.setTime(LocalDateTime.of(date,
-                    pd2.getTime().plusMinutes(workPlanned - work)));
+                    pd2.getTime().plusMinutes(workPlanned - workMinute)));
                 predictionClokins.add(pd3);
             }
-            else if (workPlanned > 360 && interval < 60) {
+            else if (workPlanned > 360 && intervalMinute < 60) {
                 pd1.setTime(
                     LocalDateTime.of(date, pd1.getTime().plusMinutes(1)));
                 predictionClokins.add(pd1);
@@ -169,12 +163,12 @@ public class WorkDayDTO {
                 predictionClokins.add(pd2);
                 Clockin pd3 = new Clockin();
                 pd3.setTime(LocalDateTime.of(date,
-                    pd2.getTime().plusMinutes(workPlanned - work)));
+                    pd2.getTime().plusMinutes(workPlanned - workMinute)));
                 predictionClokins.add(pd3);
             }
             else {
                 pd1.setTime(LocalDateTime.of(date,
-                    pd1.getTime().plusMinutes(workPlanned - work)));
+                    pd1.getTime().plusMinutes(workPlanned - workMinute)));
                 predictionClokins.add(pd1);
             }
         }
