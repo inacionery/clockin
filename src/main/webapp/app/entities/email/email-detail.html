@@ -1,22 +1,27 @@
 
 <div>
-    <h2><span translate="clockinApp.email.detail.title">Email</span></h2>
+    <h2><span data-translate="clockinApp.email.detail.title">Email</span></h2>
     <hr>
     <jhi-alert-error></jhi-alert-error>
     <dl class="dl-horizontal jh-entity-details">
-        <dt><span translate="clockinApp.email.subject">Subject</span></dt>
+        <dt><span data-translate="clockinApp.email.subject">Subject</span></dt>
         <dd>
             <span>{{vm.email.subject}}</span>
         </dd>
-        <dt><span translate="clockinApp.email.content">Content</span></dt>
+        <dt><span data-translate="clockinApp.email.content">Content</span></dt>
         <dd>
             <div ta-bind ng-model="vm.email.content"></div>
         </dd>
     </dl>
 
     <button type="submit"
-            onclick="window.history.back()"
+            ui-sref="{{ vm.previousState }}"
             class="btn btn-info">
-        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="email-detail.edit({id:vm.email.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"> Edit</span>
     </button>
 </div>

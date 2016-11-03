@@ -28,7 +28,7 @@ public class ClockinServiceImpl implements ClockinService {
 
     /**
      * Save a clockin.
-     * 
+     *
      * @param clockin the entity to save
      * @return the persisted entity
      */
@@ -47,6 +47,7 @@ public class ClockinServiceImpl implements ClockinService {
     public List<Clockin> findAll() {
         log.debug("Request to get all Clockins");
         List<Clockin> result = clockinRepository.findAll();
+
         return result;
     }
 
@@ -65,7 +66,7 @@ public class ClockinServiceImpl implements ClockinService {
 
     /**
      *  Delete the  clockin by id.
-     *  
+     *
      *  @param id the id of the entity
      */
     public void delete(Long id) {

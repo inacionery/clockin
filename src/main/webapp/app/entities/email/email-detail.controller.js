@@ -5,12 +5,13 @@
         .module('clockinApp')
         .controller('EmailDetailController', EmailDetailController);
 
-    EmailDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'DataUtils', 'entity', 'Email'];
+    EmailDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'DataUtils', 'entity', 'Email'];
 
-    function EmailDetailController($scope, $rootScope, $stateParams, DataUtils, entity, Email) {
+    function EmailDetailController($scope, $rootScope, $stateParams, previousState, DataUtils, entity, Email) {
         var vm = this;
 
         vm.email = entity;
+        vm.previousState = previousState.name;
         vm.byteSize = DataUtils.byteSize;
         vm.openFile = DataUtils.openFile;
 

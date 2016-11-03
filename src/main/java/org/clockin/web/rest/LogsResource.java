@@ -5,13 +5,13 @@ import com.codahale.metrics.annotation.Timed;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.clockin.web.rest.dto.LoggerDTO;
+import org.clockin.web.rest.vm.LoggerVM;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,22 +25,19 @@ import ch.qos.logback.classic.LoggerContext;
 @RequestMapping("/management/jhipster")
 public class LogsResource {
 
-    @RequestMapping(value = "/logs",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/logs")
     @Timed
-    public List<LoggerDTO> getList() {
+    public List<LoggerVM> getList() {
         LoggerContext context = (LoggerContext) LoggerFactory
             .getILoggerFactory();
-        return context.getLoggerList().stream().map(LoggerDTO::new)
+        return context.getLoggerList().stream().map(LoggerVM::new)
             .collect(Collectors.toList());
     }
 
-    @RequestMapping(value = "/logs",
-        method = RequestMethod.PUT)
+    @PutMapping("/logs")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Timed
-    public void changeLevel(@RequestBody LoggerDTO jsonLogger) {
+    public void changeLevel(@RequestBody LoggerVM jsonLogger) {
         LoggerContext context = (LoggerContext) LoggerFactory
             .getILoggerFactory();
         context.getLogger(jsonLogger.getName())

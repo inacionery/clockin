@@ -37,7 +37,38 @@
            timeToLiveSeconds="3600">
     </cache>
     
+
     <cache name="org.clockin.social.SocialUserConnection"
            timeToLiveSeconds="3600">
     </cache>
+
+    <cache name="org.clockin.domain.Clockin"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="org.clockin.domain.Employee"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="org.clockin.domain.Employee.workdays"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="org.clockin.domain.Employee.managers"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="org.clockin.domain.Workday"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="org.clockin.domain.Workday.clockins"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <cache name="org.clockin.domain.Email"
+        timeToLiveSeconds="3600">
+    </cache>
+
+    <!-- jhipster-needle-ehcache-add-entry -->
 </ehcache>

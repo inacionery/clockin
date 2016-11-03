@@ -5,8 +5,8 @@
         .module('clockinApp', [
             'timer',
             'textAngular',
-            'ngStorage',
             'ngMaterial',
+            'ngStorage',
             'tmh.dynamicLocale',
             'pascalprecht.translate', 
             'ngResource',

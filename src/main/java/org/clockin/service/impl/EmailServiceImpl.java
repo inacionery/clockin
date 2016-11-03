@@ -26,7 +26,7 @@ public class EmailServiceImpl implements EmailService {
 
     /**
      * Save a email.
-     * 
+     *
      * @param email the entity to save
      * @return the persisted entity
      */
@@ -64,7 +64,7 @@ public class EmailServiceImpl implements EmailService {
 
     /**
      *  Delete the  email by id.
-     *  
+     *
      *  @param id the id of the entity
      */
     public void delete(Long id) {

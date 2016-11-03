@@ -14,6 +14,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 
 import org.clockin.domain.Email;
 import org.clockin.repository.EmailRepository;
@@ -26,17 +27,14 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Test class for the EmailResource REST controller.
  *
  * @see EmailResource
  */
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@SpringApplicationConfiguration(classes = ClockinApp.class)
-//@WebAppConfiguration
-//@IntegrationTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = ClockinApp.class)
 public class EmailResourceIntTest {
 
     private static final String DEFAULT_SUBJECT = "AAAAA";
@@ -57,6 +55,9 @@ public class EmailResourceIntTest {
     @Inject
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
+    @Inject
+    private EntityManager em;
+
     private MockMvc restEmailMockMvc;
 
     private Email email;
@@ -72,15 +73,26 @@ public class EmailResourceIntTest {
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
-    @Before
-    public void initTest() {
-        email = new Email();
+    /**
+     * Create an entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Email createEntity(EntityManager em) {
+        Email email = new Email();
         email.setSubject(DEFAULT_SUBJECT);
         email.setContent(DEFAULT_CONTENT);
+        return email;
+    }
+
+    @Before
+    public void initTest() {
+        email = createEntity(em);
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void createEmail() throws Exception {
         int databaseSizeBeforeCreate = emailRepository.findAll().size();
 
@@ -101,7 +113,7 @@ public class EmailResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void getAllEmails() throws Exception {
         // Initialize the database
         emailRepository.saveAndFlush(email);
@@ -109,7 +121,8 @@ public class EmailResourceIntTest {
         // Get all the emails
         restEmailMockMvc.perform(get("/api/emails?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(
+                content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(
                 jsonPath("$.[*].id").value(hasItem(email.getId().intValue())))
             .andExpect(jsonPath("$.[*].subject")
@@ -119,7 +132,7 @@ public class EmailResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void getEmail() throws Exception {
         // Initialize the database
         emailRepository.saveAndFlush(email);
@@ -127,14 +140,15 @@ public class EmailResourceIntTest {
         // Get the email
         restEmailMockMvc.perform(get("/api/emails/{id}", email.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(
+                content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(email.getId().intValue()))
             .andExpect(jsonPath("$.subject").value(DEFAULT_SUBJECT.toString()))
             .andExpect(jsonPath("$.content").value(DEFAULT_CONTENT.toString()));
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void getNonExistingEmail() throws Exception {
         // Get the email
         restEmailMockMvc.perform(get("/api/emails/{id}", Long.MAX_VALUE))
@@ -142,7 +156,7 @@ public class EmailResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void updateEmail() throws Exception {
         // Initialize the database
         emailService.save(email);
@@ -150,8 +164,7 @@ public class EmailResourceIntTest {
         int databaseSizeBeforeUpdate = emailRepository.findAll().size();
 
         // Update the email
-        Email updatedEmail = new Email();
-        updatedEmail.setId(email.getId());
+        Email updatedEmail = emailRepository.findOne(email.getId());
         updatedEmail.setSubject(UPDATED_SUBJECT);
         updatedEmail.setContent(UPDATED_CONTENT);
 
@@ -170,7 +183,7 @@ public class EmailResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void deleteEmail() throws Exception {
         // Initialize the database
         emailService.save(email);

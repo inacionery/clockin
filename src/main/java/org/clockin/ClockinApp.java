@@ -73,7 +73,7 @@ public class ClockinApp {
         log.info(
             "\n----------------------------------------------------------\n\t"
                 + "Application '{}' is running! Access URLs:\n\t"
-                + "Local: \t\thttp://127.0.0.1:{}\n\t"
+                + "Local: \t\thttp://localhost:{}\n\t"
                 + "External: \thttp://{}:{}\n----------------------------------------------------------",
             env.getProperty("spring.application.name"),
             env.getProperty("server.port"),
@@ -81,5 +81,4 @@ public class ClockinApp {
             env.getProperty("server.port"));
 
     }
-
 }

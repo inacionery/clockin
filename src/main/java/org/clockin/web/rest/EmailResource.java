@@ -19,12 +19,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -46,9 +48,7 @@ public class EmailResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new email, or with status 400 (Bad Request) if the email has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/emails",
-        method = RequestMethod.POST,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/emails")
     @Timed
     public ResponseEntity<Email> createEmail(@RequestBody Email email)
         throws URISyntaxException {
@@ -75,9 +75,7 @@ public class EmailResource {
      * or with status 500 (Internal Server Error) if the email couldnt be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/emails",
-        method = RequestMethod.PUT,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping("/emails")
     @Timed
     public ResponseEntity<Email> updateEmail(@RequestBody Email email)
         throws URISyntaxException {
@@ -98,9 +96,7 @@ public class EmailResource {
      * @return the ResponseEntity with status 200 (OK) and the list of emails in body
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers
      */
-    @RequestMapping(value = "/emails",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/emails")
     @Timed
     public ResponseEntity<List<Email>> getAllEmails(Pageable pageable)
         throws URISyntaxException {
@@ -117,9 +113,7 @@ public class EmailResource {
      * @param id the id of the email to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the email, or with status 404 (Not Found)
      */
-    @RequestMapping(value = "/emails/{id}",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/emails/{id}")
     @Timed
     public ResponseEntity<Email> getEmail(@PathVariable Long id) {
         log.debug("REST request to get Email : {}", id);
@@ -135,9 +129,7 @@ public class EmailResource {
      * @param id the id of the email to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @RequestMapping(value = "/emails/{id}",
-        method = RequestMethod.DELETE,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping("/emails/{id}")
     @Timed
     public ResponseEntity<Void> deleteEmail(@PathVariable Long id) {
         log.debug("REST request to delete Email : {}", id);

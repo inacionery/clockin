@@ -132,18 +132,7 @@ public class JHipsterProperties {
     }
 
     public static class Cache {
-
-        private int timeToLiveSeconds = 3600;
-
         private final Ehcache ehcache = new Ehcache();
-
-        public int getTimeToLiveSeconds() {
-            return timeToLiveSeconds;
-        }
-
-        public void setTimeToLiveSeconds(int timeToLiveSeconds) {
-            this.timeToLiveSeconds = timeToLiveSeconds;
-        }
 
         public Ehcache getEhcache() {
             return ehcache;
@@ -219,8 +208,6 @@ public class JHipsterProperties {
 
         private String licenseUrl;
 
-        private Boolean enabled;
-
         public String getTitle() {
             return title;
         }
@@ -291,14 +278,6 @@ public class JHipsterProperties {
 
         public void setLicenseUrl(String licenseUrl) {
             this.licenseUrl = licenseUrl;
-        }
-
-        public Boolean isEnabled() {
-            return enabled;
-        }
-
-        public void setEnabled(Boolean enabled) {
-            this.enabled = enabled;
         }
     }
 
@@ -497,7 +476,6 @@ public class JHipsterProperties {
                 this.queueSize = queueSize;
             }
         }
-
     }
 
     public static class Social {
@@ -526,5 +504,4 @@ public class JHipsterProperties {
             this.displayOnActiveProfiles = displayOnActiveProfiles;
         }
     }
-
 }

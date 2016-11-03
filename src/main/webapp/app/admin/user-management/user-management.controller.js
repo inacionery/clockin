@@ -5,9 +5,9 @@
         .module('clockinApp')
         .controller('UserManagementController', UserManagementController);
 
-    UserManagementController.$inject = ['Principal', 'User', 'ParseLinks', '$state', 'pagingParams', 'paginationConstants', 'JhiLanguageService'];
+    UserManagementController.$inject = ['Principal', 'User', 'ParseLinks', 'AlertService', '$state', 'pagingParams', 'paginationConstants', 'JhiLanguageService'];
 
-    function UserManagementController(Principal, User, ParseLinks, $state, pagingParams, paginationConstants, JhiLanguageService) {
+    function UserManagementController(Principal, User, ParseLinks, AlertService, $state, pagingParams, paginationConstants, JhiLanguageService) {
         var vm = this;
 
         vm.authorities = ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_MANAGER'];
@@ -50,22 +50,27 @@
                 sort: sort()
             }, onSuccess, onError);
         }
-        function onSuccess (data, headers) {
+
+        function onSuccess(data, headers) {
             //hide anonymous user from user management: it's a required user for Spring Security
+            var hiddenUsersSize = 0;
             for (var i in data) {
                 if (data[i]['login'] === 'anonymoususer') {
                     data.splice(i, 1);
+                    hiddenUsersSize++;
                 }
             }
             vm.links = ParseLinks.parse(headers('link'));
-            vm.totalItems = headers('X-Total-Count');
+            vm.totalItems = headers('X-Total-Count') - hiddenUsersSize;
             vm.queryCount = vm.totalItems;
             vm.page = pagingParams.page;
             vm.users = data;
         }
-        function onError (error) {
+
+        function onError(error) {
             AlertService.error(error.data.message);
         }
+
         function clear () {
             vm.user = {
                 id: null, login: null, firstName: null, lastName: null, email: null,
@@ -74,6 +79,7 @@
                 resetKey: null, authorities: null
             };
         }
+
         function sort () {
             var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
             if (vm.predicate !== 'id') {

@@ -12,7 +12,6 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
-import org.clockin.domain.Clockin;
 import org.clockin.domain.Employee;
 import org.clockin.domain.User;
 import org.clockin.domain.Workday;

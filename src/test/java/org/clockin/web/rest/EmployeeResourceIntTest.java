@@ -14,6 +14,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 
 import org.clockin.domain.Employee;
 import org.clockin.repository.EmployeeRepository;
@@ -26,17 +27,14 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Test class for the EmployeeResource REST controller.
  *
  * @see EmployeeResource
  */
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@SpringApplicationConfiguration(classes = ClockinApp.class)
-//@WebAppConfiguration
-//@IntegrationTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = ClockinApp.class)
 public class EmployeeResourceIntTest {
 
     private static final String DEFAULT_SOCIAL_IDENTIFICATION_NUMBER = "AAAAA";
@@ -57,6 +55,9 @@ public class EmployeeResourceIntTest {
     @Inject
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
+    @Inject
+    private EntityManager em;
+
     private MockMvc restEmployeeMockMvc;
 
     private Employee employee;
@@ -73,16 +74,27 @@ public class EmployeeResourceIntTest {
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
-    @Before
-    public void initTest() {
-        employee = new Employee();
+    /**
+     * Create an entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Employee createEntity(EntityManager em) {
+        Employee employee = new Employee();
         employee.setSocialIdentificationNumber(
             DEFAULT_SOCIAL_IDENTIFICATION_NUMBER);
         employee.setHidden(DEFAULT_HIDDEN);
+        return employee;
+    }
+
+    @Before
+    public void initTest() {
+        employee = createEntity(em);
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void createEmployee() throws Exception {
         int databaseSizeBeforeCreate = employeeRepository.findAll().size();
 
@@ -104,7 +116,7 @@ public class EmployeeResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void getAllEmployees() throws Exception {
         // Initialize the database
         employeeRepository.saveAndFlush(employee);
@@ -112,7 +124,8 @@ public class EmployeeResourceIntTest {
         // Get all the employees
         restEmployeeMockMvc.perform(get("/api/employees?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(
+                content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id")
                 .value(hasItem(employee.getId().intValue())))
             .andExpect(jsonPath("$.[*].socialIdentificationNumber").value(
@@ -122,7 +135,7 @@ public class EmployeeResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void getEmployee() throws Exception {
         // Initialize the database
         employeeRepository.saveAndFlush(employee);
@@ -131,7 +144,8 @@ public class EmployeeResourceIntTest {
         restEmployeeMockMvc
             .perform(get("/api/employees/{id}", employee.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(
+                content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(employee.getId().intValue()))
             .andExpect(jsonPath("$.socialIdentificationNumber")
                 .value(DEFAULT_SOCIAL_IDENTIFICATION_NUMBER.toString()))
@@ -140,7 +154,7 @@ public class EmployeeResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void getNonExistingEmployee() throws Exception {
         // Get the employee
         restEmployeeMockMvc.perform(get("/api/employees/{id}", Long.MAX_VALUE))
@@ -148,7 +162,7 @@ public class EmployeeResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void updateEmployee() throws Exception {
         // Initialize the database
         employeeService.save(employee);
@@ -156,8 +170,7 @@ public class EmployeeResourceIntTest {
         int databaseSizeBeforeUpdate = employeeRepository.findAll().size();
 
         // Update the employee
-        Employee updatedEmployee = new Employee();
-        updatedEmployee.setId(employee.getId());
+        Employee updatedEmployee = employeeRepository.findOne(employee.getId());
         updatedEmployee.setSocialIdentificationNumber(
             UPDATED_SOCIAL_IDENTIFICATION_NUMBER);
         updatedEmployee.setHidden(UPDATED_HIDDEN);
@@ -178,7 +191,7 @@ public class EmployeeResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void deleteEmployee() throws Exception {
         // Initialize the database
         employeeService.save(employee);

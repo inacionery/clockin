@@ -15,12 +15,14 @@ import org.clockin.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -42,9 +44,7 @@ public class WorkdayResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new workday, or with status 400 (Bad Request) if the workday has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/workdays",
-        method = RequestMethod.POST,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping("/workdays")
     @Timed
     public ResponseEntity<Workday> createWorkday(@RequestBody Workday workday)
         throws URISyntaxException {
@@ -72,9 +72,7 @@ public class WorkdayResource {
      * or with status 500 (Internal Server Error) if the workday couldnt be updated
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
-    @RequestMapping(value = "/workdays",
-        method = RequestMethod.PUT,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping("/workdays")
     @Timed
     public ResponseEntity<Workday> updateWorkday(@RequestBody Workday workday)
         throws URISyntaxException {
@@ -93,9 +91,7 @@ public class WorkdayResource {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of workdays in body
      */
-    @RequestMapping(value = "/workdays",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/workdays")
     @Timed
     public List<Workday> getAllWorkdays() {
         log.debug("REST request to get all Workdays");
@@ -108,9 +104,7 @@ public class WorkdayResource {
      * @param id the id of the workday to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the workday, or with status 404 (Not Found)
      */
-    @RequestMapping(value = "/workdays/{id}",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/workdays/{id}")
     @Timed
     public ResponseEntity<Workday> getWorkday(@PathVariable Long id) {
         log.debug("REST request to get Workday : {}", id);
@@ -126,9 +120,7 @@ public class WorkdayResource {
      * @param id the id of the workday to delete
      * @return the ResponseEntity with status 200 (OK)
      */
-    @RequestMapping(value = "/workdays/{id}",
-        method = RequestMethod.DELETE,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping("/workdays/{id}")
     @Timed
     public ResponseEntity<Void> deleteWorkday(@PathVariable Long id) {
         log.debug("REST request to delete Workday : {}", id);

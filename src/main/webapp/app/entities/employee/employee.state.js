@@ -29,8 +29,8 @@
                     squash: true
                 },
                 page: {
-                	value: '1',
-                	squash: true
+                    value: '1',
+                    squash: true
                 },
                 sort: {
                     value: 'socialIdentificationNumber,asc',
@@ -77,8 +77,41 @@
                 }],
                 entity: ['$stateParams', 'Employee', function($stateParams, Employee) {
                     return Employee.get({id : $stateParams.id}).$promise;
+                }],
+                previousState: ["$state", function ($state) {
+                    var currentStateData = {
+                        name: $state.current.name || 'employee',
+                        params: $state.params,
+                        url: $state.href($state.current.name, $state.params)
+                    };
+                    return currentStateData;
                 }]
             }
+        })
+        .state('employee-detail.edit', {
+            parent: 'employee-detail',
+            url: '/detail/edit',
+            data: {
+                authorities: ['ROLE_USER']
+            },
+            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                $uibModal.open({
+                    templateUrl: 'app/entities/employee/employee-dialog.html',
+                    controller: 'EmployeeDialogController',
+                    controllerAs: 'vm',
+                    backdrop: 'static',
+                    size: 'lg',
+                    resolve: {
+                        entity: ['Employee', function(Employee) {
+                            return Employee.get({id : $stateParams.id}).$promise;
+                        }]
+                    }
+                }).result.then(function() {
+                    $state.go('^', {}, { reload: false });
+                }, function() {
+                    $state.go('^');
+                });
+            }]
         })
         .state('employee.edit', {
             parent: 'employee',

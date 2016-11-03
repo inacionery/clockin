@@ -1,68 +1,68 @@
 <div>
-   <h2 translate="clockinApp.employee.home.title">Employees</h2>
-   <jhi-alert></jhi-alert>
-   <div class="container-fluid">
-      <div class="row">
-         <div class="col-xs-12 no-padding-left">
-            <button type="submit"
-            	ng-if="vm.hidden == 0"
-            	ui-sref="employee({hidden:1})"
-            	class="btn btn-primary right" >
-	            <span class="glyphicon glyphicon-eye-open"></span>
-	            <span>
-	            	Mostrar Ocultos
-	            </span>
-            </button>
-            <button type="submit"
-            	ng-if="vm.hidden == 1"
-            	ui-sref="employee({hidden:0})"
-            	class="btn btn-primary right" >
-	            <span class="glyphicon glyphicon-eye-close"></span>
-	            <span>
-	            	Esconder Ocultos
-	            </span>
-            </button>
-         </div>
-      </div>
-   </div>
-   <br/>
-   <div class="table-responsive">
-      <table class="jh-table table table-striped">
-         <thead>
-            <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
-               <th jh-sort-by="socialIdentificationNumber"><span translate="clockinApp.employee.socialIdentificationNumber">Social Identification Number</span> <span class="glyphicon glyphicon-sort"></span></th>
-               <th jh-sort-by="user.firstName"><span translate="clockinApp.employee.user">User</span> <span class="glyphicon glyphicon-sort"></span></th>
-               <th></th>
-            </tr>
-         </thead>
-         <tbody>
-            <tr ng-repeat="employee in vm.employees track by employee.id">
-               <td>{{employee.socialIdentificationNumber}}</td>
-               <td>
-                  {{employee.user.firstName}} {{employee.user.lastName}} - {{employee.user.email}}
-               </td>
-               <td class="text-right">
-                  <div class="btn-group flex-btn-group-container">
-                     <button type="submit"
-                        ui-sref="employee-detail({id:employee.id})"
-                        class="btn btn-info btn-sm">
-                     <span class="glyphicon glyphicon-eye-open"></span>
-                     <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
-                     </button>
-                     <button type="submit"
-                        ui-sref="employee.edit({id:employee.id})"
-                        class="btn btn-primary btn-sm">
-                     <span class="glyphicon glyphicon-pencil"></span>
-                     <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
-                     </button>
-                  </div>
-               </td>
-            </tr>
-         </tbody>
-      </table>
-   </div>
-   <div class="text-center">
-      <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
-      <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
-   </div>
+    <h2 data-translate="clockinApp.employee.home.title">Employees</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 no-padding-left">
+                <button type="submit"
+                    ng-if="vm.hidden == 0"
+                    ui-sref="employee({hidden:1})"
+                    class="btn btn-primary right" >
+                <span class="glyphicon glyphicon-eye-open"></span>
+                <span>
+                Mostrar Ocultos
+                </span>
+                </button>
+                <button type="submit"
+                    ng-if="vm.hidden == 1"
+                    ui-sref="employee({hidden:0})"
+                    class="btn btn-primary right" >
+                <span class="glyphicon glyphicon-eye-close"></span>
+                <span>
+                Esconder Ocultos
+                </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="socialIdentificationNumber"><span translate="clockinApp.employee.socialIdentificationNumber">Social Identification Number</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="user.firstName"><span translate="clockinApp.employee.user">User</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="employee in vm.employees track by employee.id">
+                    <td>{{employee.socialIdentificationNumber}}</td>
+                    <td>
+                        {{employee.user.firstName}} {{employee.user.lastName}} - {{employee.user.email}}
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                ui-sref="employee-detail({id:employee.id})"
+                                class="btn btn-info btn-sm">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                            <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                ui-sref="employee.edit({id:employee.id})"
+                                class="btn btn-primary btn-sm">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" items-per-page="vm.itemsPerPage" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
 </div>

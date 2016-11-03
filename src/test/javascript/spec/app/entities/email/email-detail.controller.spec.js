@@ -4,20 +4,22 @@ describe('Controller Tests', function() {
 
     describe('Email Management Detail Controller', function() {
         var $scope, $rootScope;
-        var MockEntity, MockEmail;
+        var MockEntity, MockPreviousState, MockEmail;
         var createController;
 
         beforeEach(inject(function($injector) {
             $rootScope = $injector.get('$rootScope');
             $scope = $rootScope.$new();
             MockEntity = jasmine.createSpy('MockEntity');
+            MockPreviousState = jasmine.createSpy('MockPreviousState');
             MockEmail = jasmine.createSpy('MockEmail');
             
 
             var locals = {
                 '$scope': $scope,
                 '$rootScope': $rootScope,
-                'entity': MockEntity ,
+                'entity': MockEntity,
+                'previousState': MockPreviousState,
                 'Email': MockEmail
             };
             createController = function() {

@@ -8,11 +8,10 @@ import org.clockin.config.Constants;
 import org.clockin.config.JHipsterProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Profile;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StopWatch;
 
@@ -31,9 +30,8 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @Configuration
 @EnableSwagger2
-@Profile("!" + Constants.SPRING_PROFILE_NO_SWAGGER)
-@ConditionalOnProperty(prefix = "jhipster.swagger",
-    name = "enabled")
+@Import(springfox.bean.validators.configuration.BeanValidatorPluginsConfiguration.class)
+@Profile(Constants.SPRING_PROFILE_SWAGGER)
 public class SwaggerConfiguration {
 
     private final Logger log = LoggerFactory
@@ -69,7 +67,6 @@ public class SwaggerConfiguration {
         Docket docket = new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo)
             .forCodeGeneration(true)
             .genericModelSubstitutes(ResponseEntity.class)
-            .ignoredParameterTypes(Pageable.class)
             .ignoredParameterTypes(java.sql.Date.class)
             .directModelSubstitute(java.time.LocalDate.class,
                 java.sql.Date.class)

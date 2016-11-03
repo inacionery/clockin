@@ -6,11 +6,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import org.clockin.config.DefaultProfileUtil;
 import org.clockin.config.JHipsterProperties;
 import org.springframework.core.env.Environment;
-import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -23,15 +23,14 @@ public class ProfileInfoResource {
     @Inject
     private JHipsterProperties jHipsterProperties;
 
-    @RequestMapping(value = "/profile-info",
-        method = RequestMethod.GET,
-        produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping("/profile-info")
     public ProfileInfoResponse getActiveProfiles() {
-        return new ProfileInfoResponse(env.getActiveProfiles(), getRibbonEnv());
+        return new ProfileInfoResponse(
+            DefaultProfileUtil.getActiveProfiles(env), getRibbonEnv());
     }
 
     private String getRibbonEnv() {
-        String[] activeProfiles = env.getActiveProfiles();
+        String[] activeProfiles = DefaultProfileUtil.getActiveProfiles(env);
         String[] displayOnActiveProfiles = jHipsterProperties.getRibbon()
             .getDisplayOnActiveProfiles();
 

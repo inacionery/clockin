@@ -6,9 +6,8 @@ import org.clockin.security.AjaxAuthenticationFailureHandler;
 import org.clockin.security.AjaxAuthenticationSuccessHandler;
 import org.clockin.security.AjaxLogoutSuccessHandler;
 import org.clockin.security.AuthoritiesConstants;
-import org.clockin.security.CustomAccessDeniedHandler;
 import org.clockin.security.Http401UnauthorizedEntryPoint;
-import org.clockin.web.filter.CsrfCookieGeneratorFilter;
+import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,7 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
 import org.springframework.security.web.authentication.RememberMeServices;
-import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -58,10 +57,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Inject
-    public void configureGlobal(AuthenticationManagerBuilder auth)
-        throws Exception {
-        auth.userDetailsService(userDetailsService)
-            .passwordEncoder(passwordEncoder());
+    public void configureGlobal(AuthenticationManagerBuilder auth) {
+        try {
+            auth.userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder());
+        }
+        catch (Exception e) {
+            throw new BeanInitializationException(
+                "Security configuration failed", e);
+        }
     }
 
     @Override
@@ -76,10 +80,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().and()
-            .addFilterAfter(new CsrfCookieGeneratorFilter(), CsrfFilter.class)
-            .exceptionHandling()
-            .accessDeniedHandler(new CustomAccessDeniedHandler())
+        http.csrf()
+            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+            .and().exceptionHandling()
             .authenticationEntryPoint(authenticationEntryPoint).and()
             .rememberMe().rememberMeServices(rememberMeServices)
             .rememberMeParameter("remember-me")
@@ -89,8 +92,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .failureHandler(ajaxAuthenticationFailureHandler)
             .usernameParameter("j_username").passwordParameter("j_password")
             .permitAll().and().logout().logoutUrl("/api/logout")
-            .logoutSuccessHandler(ajaxLogoutSuccessHandler)
-            .deleteCookies("JSESSIONID", "CSRF-TOKEN").permitAll().and()
+            .logoutSuccessHandler(ajaxLogoutSuccessHandler).permitAll().and()
             .headers().frameOptions().disable().and().authorizeRequests()
             .antMatchers("/api/register").permitAll()
             .antMatchers("/api/activate").permitAll()
@@ -101,7 +103,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authenticated().antMatchers("/management/**")
             .hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/v2/api-docs/**").permitAll()
-            .antMatchers("/configuration/ui").permitAll()
+            .antMatchers("/swagger-resources/configuration/ui").permitAll()
             .antMatchers("/swagger-ui/index.html")
             .hasAuthority(AuthoritiesConstants.ADMIN);
 

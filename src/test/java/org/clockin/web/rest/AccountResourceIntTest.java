@@ -14,7 +14,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import javax.inject.Inject;
-import javax.transaction.Transactional;
 
 import org.clockin.domain.Authority;
 import org.clockin.domain.User;
@@ -23,8 +22,8 @@ import org.clockin.repository.UserRepository;
 import org.clockin.security.AuthoritiesConstants;
 import org.clockin.service.MailService;
 import org.clockin.service.UserService;
-import org.clockin.web.rest.dto.ManagedUserDTO;
-import org.clockin.web.rest.dto.UserDTO;
+import org.clockin.service.dto.UserDTO;
+import org.clockin.web.rest.vm.ManagedUserVM;
 import org.junit.Before;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -38,10 +37,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
  *
  * @see UserService
  */
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@SpringApplicationConfiguration(classes = ClockinApp.class)
-//@WebAppConfiguration
-//@IntegrationTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = ClockinApp.class)
 public class AccountResourceIntTest {
 
     @Inject
@@ -123,7 +120,8 @@ public class AccountResourceIntTest {
         restUserMockMvc
             .perform(get("/api/account").accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(
+                content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.login").value("test"))
             .andExpect(jsonPath("$.firstName").value("john"))
             .andExpect(jsonPath("$.lastName").value("doe"))
@@ -142,9 +140,9 @@ public class AccountResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void testRegisterValid() throws Exception {
-        ManagedUserDTO validUser = new ManagedUserDTO(null, // id
+        ManagedUserVM validUser = new ManagedUserVM(null, // id
             "joe", // login
             "password", // password
             "Joe", // firstName
@@ -152,7 +150,8 @@ public class AccountResourceIntTest {
             "joe@example.com", // e-mail
             true, // activated
             "en", // langKey
-            new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)), null, // createdDate
+            new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)), null, // createdBy
+            null, // createdDate
             null, // lastModifiedBy
             null // lastModifiedDate
         );
@@ -168,9 +167,9 @@ public class AccountResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void testRegisterInvalidLogin() throws Exception {
-        ManagedUserDTO invalidUser = new ManagedUserDTO(null, // id
+        ManagedUserVM invalidUser = new ManagedUserVM(null, // id
             "funky-log!n", // login <-- invalid
             "password", // password
             "Funky", // firstName
@@ -178,7 +177,8 @@ public class AccountResourceIntTest {
             "funky@example.com", // e-mail
             true, // activated
             "en", // langKey
-            new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)), null, // createdDate
+            new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)), null, // createdBy
+            null, // createdDate
             null, // lastModifiedBy
             null // lastModifiedDate
         );
@@ -195,9 +195,9 @@ public class AccountResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void testRegisterInvalidEmail() throws Exception {
-        ManagedUserDTO invalidUser = new ManagedUserDTO(null, // id
+        ManagedUserVM invalidUser = new ManagedUserVM(null, // id
             "bob", // login
             "password", // password
             "Bob", // firstName
@@ -205,7 +205,8 @@ public class AccountResourceIntTest {
             "invalid", // e-mail <-- invalid
             true, // activated
             "en", // langKey
-            new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)), null, // createdDate
+            new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)), null, // createdBy
+            null, // createdDate
             null, // lastModifiedBy
             null // lastModifiedDate
         );
@@ -221,9 +222,9 @@ public class AccountResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void testRegisterInvalidPassword() throws Exception {
-        ManagedUserDTO invalidUser = new ManagedUserDTO(null, // id
+        ManagedUserVM invalidUser = new ManagedUserVM(null, // id
             "bob", // login
             "123", // password with only 3 digits
             "Bob", // firstName
@@ -231,7 +232,8 @@ public class AccountResourceIntTest {
             "bob@example.com", // e-mail
             true, // activated
             "en", // langKey
-            new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)), null, // createdDate
+            new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)), null, // createdBy
+            null, // createdDate
             null, // lastModifiedBy
             null // lastModifiedDate
         );
@@ -247,10 +249,10 @@ public class AccountResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void testRegisterDuplicateLogin() throws Exception {
         // Good
-        ManagedUserDTO validUser = new ManagedUserDTO(null, // id
+        ManagedUserVM validUser = new ManagedUserVM(null, // id
             "alice", // login
             "password", // password
             "Alice", // firstName
@@ -258,18 +260,19 @@ public class AccountResourceIntTest {
             "alice@example.com", // e-mail
             true, // activated
             "en", // langKey
-            new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)), null, // createdDate
+            new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)), null, // createdBy
+            null, // createdDate
             null, // lastModifiedBy
-            null // lastModifiedDate 
+            null // lastModifiedDate
         );
 
         // Duplicate login, different e-mail
-        ManagedUserDTO duplicatedUser = new ManagedUserDTO(validUser.getId(),
+        ManagedUserVM duplicatedUser = new ManagedUserVM(validUser.getId(),
             validUser.getLogin(), validUser.getPassword(), validUser.getLogin(),
             validUser.getLastName(), "alicejr@example.com", true,
             validUser.getLangKey(), validUser.getAuthorities(),
-            validUser.getCreatedDate(), validUser.getLastModifiedBy(),
-            validUser.getLastModifiedDate());
+            validUser.getCreatedBy(), validUser.getCreatedDate(),
+            validUser.getLastModifiedBy(), validUser.getLastModifiedDate());
 
         // Good user
         restMvc
@@ -291,10 +294,10 @@ public class AccountResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void testRegisterDuplicateEmail() throws Exception {
         // Good
-        ManagedUserDTO validUser = new ManagedUserDTO(null, // id
+        ManagedUserVM validUser = new ManagedUserVM(null, // id
             "john", // login
             "password", // password
             "John", // firstName
@@ -302,18 +305,19 @@ public class AccountResourceIntTest {
             "john@example.com", // e-mail
             true, // activated
             "en", // langKey
-            new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)), null, // createdDate
+            new HashSet<>(Arrays.asList(AuthoritiesConstants.USER)), null, // createdBy
+            null, // createdDate
             null, // lastModifiedBy
             null // lastModifiedDate
         );
 
         // Duplicate e-mail, different login
-        ManagedUserDTO duplicatedUser = new ManagedUserDTO(validUser.getId(),
+        ManagedUserVM duplicatedUser = new ManagedUserVM(validUser.getId(),
             "johnjr", validUser.getPassword(), validUser.getLogin(),
             validUser.getLastName(), validUser.getEmail(), true,
             validUser.getLangKey(), validUser.getAuthorities(),
-            validUser.getCreatedDate(), validUser.getLastModifiedBy(),
-            validUser.getLastModifiedDate());
+            validUser.getCreatedBy(), validUser.getCreatedDate(),
+            validUser.getLastModifiedBy(), validUser.getLastModifiedDate());
 
         // Good user
         restMvc
@@ -334,9 +338,9 @@ public class AccountResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void testRegisterAdminIsIgnored() throws Exception {
-        ManagedUserDTO validUser = new ManagedUserDTO(null, // id
+        ManagedUserVM validUser = new ManagedUserVM(null, // id
             "badguy", // login
             "password", // password
             "Bad", // firstName
@@ -344,7 +348,8 @@ public class AccountResourceIntTest {
             "badguy@example.com", // e-mail
             true, // activated
             "en", // langKey
-            new HashSet<>(Arrays.asList(AuthoritiesConstants.ADMIN)), null, // createdDate
+            new HashSet<>(Arrays.asList(AuthoritiesConstants.ADMIN)), null, // createdBy
+            null, // createdDate
             null, // lastModifiedBy
             null // lastModifiedDate
         );
@@ -362,7 +367,7 @@ public class AccountResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void testSaveInvalidLogin() throws Exception {
         UserDTO invalidUser = new UserDTO("funky-log!n", // login <-- invalid
             "Funky", // firstName

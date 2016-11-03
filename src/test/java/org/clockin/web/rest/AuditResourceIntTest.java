@@ -28,10 +28,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
  * Test class for the AuditResource REST controller.
  *
  */
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@SpringApplicationConfiguration(classes = ClockinApp.class)
-//@WebAppConfiguration
-//@IntegrationTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = ClockinApp.class)
 //@Transactional
 public class AuditResourceIntTest {
 
@@ -67,7 +65,6 @@ public class AuditResourceIntTest {
         this.restAuditMockMvc = MockMvcBuilders.standaloneSetup(auditResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setMessageConverters(jacksonMessageConverter).build();
-        ;
     }
 
     @Before
@@ -87,7 +84,8 @@ public class AuditResourceIntTest {
         // Get all the audits
         restAuditMockMvc.perform(get("/management/jhipster/audits"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(
+                content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(
                 jsonPath("$.[*].principal").value(hasItem(SAMPLE_PRINCIPAL)));
     }
@@ -102,7 +100,8 @@ public class AuditResourceIntTest {
             .perform(
                 get("/management/jhipster/audits/{id}", auditEvent.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(
+                content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.principal").value(SAMPLE_PRINCIPAL));
     }
 
@@ -120,7 +119,8 @@ public class AuditResourceIntTest {
             .perform(get("/management/jhipster/audits?fromDate=" + fromDate
                 + "&toDate=" + toDate))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(
+                content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(
                 jsonPath("$.[*].principal").value(hasItem(SAMPLE_PRINCIPAL)));
     }
@@ -139,7 +139,8 @@ public class AuditResourceIntTest {
             .perform(get("/management/jhipster/audits?fromDate=" + fromDate
                 + "&toDate=" + toDate))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(
+                content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(header().string("X-Total-Count", "0"));
     }
 

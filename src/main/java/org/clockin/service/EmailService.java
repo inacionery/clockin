@@ -11,7 +11,7 @@ public interface EmailService {
 
     /**
      * Save a email.
-     * 
+     *
      * @param email the entity to save
      * @return the persisted entity
      */
@@ -27,7 +27,7 @@ public interface EmailService {
 
     /**
      *  Get the "id" email.
-     *  
+     *
      *  @param id the id of the entity
      *  @return the entity
      */
@@ -35,7 +35,7 @@ public interface EmailService {
 
     /**
      *  Delete the "id" email.
-     *  
+     *
      *  @param id the id of the entity
      */
     void delete(Long id);

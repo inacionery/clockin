@@ -13,7 +13,7 @@ public interface WorkdayService {
 
     /**
      * Save a workday.
-     * 
+     *
      * @param workday the entity to save
      * @return the persisted entity
      */
@@ -28,7 +28,7 @@ public interface WorkdayService {
 
     /**
      *  Get the "id" workday.
-     *  
+     *
      *  @param id the id of the entity
      *  @return the entity
      */
@@ -36,7 +36,7 @@ public interface WorkdayService {
 
     /**
      *  Delete the "id" workday.
-     *  
+     *
      *  @param id the id of the entity
      */
     void delete(Long id);

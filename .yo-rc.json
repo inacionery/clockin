@@ -5,12 +5,12 @@
     "packageFolder": "org/clockin",
     "authenticationType": "session",
     "hibernateCache": "ehcache",
-    "clusteredHttpSession": "no",
-    "websocket": "no",
+    "clusteredHttpSession": false,
+    "websocket": false,
     "databaseType": "sql",
     "devDatabaseType": "mysql",
     "prodDatabaseType": "mysql",
-    "searchEngine": "no",
+    "searchEngine": false,
     "useSass": false,
     "buildTool": "maven",
     "frontendBuilder": "grunt",
@@ -18,12 +18,14 @@
     "enableSocialSignIn": true,
     "rememberMeKey": "137c5ecf6426a5e3a1290b63fffc4da2061fd4a4",
     "testFrameworks": [],
-    "jhipsterVersion": "3.4.2",
+    "jhipsterVersion": "3.10.0",
     "serverPort": "8181",
     "applicationType": "monolith",
     "languages": [
       "pt-br"
     ],
-    "jhiPrefix": "jhi"
+    "jhiPrefix": "jhi",
+    "messageBroker": false,
+    "serviceDiscoveryType": false
   }
 }

@@ -4,13 +4,14 @@ describe('Controller Tests', function() {
 
     describe('Employee Management Detail Controller', function() {
         var $scope, $rootScope;
-        var MockEntity, MockEmployee, MockWorkday, MockUser;
+        var MockEntity, MockPreviousState, MockEmployee, MockWorkday, MockUser;
         var createController;
 
         beforeEach(inject(function($injector) {
             $rootScope = $injector.get('$rootScope');
             $scope = $rootScope.$new();
             MockEntity = jasmine.createSpy('MockEntity');
+            MockPreviousState = jasmine.createSpy('MockPreviousState');
             MockEmployee = jasmine.createSpy('MockEmployee');
             MockWorkday = jasmine.createSpy('MockWorkday');
             MockUser = jasmine.createSpy('MockUser');
@@ -19,7 +20,8 @@ describe('Controller Tests', function() {
             var locals = {
                 '$scope': $scope,
                 '$rootScope': $rootScope,
-                'entity': MockEntity ,
+                'entity': MockEntity,
+                'previousState': MockPreviousState,
                 'Employee': MockEmployee,
                 'Workday': MockWorkday,
                 'User': MockUser

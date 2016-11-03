@@ -5,9 +5,9 @@
         .module('clockinApp')
         .controller('SocialRegisterController', SocialRegisterController);
 
-    SocialRegisterController.$inject = ['$filter', '$stateParams', '$state', 'Principal'];
+    SocialRegisterController.$inject = ['$filter', '$stateParams', '$state'];
 
-    function SocialRegisterController ($filter, $stateParams, $state, Principal) {
+    function SocialRegisterController ($filter, $stateParams, $state) {
         var vm = this;
 
         vm.success = $stateParams.success;

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="Inácio Nery" id="1478218181650-1">
+        <addForeignKeyConstraint baseColumnNames="workday_id" baseTableName="clockin" constraintName="FK_4vr4fn59olr9g86wuvnh8g70a" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="workday"/>
+    </changeSet>
+    <changeSet author="Inácio Nery" id="1478218181650-2">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="jhi_persistent_token" constraintName="FK_c2yetr6vr7nrqhjvi1rl24b3l" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="Inácio Nery" id="1478218181650-3">
+        <addForeignKeyConstraint baseColumnNames="event_id" baseTableName="jhi_persistent_audit_evt_data" constraintName="FK_evb970jo5bi8aon8s65c0lyyn" deferrable="false" initiallyDeferred="false" referencedColumnNames="event_id" referencedTableName="jhi_persistent_audit_event"/>
+    </changeSet>
+    <changeSet author="Inácio Nery" id="1478218181650-4">
+        <addForeignKeyConstraint baseColumnNames="authority_name" baseTableName="jhi_user_authority" constraintName="FK_ik5r332jlvpolfr7e5n7oi42l" deferrable="false" initiallyDeferred="false" referencedColumnNames="name" referencedTableName="jhi_authority"/>
+    </changeSet>
+    <changeSet author="Inácio Nery" id="1478218181650-5">
+        <addForeignKeyConstraint baseColumnNames="employee_id" baseTableName="workday" constraintName="FK_k5yqcm96b1jvcboebivq0m3me" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="employee"/>
+    </changeSet>
+    <changeSet author="Inácio Nery" id="1478218181650-6">
+        <addForeignKeyConstraint baseColumnNames="managers_id" baseTableName="employee_manager" constraintName="FK_m9p6ea79emuvqvu4w4d1l8ahh" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="Inácio Nery" id="1478218181650-7">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="employee" constraintName="FK_mpps3d3r9pdvyjx3iqixi96fi" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="Inácio Nery" id="1478218181650-8">
+        <addForeignKeyConstraint baseColumnNames="employees_id" baseTableName="employee_manager" constraintName="FK_pavlvw5bxepxec49wtexywvs8" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="employee"/>
+    </changeSet>
+    <changeSet author="Inácio Nery" id="1478218181650-9">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="jhi_user_authority" constraintName="FK_pg0oaw6mr9pt3ibeihdc1jwof" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="Inácio Nery" id="1478218181650-10">
+        <dropDefaultValue columnDataType="datetime" columnName="created_date" tableName="jhi_user"/>
+    </changeSet>
+</databaseChangeLog>

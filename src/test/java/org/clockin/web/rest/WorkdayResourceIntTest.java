@@ -16,6 +16,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 
 import org.clockin.domain.Workday;
 import org.clockin.repository.WorkdayRepository;
@@ -28,17 +29,14 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Test class for the WorkdayResource REST controller.
  *
  * @see WorkdayResource
  */
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@SpringApplicationConfiguration(classes = ClockinApp.class)
-//@WebAppConfiguration
-//@IntegrationTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = ClockinApp.class)
 public class WorkdayResourceIntTest {
 
     private static final Long DEFAULT_WORK_PLANNED = 1L;
@@ -50,6 +48,7 @@ public class WorkdayResourceIntTest {
     private static final LocalDate DEFAULT_DATE = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATE = LocalDate
         .now(ZoneId.systemDefault());
+
     private static final String DEFAULT_JUSTIFICATION = "AAAAA";
     private static final String UPDATED_JUSTIFICATION = "BBBBB";
 
@@ -64,6 +63,9 @@ public class WorkdayResourceIntTest {
 
     @Inject
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
+
+    @Inject
+    private EntityManager em;
 
     private MockMvc restWorkdayMockMvc;
 
@@ -81,17 +83,28 @@ public class WorkdayResourceIntTest {
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
-    @Before
-    public void initTest() {
-        workday = new Workday();
+    /**
+     * Create an entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Workday createEntity(EntityManager em) {
+        Workday workday = new Workday();
         workday.setWorkPlanned(DEFAULT_WORK_PLANNED);
         workday.setWorkDone(DEFAULT_WORK_DONE);
         workday.setDate(DEFAULT_DATE);
         workday.setJustification(DEFAULT_JUSTIFICATION);
+        return workday;
+    }
+
+    @Before
+    public void initTest() {
+        workday = createEntity(em);
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void createWorkday() throws Exception {
         int databaseSizeBeforeCreate = workdayRepository.findAll().size();
 
@@ -116,7 +129,7 @@ public class WorkdayResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void getAllWorkdays() throws Exception {
         // Initialize the database
         workdayRepository.saveAndFlush(workday);
@@ -124,7 +137,8 @@ public class WorkdayResourceIntTest {
         // Get all the workdays
         restWorkdayMockMvc.perform(get("/api/workdays?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(
+                content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(
                 jsonPath("$.[*].id").value(hasItem(workday.getId().intValue())))
             .andExpect(jsonPath("$.[*].workPlanned")
@@ -138,7 +152,7 @@ public class WorkdayResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void getWorkday() throws Exception {
         // Initialize the database
         workdayRepository.saveAndFlush(workday);
@@ -146,7 +160,8 @@ public class WorkdayResourceIntTest {
         // Get the workday
         restWorkdayMockMvc.perform(get("/api/workdays/{id}", workday.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(
+                content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(workday.getId().intValue()))
             .andExpect(jsonPath("$.workPlanned")
                 .value(DEFAULT_WORK_PLANNED.intValue()))
@@ -158,7 +173,7 @@ public class WorkdayResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void getNonExistingWorkday() throws Exception {
         // Get the workday
         restWorkdayMockMvc.perform(get("/api/workdays/{id}", Long.MAX_VALUE))
@@ -166,7 +181,7 @@ public class WorkdayResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void updateWorkday() throws Exception {
         // Initialize the database
         workdayService.save(workday);
@@ -174,11 +189,11 @@ public class WorkdayResourceIntTest {
         int databaseSizeBeforeUpdate = workdayRepository.findAll().size();
 
         // Update the workday
-        Workday updatedWorkday = new Workday();
-        updatedWorkday.setId(workday.getId());
+        Workday updatedWorkday = workdayRepository.findOne(workday.getId());
         updatedWorkday.setWorkPlanned(UPDATED_WORK_PLANNED);
         updatedWorkday.setWorkDone(UPDATED_WORK_DONE);
         updatedWorkday.setDate(UPDATED_DATE);
+        updatedWorkday.setJustification(UPDATED_JUSTIFICATION);
 
         restWorkdayMockMvc
             .perform(
@@ -199,7 +214,7 @@ public class WorkdayResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void deleteWorkday() throws Exception {
         // Initialize the database
         workdayService.save(workday);

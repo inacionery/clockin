@@ -30,7 +30,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     /**
      * Save a employee.
-     * 
+     *
      * @param employee the entity to save
      * @return the persisted entity
      */
@@ -69,7 +69,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     /**
      *  Delete the  employee by id.
-     *  
+     *
      *  @param id the id of the entity
      * @return 
      */

@@ -30,10 +30,8 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@SpringApplicationConfiguration(classes = ClockinApp.class)
-//@WebAppConfiguration
-//@IntegrationTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = ClockinApp.class)
 //@Transactional
 public class SocialServiceIntTest {
 
@@ -84,7 +82,7 @@ public class SocialServiceIntTest {
         Connection<?> connection = createConnection("@LOGIN", "mail@mail.com",
             "FIRST_NAME", "LAST_NAME", "PROVIDER");
         socialService.createSocialUser(connection, "fr");
-        MultiValueMap connectionsByProviderId = new LinkedMultiValueMap<>();
+        MultiValueMap<String, Connection<?>> connectionsByProviderId = new LinkedMultiValueMap<>();
         connectionsByProviderId.put("PROVIDER", null);
         when(mockConnectionRepository.findAllConnections())
             .thenReturn(connectionsByProviderId);

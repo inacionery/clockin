@@ -1,9 +1,10 @@
 
 <div>
-    <h2><strong translate="clockinApp.employee.detail.title">Employee</strong> {{vm.employee.user.firstName}} {{vm.employee.user.lastName}}</h2>
+    <h2><span data-translate="clockinApp.employee.detail.title">Employee</span> {{vm.employee.user.firstName}} {{vm.employee.user.lastName}}</h2>
     <hr>
-    <dl class="dl-horizontal">
-        <dt><span translate="clockinApp.employee.socialIdentificationNumber">Social Identification Number</span></dt>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="clockinApp.employee.socialIdentificationNumber">Social Identification Number</span></dt>
         <dd>
             <span>{{vm.employee.socialIdentificationNumber}}</span>
         </dd>
@@ -11,7 +12,7 @@
         <dd>
             {{vm.employee.user.email}}
         </dd>
-        <dt><span translate="clockinApp.employee.manager">Manager</span></dt>
+        <dt><span data-translate="clockinApp.employee.manager">Manager</span></dt>
         <dd>
             <span ng-repeat="manager in vm.employee.managers">
                  {{manager.firstName}} {{manager.lastName}} - {{manager.email}}{{$last ? '' : ', '}}
@@ -24,8 +25,13 @@
     </dl>
 
     <button type="submit"
-            onclick="window.history.back()"
+            ui-sref="{{ vm.previousState }}"
             class="btn btn-info">
-        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="employee-detail.edit({id:vm.employee.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"> Edit</span>
     </button>
 </div>

@@ -14,7 +14,7 @@ public interface EmployeeService {
 
     /**
      * Save a employee.
-     * 
+     *
      * @param employee the entity to save
      * @return the persisted entity
      */
@@ -30,7 +30,7 @@ public interface EmployeeService {
 
     /**
      *  Get the "id" employee.
-     *  
+     *
      *  @param id the id of the entity
      *  @return the entity
      */
@@ -38,7 +38,7 @@ public interface EmployeeService {
 
     /**
      *  Delete the "id" employee.
-     *  
+     *
      *  @param id the id of the entity
      * @return 
      */

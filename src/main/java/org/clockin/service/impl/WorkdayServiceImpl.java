@@ -29,7 +29,7 @@ public class WorkdayServiceImpl implements WorkdayService {
 
     /**
      * Save a workday.
-     * 
+     *
      * @param workday the entity to save
      * @return the persisted entity
      */
@@ -48,6 +48,7 @@ public class WorkdayServiceImpl implements WorkdayService {
     public List<Workday> findAll() {
         log.debug("Request to get all Workdays");
         List<Workday> result = workdayRepository.findAll();
+
         return result;
     }
 
@@ -66,7 +67,7 @@ public class WorkdayServiceImpl implements WorkdayService {
 
     /**
      *  Delete the  workday by id.
-     *  
+     *
      *  @param id the id of the entity
      */
     public void delete(Long id) {

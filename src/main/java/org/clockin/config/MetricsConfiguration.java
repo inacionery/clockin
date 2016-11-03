@@ -13,6 +13,7 @@ import com.codahale.metrics.jvm.MemoryUsageGaugeSet;
 import com.codahale.metrics.jvm.ThreadStatesGaugeSet;
 import com.ryantenney.metrics.spring.config.annotation.EnableMetrics;
 import com.ryantenney.metrics.spring.config.annotation.MetricsConfigurerAdapter;
+import com.zaxxer.hikari.HikariDataSource;
 
 import java.lang.management.ManagementFactory;
 import java.net.InetSocketAddress;
@@ -23,6 +24,7 @@ import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,6 +50,9 @@ public class MetricsConfiguration extends MetricsConfigurerAdapter {
 
     @Inject
     private JHipsterProperties jHipsterProperties;
+
+    @Autowired(required = false)
+    private HikariDataSource hikariDataSource;
 
     @Override
     @Bean
@@ -75,6 +80,10 @@ public class MetricsConfiguration extends MetricsConfigurerAdapter {
         metricRegistry.register(PROP_METRIC_REG_JVM_BUFFERS,
             new BufferPoolMetricSet(
                 ManagementFactory.getPlatformMBeanServer()));
+        if (hikariDataSource != null) {
+            log.debug("Monitoring the datasource");
+            hikariDataSource.setMetricRegistry(metricRegistry);
+        }
         if (jHipsterProperties.getMetrics().getJmx().isEnabled()) {
             log.debug("Initializing Metrics JMX reporting");
             JmxReporter jmxReporter = JmxReporter.forRegistry(metricRegistry)

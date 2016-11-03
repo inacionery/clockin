@@ -1,21 +1,21 @@
 <div ng-cloak>
-   <div class="row">
-      <div class="col-md-12 center-align">
-         <h1 class="login-text">
-            <i class="fa fa-clock-o logo-icon"></i> Clockin!
-         </h1>
-         <div ng-switch="vm.isAuthenticated()">
-            <div ng-switch-when="false">
-               <p>Controle de ponto eletrônico</p>
+    <div class="row">
+        <div class="col-md-12 center-align">
+            <h1 class="login-text">
+                <i class="fa fa-clock-o logo-icon"></i> Clockin!
+            </h1>
+            <div ng-switch="vm.isAuthenticated()">
+                <div ng-switch-when="false">
+                    <p>Controle de ponto eletrônico</p>
+                </div>
+                <br>
+                <div ng-switch-when="true" class="alert alert-success" translate="home.logged.message" translate-values="{username: '{{vm.account.firstName}}'}">
+                    Welcome "{{vm.account.firstName}}".
+                </div>
+                <div ng-switch-when="false">
+                    <jh-social ng-provider="google"></jh-social>
+                </div>
             </div>
-            <br>
-            <div ng-switch-when="true" class="alert alert-success" translate="home.logged.message" translate-values="{username: '{{vm.account.firstName}}'}">
-               Welcome "{{vm.account.firstName}}".
-            </div>
-            <div ng-switch-when="false">
-               <jh-social ng-provider="google"></jh-social>
-            </div>
-         </div>
-      </div>
-   </div>
+        </div>
+    </div>
 </div>

@@ -35,10 +35,8 @@ import org.springframework.social.oauth2.OAuth2ServiceProvider;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@SpringApplicationConfiguration(classes = ClockinApp.class)
-//@WebAppConfiguration
-//@IntegrationTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = ClockinApp.class)
 //@Transactional
 public class CustomSocialUsersConnectionRepositoryIntTest {
 
@@ -488,53 +486,44 @@ public class CustomSocialUsersConnectionRepositoryIntTest {
     private static class TestFacebookServiceProvider
         implements OAuth2ServiceProvider<TestFacebookApi> {
 
-        @Override
         public OAuth2Operations getOAuthOperations() {
             return new OAuth2Operations() {
-                @Override
                 public String buildAuthorizeUrl(GrantType grantType,
                     OAuth2Parameters params) {
                     return null;
                 }
 
-                @Override
                 public String buildAuthenticateUrl(GrantType grantType,
                     OAuth2Parameters params) {
                     return null;
                 }
 
-                @Override
                 public String buildAuthorizeUrl(OAuth2Parameters params) {
                     return null;
                 }
 
-                @Override
                 public String buildAuthenticateUrl(OAuth2Parameters params) {
                     return null;
                 }
 
-                @Override
                 public AccessGrant exchangeForAccess(String authorizationGrant,
                     String redirectUri,
                     MultiValueMap<String, String> additionalParameters) {
                     return null;
                 }
 
-                @Override
                 public AccessGrant exchangeCredentialsForAccess(String username,
                     String password,
                     MultiValueMap<String, String> additionalParameters) {
                     return null;
                 }
 
-                @Override
                 public AccessGrant refreshAccess(String refreshToken,
                     MultiValueMap<String, String> additionalParameters) {
                     return new AccessGrant("765432109", "read", "654321098",
                         3600L);
                 }
 
-                @Override
                 @Deprecated
                 public AccessGrant refreshAccess(String refreshToken,
                     String scope,
@@ -543,19 +532,16 @@ public class CustomSocialUsersConnectionRepositoryIntTest {
                         3600L);
                 }
 
-                @Override
                 public AccessGrant authenticateClient() {
                     return null;
                 }
 
-                @Override
                 public AccessGrant authenticateClient(String scope) {
                     return null;
                 }
             };
         }
 
-        @Override
         public TestFacebookApi getApi(final String accessToken) {
             return () -> accessToken;
         }
@@ -579,12 +565,10 @@ public class CustomSocialUsersConnectionRepositoryIntTest {
 
         private String profilePictureUrl = "http://facebook.com/keith.donald/picture";
 
-        @Override
         public boolean test(TestFacebookApi api) {
             return true;
         }
 
-        @Override
         public void setConnectionValues(TestFacebookApi api,
             ConnectionValues values) {
             values.setProviderUserId(accountId);
@@ -593,14 +577,12 @@ public class CustomSocialUsersConnectionRepositoryIntTest {
             values.setImageUrl(profilePictureUrl);
         }
 
-        @Override
         public UserProfile fetchUserProfile(TestFacebookApi api) {
             return new UserProfileBuilder().setName(name)
                 .setEmail("keith@interface21.com").setUsername("Keith.Donald")
                 .build();
         }
 
-        @Override
         public void updateStatus(TestFacebookApi api, String message) {
 
         }
@@ -619,21 +601,17 @@ public class CustomSocialUsersConnectionRepositoryIntTest {
     private static class TestTwitterServiceProvider
         implements OAuth1ServiceProvider<TestTwitterApi> {
 
-        @Override
         public OAuth1Operations getOAuthOperations() {
             return null;
         }
 
-        @Override
         public TestTwitterApi getApi(final String accessToken,
             final String secret) {
             return new TestTwitterApi() {
-                @Override
                 public String getAccessToken() {
                     return accessToken;
                 }
 
-                @Override
                 public String getSecret() {
                     return secret;
                 }
@@ -661,12 +639,10 @@ public class CustomSocialUsersConnectionRepositoryIntTest {
 
         private String profilePictureUrl = "http://twitter.com/kdonald/a_new_picture";
 
-        @Override
         public boolean test(TestTwitterApi api) {
             return true;
         }
 
-        @Override
         public void setConnectionValues(TestTwitterApi api,
             ConnectionValues values) {
             values.setProviderUserId(accountId);
@@ -675,13 +651,11 @@ public class CustomSocialUsersConnectionRepositoryIntTest {
             values.setImageUrl(profilePictureUrl);
         }
 
-        @Override
         public UserProfile fetchUserProfile(TestTwitterApi api) {
             return new UserProfileBuilder().setName(name).setUsername("kdonald")
                 .build();
         }
 
-        @Override
         public void updateStatus(TestTwitterApi api, String message) {
         }
 

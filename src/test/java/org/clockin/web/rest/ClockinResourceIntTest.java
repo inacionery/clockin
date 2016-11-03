@@ -19,6 +19,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 
 import org.clockin.domain.Clockin;
 import org.clockin.repository.ClockinRepository;
@@ -31,17 +32,14 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Test class for the ClockinResource REST controller.
  *
  * @see ClockinResource
  */
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@SpringApplicationConfiguration(classes = ClockinApp.class)
-//@WebAppConfiguration
-//@IntegrationTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest(classes = ClockinApp.class)
 public class ClockinResourceIntTest {
 
     private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter
@@ -72,6 +70,9 @@ public class ClockinResourceIntTest {
     @Inject
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
+    @Inject
+    private EntityManager em;
+
     private MockMvc restClockinMockMvc;
 
     private Clockin clockin;
@@ -88,16 +89,27 @@ public class ClockinResourceIntTest {
             .setMessageConverters(jacksonMessageConverter).build();
     }
 
-    @Before
-    public void initTest() {
-        clockin = new Clockin();
+    /**
+     * Create an entity for this test.
+     *
+     * This is a static method, as tests for other entities might also need it,
+     * if they test an entity which requires the current entity.
+     */
+    public static Clockin createEntity(EntityManager em) {
+        Clockin clockin = new Clockin();
         clockin.setSequentialRegisterNumber(DEFAULT_SEQUENTIAL_REGISTER_NUMBER);
         clockin.setTime(DEFAULT_TIME);
         clockin.setJustification(DEFAULT_JUSTIFICATION);
+        return clockin;
+    }
+
+    @Before
+    public void initTest() {
+        clockin = createEntity(em);
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void createClockin() throws Exception {
         int databaseSizeBeforeCreate = clockinRepository.findAll().size();
 
@@ -121,7 +133,7 @@ public class ClockinResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void getAllClockins() throws Exception {
         // Initialize the database
         clockinRepository.saveAndFlush(clockin);
@@ -129,7 +141,8 @@ public class ClockinResourceIntTest {
         // Get all the clockins
         restClockinMockMvc.perform(get("/api/clockins?sort=id,desc"))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(
+                content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(
                 jsonPath("$.[*].id").value(hasItem(clockin.getId().intValue())))
             .andExpect(jsonPath("$.[*].sequentialRegisterNumber")
@@ -140,7 +153,7 @@ public class ClockinResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void getClockin() throws Exception {
         // Initialize the database
         clockinRepository.saveAndFlush(clockin);
@@ -148,7 +161,8 @@ public class ClockinResourceIntTest {
         // Get the clockin
         restClockinMockMvc.perform(get("/api/clockins/{id}", clockin.getId()))
             .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(
+                content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(clockin.getId().intValue()))
             .andExpect(jsonPath("$.sequentialRegisterNumber")
                 .value(DEFAULT_SEQUENTIAL_REGISTER_NUMBER.toString()))
@@ -158,7 +172,7 @@ public class ClockinResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void getNonExistingClockin() throws Exception {
         // Get the clockin
         restClockinMockMvc.perform(get("/api/clockins/{id}", Long.MAX_VALUE))
@@ -166,7 +180,7 @@ public class ClockinResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void updateClockin() throws Exception {
         // Initialize the database
         clockinService.save(clockin);
@@ -174,8 +188,7 @@ public class ClockinResourceIntTest {
         int databaseSizeBeforeUpdate = clockinRepository.findAll().size();
 
         // Update the clockin
-        Clockin updatedClockin = new Clockin();
-        updatedClockin.setId(clockin.getId());
+        Clockin updatedClockin = clockinRepository.findOne(clockin.getId());
         updatedClockin
             .setSequentialRegisterNumber(UPDATED_SEQUENTIAL_REGISTER_NUMBER);
         updatedClockin.setTime(UPDATED_TIME);
@@ -199,7 +212,7 @@ public class ClockinResourceIntTest {
     }
 
     //@Test
-    @Transactional
+    //@Transactional
     public void deleteClockin() throws Exception {
         // Initialize the database
         clockinService.save(clockin);

@@ -6,14 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZonedDateTime;
 
-import org.clockin.domain.util.JSR310DateTimeSerializer;
-import org.clockin.domain.util.JSR310LocalDateDeserializer;
 import org.springframework.http.MediaType;
 
 /**
@@ -40,15 +33,6 @@ public class TestUtil {
         mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
         JavaTimeModule module = new JavaTimeModule();
-        module.addSerializer(OffsetDateTime.class,
-            JSR310DateTimeSerializer.INSTANCE);
-        module.addSerializer(ZonedDateTime.class,
-            JSR310DateTimeSerializer.INSTANCE);
-        module.addSerializer(LocalDateTime.class,
-            JSR310DateTimeSerializer.INSTANCE);
-        module.addSerializer(Instant.class, JSR310DateTimeSerializer.INSTANCE);
-        module.addDeserializer(LocalDate.class,
-            JSR310LocalDateDeserializer.INSTANCE);
         mapper.registerModule(module);
 
         return mapper.writeValueAsBytes(object);
@@ -59,6 +43,7 @@ public class TestUtil {
      *
      * @param size the size of the byte array
      * @param data the data to put in the byte array
+     * @return the JSON byte array
      */
     public static byte[] createByteArray(int size, String data) {
         byte[] byteArray = new byte[size];

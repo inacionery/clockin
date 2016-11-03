@@ -72,8 +72,41 @@
                 }],
                 entity: ['$stateParams', 'Email', function($stateParams, Email) {
                     return Email.get({id : $stateParams.id}).$promise;
+                }],
+                previousState: ["$state", function ($state) {
+                    var currentStateData = {
+                        name: $state.current.name || 'email',
+                        params: $state.params,
+                        url: $state.href($state.current.name, $state.params)
+                    };
+                    return currentStateData;
                 }]
             }
+        })
+        .state('email-detail.edit', {
+            parent: 'email-detail',
+            url: '/detail/edit',
+            data: {
+                authorities: ['ROLE_USER']
+            },
+            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                $uibModal.open({
+                    templateUrl: 'app/entities/email/email-dialog.html',
+                    controller: 'EmailDialogController',
+                    controllerAs: 'vm',
+                    backdrop: 'static',
+                    size: 'lg',
+                    resolve: {
+                        entity: ['Email', function(Email) {
+                            return Email.get({id : $stateParams.id}).$promise;
+                        }]
+                    }
+                }).result.then(function() {
+                    $state.go('^', {}, { reload: false });
+                }, function() {
+                    $state.go('^');
+                });
+            }]
         })
         .state('email.new', {
             parent: 'email',
@@ -98,7 +131,7 @@
                         }
                     }
                 }).result.then(function() {
-                    $state.go('email', null, { reload: true });
+                    $state.go('email', null, { reload: 'email' });
                 }, function() {
                     $state.go('email');
                 });
@@ -123,7 +156,7 @@
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('email', null, { reload: true });
+                    $state.go('email', null, { reload: 'email' });
                 }, function() {
                     $state.go('^');
                 });
@@ -147,7 +180,7 @@
                         }]
                     }
                 }).result.then(function() {
-                    $state.go('email', null, { reload: true });
+                    $state.go('email', null, { reload: 'email' });
                 }, function() {
                     $state.go('^');
                 });

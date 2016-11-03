@@ -162,5 +162,4 @@
 
         	return workTime.getTime();
         }
-    }
-})();
+    }})();
