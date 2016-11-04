@@ -39,7 +39,6 @@
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('report');
-                    $translatePartialLoader.addPart('registryType');
                     $translatePartialLoader.addPart('global');
                     return $translate.refresh();
                 }],

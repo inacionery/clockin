@@ -67,7 +67,7 @@ class ClockinGatlingTest extends Simulation {
             .exec(http("Create new clockin")
             .post("/api/clockins")
             .headers(headers_http_authenticated)
-            .body(StringBody("""{"id":null, "sequentialRegisterNumber":"SAMPLE_TEXT", "dateTime":"2020-01-01T00:00:00.000Z", "registryType":null}""")).asJSON
+            .body(StringBody("""{"id":null, "sequentialRegisterNumber":"SAMPLE_TEXT", "dateTime":"2020-01-01T00:00:00.000Z"}""")).asJSON
             .check(status.is(201))
             .check(headerRegex("Location", "(.*)").saveAs("new_clockin_url"))).exitHereIfFailed
             .pause(10)
