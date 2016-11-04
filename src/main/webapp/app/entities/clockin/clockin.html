@@ -46,7 +46,7 @@
                            <div layout="column" class="date-cell" layout-align="center center">
                               <div hide-xs hide-sm layout="row" layout-align="center center">
                                  <div ng-class="$index == 1 ? 'hide-md' : ''" layout="column" ng-repeat="clockin in vm.firstClockin(workday.clockinValues) track by clockin.id">
-                                    {{clockin.time}}
+                                    {{clockin.time | limitTo:5}}
                                  </div>
                               </div>
                               <div layout="row" layout-align="center center">
@@ -59,7 +59,7 @@
                               </div>
                               <div hide-xs hide-sm layout="row" layout-align="center center">
                                  <div ng-class="$index == 0 ? 'hide-md' : ''" layout="column" ng-repeat="clockin in vm.lastClockin(workday.clockinValues) track by clockin.id">
-                                    {{clockin.time}}
+                                    {{clockin.time | limitTo:5}}
                                  </div>
                               </div>
                            </div>
@@ -72,10 +72,10 @@
                                     <span ng-if="workday.justification && !workday.isToday && !workday.isAfterToday" class="md-headline">{{workday.justification}}</span>
                                     <md-content ng-if="workday.clockinValues.length > 0 || workday.justification" class="md-headline tooltip-days-content flex layout-padding">
                                        <span ng-repeat="clockin in workday.clockinValues track by clockin.id" class="tooltip-days-entry {{clockin.justification ? 'font-orange' : ''}}">
-                                       {{clockin.time}}
+                                       {{clockin.time | limitTo:5}}
                                        </span>
                                        <span ng-if="workday.isToday" ng-repeat="clockin in workday.predictions" class="tooltip-days-entry font-lightPurple">
-                                          {{clockin.time}}
+                                          {{clockin.time | limitTo:5}}
                                           <ng-if ng-if="workday.isToday && workday.predictions.length > 0  ? vm.notifyMe(clockin.time) : false"></ng-if>
                                        </span>
                                     </md-content>

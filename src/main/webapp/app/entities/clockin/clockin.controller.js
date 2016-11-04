@@ -110,7 +110,7 @@
             var minutesDiff = time.split(":")[1] - now.getMinutes();
             if ((hoursDiff >= 0) && (minutesDiff >= 0)) {
                 var remainTime = ((hoursDiff * 60) + (minutesDiff) - (6));
-                vm.time = time;
+                vm.time = time.split(":")[0] + ":" + time.split(":")[1];
                 vm.isNotify = true;
                 if (remainTime > 0) {
                     setTimeout(notifyClockin, remainTime * 60000);
