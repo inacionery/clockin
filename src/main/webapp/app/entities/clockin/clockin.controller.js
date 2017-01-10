@@ -38,7 +38,7 @@
         }
 
         if (year == vm.today.getFullYear() && ((vm.today.getMonth() > 5 ? 1 : 0) == semester)) {
-            $scope.selectedIndex = vm.today.getMonth() - (5 * semester);
+            $scope.selectedIndex = vm.today.getMonth() - (6 * semester) + 1;
         }
 
         vm.semesterHours = function semesterHours(months) {
