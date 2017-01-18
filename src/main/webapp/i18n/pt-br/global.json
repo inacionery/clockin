@@ -25,6 +25,7 @@
             },
             "admin": {
                 "main": "Administração",
+                "server": "Servidor",
                 "userManagement": "Usuários",
                 "employeeManagement": "Funcionários",
                 "tracker": "Rastreamento de usuário",
