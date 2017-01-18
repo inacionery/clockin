@@ -3,12 +3,14 @@ package org.clockin.service.dto;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.inject.Inject;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.clockin.config.Constants;
 import org.clockin.domain.Authority;
 import org.clockin.domain.User;
+import org.clockin.service.EmployeeService;
 import org.hibernate.validator.constraints.Email;
 
 /**
@@ -39,6 +41,8 @@ public class UserDTO {
     private String langKey;
 
     private Set<String> authorities;
+
+    private boolean employee = false;
 
     public UserDTO() {
     }
@@ -91,11 +95,20 @@ public class UserDTO {
         return authorities;
     }
 
+    public void setEmployee(boolean employee) {
+        this.employee = employee;
+    }
+
+    public boolean isEmployee() {
+        return employee;
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" + "login='" + login + '\'' + ", firstName='"
             + firstName + '\'' + ", lastName='" + lastName + '\'' + ", email='"
             + email + '\'' + ", activated=" + activated + ", langKey='"
-            + langKey + '\'' + ", authorities=" + authorities + "}";
+            + langKey + '\'' + ", authorities=" + authorities + ", employee="
+            + employee + "}";
     }
 }

@@ -12,11 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
+import org.clockin.domain.Employee;
 import org.clockin.domain.PersistentToken;
 import org.clockin.domain.User;
+import org.clockin.repository.EmployeeRepository;
 import org.clockin.repository.PersistentTokenRepository;
 import org.clockin.repository.UserRepository;
 import org.clockin.security.SecurityUtils;
+import org.clockin.service.EmployeeService;
 import org.clockin.service.UserService;
 import org.clockin.service.dto.UserDTO;
 import org.clockin.web.rest.util.HeaderUtil;
@@ -48,6 +51,9 @@ public class AccountResource {
 
     @Inject
     private UserRepository userRepository;
+
+    @Inject
+    private EmployeeRepository employeeRepository;
 
     @Inject
     private UserService userService;
@@ -123,9 +129,19 @@ public class AccountResource {
     @GetMapping("/account")
     @Timed
     public ResponseEntity<UserDTO> getAccount() {
-        return Optional.ofNullable(userService.getUserWithAuthorities())
-            .map(user -> new ResponseEntity<>(new UserDTO(user), HttpStatus.OK))
-            .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+        User user = userService.getUserWithAuthorities();
+
+        if (user != null) {
+            UserDTO userDTO = new UserDTO(user);
+
+            Employee employee = employeeRepository.findByUser(user);
+            userDTO.setEmployee(employee != null);
+
+            return new ResponseEntity<>(userDTO, HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     /**
