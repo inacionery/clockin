@@ -43,7 +43,7 @@
                         {{employee.user.firstName}} {{employee.user.lastName}} - {{employee.user.email}}
                     </td>
                     <td>
-                        <span ng-repeat="manager in vm.employee.managers">
+                        <span ng-repeat="manager in employee.managers">
                             {{manager.firstName}} {{manager.lastName}} {{$last ? '' : ', '}}
                         </span>
                     </td>
