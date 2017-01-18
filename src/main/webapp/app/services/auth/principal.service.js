@@ -17,6 +17,7 @@
             hasAuthority: hasAuthority,
             identity: identity,
             isAuthenticated: isAuthenticated,
+            isEmployee: isEmployee,
             isIdentityResolved: isIdentityResolved
         };
 
@@ -90,6 +91,10 @@
 
         function isAuthenticated () {
             return _authenticated;
+        }
+
+        function isEmployee () {
+            return _identity.employee;
         }
 
         function isIdentityResolved () {
