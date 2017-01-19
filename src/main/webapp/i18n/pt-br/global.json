@@ -12,6 +12,7 @@
                 "workday": "Workday",
                 "email": "Modelos de e-mail",
                 "report": "Relatórios",
+                "manager": "Gestor",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
