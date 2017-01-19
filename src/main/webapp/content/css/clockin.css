@@ -170,10 +170,16 @@ md-tabs md-ink-bar {
         padding: 0px;
     }
     .layout-align-end-start.layout-row {
-        font-size: 14px;
+        font-size: 13px;
     }
     span.glyphicon.glyphicon-chevron-left,
     span.glyphicon.glyphicon-chevron-right {
         padding: 0px;
     }
+    md-tab-item.md-tab.md-ink-ripple {
+        padding: 12px 14px;
+    }
+    .hours {
+        padding: 0px 5px 0px 0px;
+    }                
 }
