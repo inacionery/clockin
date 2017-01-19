@@ -6,7 +6,7 @@
    </div>
    <div ng-cloak ng-switch-when="true">
       <md-content>
-         <md-tabs md-no-pagination md-selected="selectedIndex" md-stretch-tabs="always" md-center-tabs md-dynamic-height md-border-bottom>
+         <md-tabs class="desktop" hide-xs hide-sm md-no-pagination md-selected="selectedIndex" md-stretch-tabs="always" md-center-tabs md-dynamic-height md-border-bottom>
             <md-tab md-on-select="vm.selectMonth(6)" ui-sref="clockin({year: vm.previousYear, semester: vm.previousSemester})">
                <md-tab-label>
                   <span class="glyphicon glyphicon-chevron-left"></span>
@@ -79,7 +79,12 @@
                                           <ng-if ng-if="workday.isToday && workday.predictions.length > 0  ? vm.notifyMe(clockin.time) : false"></ng-if>
                                        </span>
                                     </md-content>
-                                    <span ng-if="(workday.isToday && workday.clockinValues.length % 2 != 0)" class="md-headline">Saldo: <span class="font-lightPurple"><timer start-time="vm.workRealTime(workday)">{{hhours}}:{{mminutes}}:{{sseconds}}</timer></span></span>
+                                    <span ng-if="(workday.isToday && workday.clockinValues.length % 2 != 0)" class="md-headline">
+                                       Saldo: 
+                                       <span class="font-lightPurple">
+                                          <timer start-time="vm.workRealTime(workday)">{{hhours}}:{{mminutes}}:{{sseconds}}</timer>
+                                       </span>
+                                    </span>
                                     <span ng-if="(workday.isToday && workday.clockinValues.length % 2 == 0)" class="md-headline">Saldo: <span class="font-lightPurple">{{vm.balanceHours(workday.workMinute)}}</span></span>
                                     <span ng-if="(workday.workPlanned > 0 || workday.clockinValues.length > 0) && !workday.isClockinMissing && !workday.isToday && !workday.isAfterToday" class="md-headline">Saldo: <span ng-class="workday.workDone >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workDone)}}</span></span>
                                  </md-card-title-text>
@@ -97,6 +102,90 @@
                      <span>{{vm.semesterHours(vm.months)}}</span>
                   </div>
                </md-tab-label>
+            </md-tab>
+            <md-tab md-on-select="vm.selectMonth(1)" ui-sref="clockin({year: vm.nextYear, semester: vm.nextSemester})">
+               <md-tab-label>
+                  <span class="glyphicon glyphicon-chevron-right"></span>
+               </md-tab-label>
+            </md-tab>
+         </md-tabs>
+         <md-tabs class="mobile" hide-md hide-lg hide-gt-md md-no-pagination md-selected="selectedIndex" md-stretch-tabs="always" md-center-tabs md-dynamic-height md-border-bottom>
+            <md-tab md-on-select="vm.selectMonth(6)" ui-sref="clockin({year: vm.previousYear, semester: vm.previousSemester})">
+               <md-tab-label>
+                  <span class="glyphicon glyphicon-chevron-left"></span>
+               </md-tab-label>
+            </md-tab>
+            <md-tab class="month-title" ng-repeat="month in vm.months">
+               <md-tab-label>
+                  <p>{{month.date | date:'MMM'}}</p>
+               </md-tab-label>
+               <md-tab-body>
+                  <md-grid-list
+                     md-cols="7" 
+                     md-row-height="3:1"
+                     md-gutter="8px" >
+                     <md-grid-tile
+                        ng-repeat="shortDay in vm.shortDays" md-rowspan="3"
+                        gt-md-rowspan="2" md-colspan="1" md-colspan-sm="1" md-colspan-xs="1">
+                        <p class="md-headline">{{shortDay.fstChar}}</p>
+                     </md-grid-tile>
+                  </md-grid-list>
+                  <md-grid-list
+                     md-cols="7"                     
+                     md-row-height="1:1"
+                     md-gutter="0px">
+                     <md-grid-tile 
+                        ng-repeat="workday in month.workDays"
+                        class="bordered {{workday.clockinValues.length > 0 ? 'dateEnable' : 'dateDisable'}} dates {{(month.date | date:'MMMM') == (workday.date | date:'MMMM') && workday.isToday ? 'today': ''}}">
+                        <div flex="5" layout="column" class="date-warning {{((workday.isClockinMissing || workday.isDayMissing || workday.isMissingBreak) && workday.isBeforeToday) ? 'warning bordered' : ''}} {{workday.justification ? 'justification bordered': ''}}">
+                        </div>
+                        <div flex="95" layout="column" class="date-cell">
+                           <div layout="row" layout-align="end start">
+                              <div>{{workday.date | date:"dd"}}</div>
+                           </div>
+                           <div layout="row" layout-align="end start">
+                              <div ng-if="(workday.isToday && workday.clockinValues.length % 2 == 0)"><span class="font-lightPurple">{{vm.balanceHours(workday.workMinute)}}</span></div>
+                              <div ng-if="(workday.workPlanned > 0 || workday.clockinValues.length > 0) && !workday.isClockinMissing && !workday.isToday && !workday.isAfterToday"><span ng-class="workday.workDone >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workDone)}}</span></div>
+                           </div>
+                        </div>
+                        <md-tooltip class="clockin-tooltip" md-direction="{{([0,7,14,21,28,35].indexOf($index) !== -1 ? 'right' : ([6,13,20,27,34,41].indexOf($index) !== -1 ? 'left' : ([22,23,24,25,26,29,30,31,32,33,36,37,38,39,40].indexOf($index) !== -1 ? 'top' : 'bottom')))}}">
+                           <md-card>
+                              <md-card-title>
+                                 <md-card-title-text layout-align="center center">
+                                    <span ng-if="workday.isMissingBreak && !workday.isToday && !workday.isAfterToday" class="md-headline">Está faltando o intervalo</span>
+                                    <span ng-if="workday.justification && !workday.isToday && !workday.isAfterToday" class="md-headline">{{workday.justification}}</span>
+                                    <md-content ng-if="workday.clockinValues.length > 0 || workday.justification" class="md-headline tooltip-days-content flex layout-padding">
+                                       <span ng-repeat="clockin in workday.clockinValues track by clockin.id" class="tooltip-days-entry {{clockin.justification ? 'font-orange' : ''}}">
+                                       {{clockin.time | limitTo:5}}
+                                       </span>
+                                       <span ng-if="workday.isToday" ng-repeat="clockin in workday.predictions" class="tooltip-days-entry font-lightPurple">
+                                          {{clockin.time | limitTo:5}}
+                                          <ng-if ng-if="workday.isToday && workday.predictions.length > 0  ? vm.notifyMe(clockin.time) : false"></ng-if>
+                                       </span>
+                                    </md-content>
+                                    <span ng-if="(workday.isToday && workday.clockinValues.length % 2 != 0)" class="md-headline">
+                                       Saldo: 
+                                       <span class="font-lightPurple">
+                                          <timer start-time="vm.workRealTime(workday)">{{hhours}}:{{mminutes}}:{{sseconds}}</timer>
+                                       </span>
+                                    </span>
+                                    <span ng-if="(workday.isToday && workday.clockinValues.length % 2 == 0)" class="md-headline">Saldo: <span class="font-lightPurple">{{vm.balanceHours(workday.workMinute)}}</span></span>
+                                    <span ng-if="(workday.workPlanned > 0 || workday.clockinValues.length > 0) && !workday.isClockinMissing && !workday.isToday && !workday.isAfterToday" class="md-headline">Saldo: <span ng-class="workday.workDone >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workDone)}}</span></span>
+                                 </md-card-title-text>
+                              </md-card-title>
+                           </md-card>
+                        </md-tooltip>
+                     </md-grid-tile>
+                  </md-grid-list>
+                  <md-grid-list md-cols="2" md-row-height="3:1">
+                     <md-grid-tile>
+                        <div>Total do mês: {{vm.balanceHours(month.hours)}}</div>
+                     </md-grid-tile>
+                     <md-grid-tile>
+                        <div>Total do período: {{vm.semesterHours(vm.months)}}</div>
+                     </md-grid-tile>
+                  </md-grid-list>
+               </md-tab-body>
             </md-tab>
             <md-tab md-on-select="vm.selectMonth(1)" ui-sref="clockin({year: vm.nextYear, semester: vm.nextSemester})">
                <md-tab-label>

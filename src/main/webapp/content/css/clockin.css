@@ -57,7 +57,7 @@ span.glyphicon.glyphicon-chevron-right {
 .justification:hover {
     background: #f76e05;
 }
-md-tabs-canvas,
+.desktop md-tabs-canvas,
 md-pagination-wrapper {
     height: 80px;
 }
@@ -155,4 +155,25 @@ md-tabs md-ink-bar {
     overflow: initial;
     text-align: center;
     width: 250px;
+}
+@media (max-width: 959px) {
+    .container {
+        padding-right: 0px;
+        padding-left: 0px;
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+    md-tab-item.md-tab.ng-scope.ng-isolate-scope.md-ink-ripple {
+        padding: 12px 17px;
+    }
+    .well {
+        padding: 0px;
+    }
+    .layout-align-end-start.layout-row {
+        font-size: 14px;
+    }
+    span.glyphicon.glyphicon-chevron-left,
+    span.glyphicon.glyphicon-chevron-right {
+        padding: 0px;
+    }
 }
