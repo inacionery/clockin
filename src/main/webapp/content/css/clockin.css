@@ -1,25 +1,26 @@
 .today {
     background-color: #EEEEEE;
 }
-.font-green{
-	color: #77d55a;
+.font-green {
+    color: #77d55a;
 }
-.font-red{
-	color: #e64545;
+.font-red {
+    color: #e64545;
 }
-.font-orange{
-	color: #f76e05;
+.font-orange {
+    color: #f76e05;
 }
 .font-lightPurple {
     color: #8c9eff;
 }
 md-content {
-	font-size: 0.8em;
+    font-size: 0.8em;
 }
 md-tooltip .md-content {
     overflow: initial;
 }
-md-tooltip.md-default-theme .md-content, md-tooltip .md-content {
+md-tooltip.md-default-theme .md-content,
+md-tooltip .md-content {
     background-color: transparent;
 }
 md-tab-item.md-tab.md-ink-ripple.md-disabled {
@@ -41,8 +42,8 @@ md-tooltip md-card {
 }
 md-content.md-headline,
 span.md-headline {
-	font-size: 1.5em;
-	background-color: #FFFFFF;
+    font-size: 1.5em;
+    background-color: #FFFFFF;
 }
 span.glyphicon.glyphicon-chevron-left,
 span.glyphicon.glyphicon-chevron-right {
