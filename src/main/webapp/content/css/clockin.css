@@ -45,8 +45,8 @@ span.md-headline {
     font-size: 1.5em;
     background-color: #FFFFFF;
 }
-span.glyphicon.glyphicon-chevron-left,
-span.glyphicon.glyphicon-chevron-right {
+.desktop span.glyphicon.glyphicon-chevron-left,
+.desktop span.glyphicon.glyphicon-chevron-right {
     padding: 15px;
 }
 .warning,
@@ -58,7 +58,7 @@ span.glyphicon.glyphicon-chevron-right {
     background: #f76e05;
 }
 .desktop md-tabs-canvas,
-md-pagination-wrapper {
+.desktop md-pagination-wrapper {
     height: 80px;
 }
 .bordered {
