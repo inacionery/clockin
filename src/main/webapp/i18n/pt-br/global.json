@@ -8,6 +8,7 @@
             "entities": {
                 "main": "Entidades",
                 "clockin": "Folha de ponto",
+                "request": "Requisições",
                 "employee": "Funcionário",
                 "workday": "Workday",
                 "email": "Modelos de e-mail",

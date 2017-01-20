@@ -3,14 +3,12 @@ package org.clockin.service.dto;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.inject.Inject;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.clockin.config.Constants;
 import org.clockin.domain.Authority;
 import org.clockin.domain.User;
-import org.clockin.service.EmployeeService;
 import org.hibernate.validator.constraints.Email;
 
 /**

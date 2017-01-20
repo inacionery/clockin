@@ -18,7 +18,7 @@ public interface ClockinRepository extends JpaRepository<Clockin, Long> {
 
     Clockin findBySequentialRegisterNumber(String sequentialRegisterNumber);
 
-    List<Clockin> findByWorkdayAndJustificationNotLike(Workday workday,
-        String justification);
+    List<Clockin> findByWorkdayAndJustificationNotLikeOrderByTime(
+        Workday workday, String justification);
 
 }

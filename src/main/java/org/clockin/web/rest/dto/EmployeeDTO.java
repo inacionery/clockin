@@ -4,7 +4,7 @@
 
 package org.clockin.web.rest.dto;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.clockin.domain.Employee;
@@ -19,7 +19,7 @@ public class EmployeeDTO {
     private Long hourCumulative;
     private boolean check;
     private boolean sent;
-    private Map<Object, Object> occurrence = new HashMap<>();
+    private Map<Object, Object> occurrence = new LinkedHashMap<>();
 
     public EmployeeDTO() {
     }

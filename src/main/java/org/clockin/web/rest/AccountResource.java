@@ -19,7 +19,6 @@ import org.clockin.repository.EmployeeRepository;
 import org.clockin.repository.PersistentTokenRepository;
 import org.clockin.repository.UserRepository;
 import org.clockin.security.SecurityUtils;
-import org.clockin.service.EmployeeService;
 import org.clockin.service.UserService;
 import org.clockin.service.dto.UserDTO;
 import org.clockin.web.rest.util.HeaderUtil;

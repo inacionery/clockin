@@ -21,6 +21,12 @@
                     <span class="hidden-sm" translate="global.menu.entities.clockin">Clockin</span>
                     </a>
                 </li>
+                <li ui-sref-active="active" >
+                    <a ui-sref="request" is-employee ng-click="vm.collapseNavbar()">
+                    <span class="glyphicon glyphicon-inbox"></span>&nbsp;
+                    <span class="hidden-sm" translate="global.menu.entities.request">Request</span>
+                    </a>
+                </li>
                 <li ui-sref-active="active" has-authority="ROLE_MANAGER" >
                     <a ui-sref="manager" ng-click="vm.collapseNavbar()">
                     <span class="glyphicon glyphicon-list-alt"></span>&nbsp;

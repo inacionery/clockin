@@ -103,7 +103,8 @@ public class ClockinServiceImpl implements ClockinService {
         String justification) {
         log.debug("Request to get Clockin by workday : {} and justification",
             workday, justification);
-        return clockinRepository.findByWorkdayAndJustificationNotLike(workday,
-            justification);
+        return clockinRepository
+            .findByWorkdayAndJustificationNotLikeOrderByTime(workday,
+                justification);
     }
 }
