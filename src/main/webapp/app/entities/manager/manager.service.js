@@ -6,11 +6,14 @@
 
     Manager.$inject = ['$resource'];
 
-    function Manager ($resource) {
+    function Manager($resource) {
         var resourceUrl = 'api/manager/:year/:semester';
 
         return $resource(resourceUrl, {}, {
-            'query': { method: 'GET', isArray: true}
+            'query': {
+                method: 'GET',
+                isArray: true
+            }
         });
     }
 })();

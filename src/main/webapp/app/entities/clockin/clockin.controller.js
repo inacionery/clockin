@@ -100,7 +100,7 @@
 
         vm.isNotify = false;
         vm.notifyMe = function notifyMe(time) {
-        	Notification.requestPermission();
+            Notification.requestPermission();
 
             if (vm.isNotify) {
                 return;
@@ -135,12 +135,12 @@
             }
         }
 
-        vm.workRealTime = function workRealTime(workday){
-        	var workTime = vm.today;
+        vm.workRealTime = function workRealTime(workday) {
+            var workTime = vm.today;
 
-        	if (workday.clockinValues && workday.clockinValues.length % 2 != 0) {
-        		var firstClockin = workday.clockinValues[0].time;
-        		var firstClockinHour = firstClockin.split(":")[0];
+            if (workday.clockinValues && workday.clockinValues.length % 2 != 0) {
+                var firstClockin = workday.clockinValues[0].time;
+                var firstClockinHour = firstClockin.split(":")[0];
                 var firstClockinMinutes = firstClockin.split(":")[1];
 
                 var intervalHours = parseInt(workday.intervalMinute) / 60;
@@ -149,17 +149,18 @@
                 var startHour = intervalHours + parseInt(firstClockinHour);
                 var startMinute = intervalMinutes + parseInt(firstClockinMinutes);
 
-                if (startMinute > 60){
-                	startMinute -= 60;
-                	startHour +=1;
+                if (startMinute > 60) {
+                    startMinute -= 60;
+                    startHour += 1;
                 }
 
-        		workTime.setHours(startHour);
-        		workTime.setMinutes(startMinute);
+                workTime.setHours(startHour);
+                workTime.setMinutes(startMinute);
 
-        		return workTime;
-        	}
+                return workTime;
+            }
 
-        	return workTime.getTime();
+            return workTime.getTime();
         }
-    }})();
+    }
+})();

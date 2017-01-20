@@ -15,66 +15,66 @@
                 <li hide-layout-xs hide-sm class="welcome-text">
                     Olá, {{firstName}}
                 </li>
-                <li ui-sref-active="active" >
+                <li ui-sref-active="active">
                     <a ui-sref="clockin" is-employee ng-click="vm.collapseNavbar()">
-                    <span class="glyphicon glyphicon-time"></span>&nbsp;
-                    <span class="hidden-sm" translate="global.menu.entities.clockin">Clockin</span>
+                        <span class="glyphicon glyphicon-time"></span>&nbsp;
+                        <span class="hidden-sm" translate="global.menu.entities.clockin">Clockin</span>
                     </a>
                 </li>
-                <li ui-sref-active="active" >
+                <li ui-sref-active="active">
                     <a ui-sref="request" is-employee ng-click="vm.collapseNavbar()">
-                    <span class="glyphicon glyphicon-inbox"></span>&nbsp;
-                    <span class="hidden-sm" translate="global.menu.entities.request">Request</span>
+                        <span class="glyphicon glyphicon-inbox"></span>&nbsp;
+                        <span class="hidden-sm" translate="global.menu.entities.request">Request</span>
                     </a>
                 </li>
-                <li ui-sref-active="active" has-authority="ROLE_MANAGER" >
+                <li ui-sref-active="active" has-authority="ROLE_MANAGER">
                     <a ui-sref="manager" ng-click="vm.collapseNavbar()">
-                    <span class="glyphicon glyphicon-list-alt"></span>&nbsp;
-                    <span class="hidden-sm" translate="global.menu.entities.manager">Manager</span>
+                        <span class="glyphicon glyphicon-list-alt"></span>&nbsp;
+                        <span class="hidden-sm" translate="global.menu.entities.manager">Manager</span>
                     </a>
                 </li>
                 <li ng-class="{active: vm.$state.includes('entity')}" has-authority="ROLE_ADMIN" uib-dropdown class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="entity-menu">
-                    <span>
+                        <span>
                     <span class="glyphicon glyphicon-cog"></span>
-                    <span class="hidden-sm" translate="global.menu.admin.main">Administration</span>
-                    <b class="caret"></b>
-                    </span>
+                        <span class="hidden-sm" translate="global.menu.admin.main">Administration</span>
+                        <b class="caret"></b>
+                        </span>
                     </a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                         <li ui-sref-active="active" has-authority="ROLE_ADMIN">
                             <a ui-sref="report" ng-click="vm.collapseNavbar()">
-                            <span class="glyphicon glyphicon-list-alt"></span>&nbsp;
-                            <span translate="global.menu.entities.report">Report</span>
+                                <span class="glyphicon glyphicon-list-alt"></span>&nbsp;
+                                <span translate="global.menu.entities.report">Report</span>
                             </a>
                         </li>
                         <li ui-sref-active="active" has-authority="ROLE_ADMIN">
                             <a ui-sref="email" ng-click="vm.collapseNavbar()">
-                            <span class="glyphicon glyphicon-envelope"></span>&nbsp;
-                            <span translate="global.menu.entities.email">Email</span>
+                                <span class="glyphicon glyphicon-envelope"></span>&nbsp;
+                                <span translate="global.menu.entities.email">Email</span>
                             </a>
                         </li>
-                        <li ui-sref-active="active" >
+                        <li ui-sref-active="active">
                             <a ui-sref="employee" ng-click="vm.collapseNavbar()">
-                            <span class="glyphicon glyphicon-education"></span>&nbsp;
-                            <span translate="global.menu.admin.employeeManagement">Employee management</span>
+                                <span class="glyphicon glyphicon-education"></span>&nbsp;
+                                <span translate="global.menu.admin.employeeManagement">Employee management</span>
                             </a>
                         </li>
                         <li ui-sref-active="active">
                             <a ui-sref="user-management" ng-click="vm.collapseNavbar()">
-                            <span class="glyphicon glyphicon-user"></span>&nbsp;
-                            <span translate="global.menu.admin.userManagement">User management</span>
+                                <span class="glyphicon glyphicon-user"></span>&nbsp;
+                                <span translate="global.menu.admin.userManagement">User management</span>
                             </a>
                         </li>
                     </ul>
                 </li>
                 <li ng-class="{active: vm.$state.includes('admin')}" has-authority="ROLE_ADMIN" uib-dropdown class="dropdown pointer">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="admin-menu">
-                    <span>
+                        <span>
                     <span class="glyphicon glyphicon-wrench"></span>
-                    <span class="hidden-sm" translate="global.menu.admin.server">Server</span>
-                    <b class="caret"></b>
-                    </span>
+                        <span class="hidden-sm" translate="global.menu.admin.server">Server</span>
+                        <b class="caret"></b>
+                        </span>
                     </a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
                         <li ui-sref-active="active">
@@ -118,8 +118,8 @@
                 </li>
                 <li ui-sref-active="active">
                     <a href="" ng-click="vm.logout()" id="logout">
-                    <span class="glyphicon glyphicon-log-out"></span>&nbsp;
-                    <span class="hidden-sm" translate="global.menu.account.logout">Sign out</span>
+                        <span class="glyphicon glyphicon-log-out"></span>&nbsp;
+                        <span class="hidden-sm" translate="global.menu.account.logout">Sign out</span>
                     </a>
                 </li>
             </ul>

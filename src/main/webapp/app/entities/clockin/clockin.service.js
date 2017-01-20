@@ -6,14 +6,17 @@
 
     Clockin.$inject = ['$resource', 'DateUtils'];
 
-    function Clockin ($resource, DateUtils) {
+    function Clockin($resource, DateUtils) {
         var resourceUrl = 'api/clockin/:year/:semester';
 
         return $resource(resourceUrl, {}, {
-            'query': { method: 'GET', isArray: true},
+            'query': {
+                method: 'GET',
+                isArray: true
+            },
             'get': {
                 method: 'GET',
-                transformResponse: function (data) {
+                transformResponse: function(data) {
                     if (data) {
                         data = angular.fromJson(data);
                         data.time = DateUtils.convertDateTimeFromServer(data.time);
@@ -21,7 +24,9 @@
                     return data;
                 }
             },
-            'update': { method:'PUT' }
+            'update': {
+                method: 'PUT'
+            }
         });
     }
 })();

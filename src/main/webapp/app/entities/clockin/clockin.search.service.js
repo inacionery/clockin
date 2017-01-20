@@ -8,10 +8,13 @@
     ClockinSearch.$inject = ['$resource'];
 
     function ClockinSearch($resource) {
-        var resourceUrl =  'api/_search/clockins/:id';
+        var resourceUrl = 'api/_search/clockins/:id';
 
         return $resource(resourceUrl, {}, {
-            'query': { method: 'GET', isArray: true}
+            'query': {
+                method: 'GET',
+                isArray: true
+            }
         });
     }
 })();

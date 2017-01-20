@@ -6,11 +6,14 @@
 
     Request.$inject = ['$resource'];
 
-    function Request ($resource) {
+    function Request($resource) {
         var resourceUrl = 'api/request/:year/:semester';
 
         return $resource(resourceUrl, {}, {
-            'query': { method: 'GET', isArray: true}
+            'query': {
+                method: 'GET',
+                isArray: true
+            }
         });
     }
 })();
