@@ -135,32 +135,28 @@
             }
         }
 
-        vm.workRealTime = function workRealTime(workday) {
-            var workTime = vm.today;
+        vm.now = new Date();
+        vm.timeNow = new Date();
 
-            if (workday.clockinValues && workday.clockinValues.length % 2 != 0) {
-                var firstClockin = workday.clockinValues[0].time;
-                var firstClockinHour = firstClockin.split(":")[0];
-                var firstClockinMinutes = firstClockin.split(":")[1];
+        vm.remainTime = function remainTime(remainTime) {
+            var time = vm.timeNow;
 
-                var intervalHours = parseInt(workday.intervalMinute) / 60;
-                var intervalMinutes = parseInt(workday.intervalMinute) % 60;
+            var startHour = vm.now.getHours();
+            var startMinute = vm.now.getMinutes();
 
-                var startHour = intervalHours + parseInt(firstClockinHour);
-                var startMinute = intervalMinutes + parseInt(firstClockinMinutes);
-
-                if (startMinute > 60) {
-                    startMinute -= 60;
-                    startHour += 1;
-                }
-
-                workTime.setHours(startHour);
-                workTime.setMinutes(startMinute);
-
-                return workTime;
+            if (remainTime != 0) {
+                startMinute = startMinute + remainTime / 60;
             }
 
-            return workTime.getTime();
+            while (startMinute < 0) {
+                startMinute += 60;
+                startHour -= 1;
+            }
+
+            time.setHours(startHour);
+            time.setMinutes(startMinute);
+
+            return time;
         }
     }
 })();

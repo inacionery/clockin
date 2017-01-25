@@ -62,18 +62,21 @@
                                                 <span ng-if="workday.justification && !workday.isToday && !workday.isAfterToday" class="md-headline">{{workday.justification}}</span>
                                                 <md-content ng-if="workday.clockinValues.length > 0 || workday.justification" class="md-headline tooltip-days-content flex layout-padding">
                                                     <span ng-repeat="clockin in workday.clockinValues track by clockin.id" class="tooltip-days-entry {{clockin.justification ? 'font-orange' : ''}}">
-                                       {{clockin.time | limitTo:5}}
-                                       </span>
+                                                        {{clockin.time | limitTo:5}}
+                                                    </span>
                                                     <span ng-if="workday.isToday" ng-repeat="clockin in workday.predictions" class="tooltip-days-entry font-lightPurple">
-                                          {{clockin.time | limitTo:5}}
-                                          <ng-if ng-if="workday.isToday && workday.predictions.length > 0  ? vm.notifyMe(clockin.time) : false"></ng-if>
-                                       </span>
+                                                        {{clockin.time | limitTo:5}}
+                                                        <ng-if ng-if="workday.isToday && workday.predictions.length > 0  ? vm.notifyMe(clockin.time) : false"></ng-if>
+                                                    </span>
                                                 </md-content>
                                                 <span ng-if="(workday.isToday && workday.clockinValues.length % 2 != 0)" class="md-headline">
-                                       Saldo: 
-                                       <span class="font-lightPurple">
-                                          <timer start-time="vm.workRealTime(workday)">{{hhours}}:{{mminutes}}:{{sseconds}}</timer>
-                                       </span>
+                                                     Saldo:
+                                                     <span ng-if="workday.remainTime <= 0" class="font-green">
+                                                        <timer start-time="vm.remainTime(workday.remainTime)">{{hhours}}:{{mminutes}}:{{sseconds}}</timer>
+                                                     </span>
+                                                     <span ng-if="workday.remainTime > 0" class="font-red">
+                                                        -<timer countdown="workday.remainTime" max-time-unit="'hour'" interval="1000">{{hhours}}:{{mminutes}}:{{sseconds}}</timer>
+                                                    </span>
                                                 </span>
                                                 <span ng-if="(workday.isToday && workday.clockinValues.length % 2 == 0)" class="md-headline">Saldo: <span class="font-lightPurple">{{vm.balanceHours(workday.workMinute)}}</span></span>
                                                 <span ng-if="(workday.workPlanned > 0 || workday.clockinValues.length > 0) && !workday.isClockinMissing && !workday.isToday && !workday.isAfterToday" class="md-headline">Saldo: <span ng-class="workday.workDone >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workDone)}}</span></span>
@@ -138,18 +141,21 @@
                                                 <span ng-if="workday.justification && !workday.isToday && !workday.isAfterToday" class="md-headline">{{workday.justification}}</span>
                                                 <md-content ng-if="workday.clockinValues.length > 0 || workday.justification" class="md-headline tooltip-days-content flex layout-padding">
                                                     <span ng-repeat="clockin in workday.clockinValues track by clockin.id" class="tooltip-days-entry {{clockin.justification ? 'font-orange' : ''}}">
-                                       {{clockin.time | limitTo:5}}
-                                       </span>
+                                                        {{clockin.time | limitTo:5}}
+                                                    </span>
                                                     <span ng-if="workday.isToday" ng-repeat="clockin in workday.predictions" class="tooltip-days-entry font-lightPurple">
-                                          {{clockin.time | limitTo:5}}
-                                          <ng-if ng-if="workday.isToday && workday.predictions.length > 0  ? vm.notifyMe(clockin.time) : false"></ng-if>
-                                       </span>
+                                                        {{clockin.time | limitTo:5}}
+                                                        <ng-if ng-if="workday.isToday && workday.predictions.length > 0  ? vm.notifyMe(clockin.time) : false"></ng-if>
+                                                    </span>
                                                 </md-content>
                                                 <span ng-if="(workday.isToday && workday.clockinValues.length % 2 != 0)" class="md-headline">
-                                       Saldo: 
-                                       <span class="font-lightPurple">
-                                          <timer start-time="vm.workRealTime(workday)">{{hhours}}:{{mminutes}}:{{sseconds}}</timer>
-                                       </span>
+                                                     Saldo:
+                                                     <span ng-if="workday.remainTime <= 0" class="font-green">
+                                                        <timer start-time="vm.remainTime(workday.remainTime)">{{hhours}}:{{mminutes}}:{{sseconds}}</timer>
+                                                     </span>
+                                                     <span ng-if="workday.remainTime > 0" class="font-red">
+                                                        -<timer countdown="workday.remainTime" max-time-unit="'hour'" interval="1000">{{hhours}}:{{mminutes}}:{{sseconds}}</timer>
+                                                    </span>
                                                 </span>
                                                 <span ng-if="(workday.isToday && workday.clockinValues.length % 2 == 0)" class="md-headline">Saldo: <span class="font-lightPurple">{{vm.balanceHours(workday.workMinute)}}</span></span>
                                                 <span ng-if="(workday.workPlanned > 0 || workday.clockinValues.length > 0) && !workday.isClockinMissing && !workday.isToday && !workday.isAfterToday" class="md-headline">Saldo: <span ng-class="workday.workDone >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workDone)}}</span></span>

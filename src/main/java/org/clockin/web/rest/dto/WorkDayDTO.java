@@ -4,9 +4,13 @@
 
 package org.clockin.web.rest.dto;
 
+import static java.time.temporal.ChronoUnit.MINUTES;
+
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,6 +71,34 @@ public class WorkDayDTO {
             calculateTime();
         }
         return intervalMinute;
+    }
+
+    public long getRemainTime() {
+
+        if (workPlanned > 0 && clockins.size() > 0) {
+            calculateTime();
+
+            long interval = 0;
+            if (workPlanned > 240 && workPlanned <= 360
+                && intervalMinute < 15) {
+                interval = 15;
+            }
+            else if (workPlanned > 360 && intervalMinute < 60) {
+                interval = 60;
+            }
+
+            long remainTime = (workPlanned + interval - workMinute
+                - MINUTES.between(clockins.get(clockins.size() - 1).getTime(),
+                    LocalTime.now(ZoneId.of("GMT-3"))));
+
+            if (remainTime == 0) {
+                return remainTime;
+            }
+
+            return remainTime * 60;
+        }
+
+        return 0;
     }
 
     private void calculateTime() {
