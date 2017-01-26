@@ -78,16 +78,7 @@ public class WorkDayDTO {
         if (workPlanned > 0 && clockins.size() > 0) {
             calculateTime();
 
-            long interval = 0;
-            if (workPlanned > 240 && workPlanned <= 360
-                && intervalMinute < 15) {
-                interval = 15;
-            }
-            else if (workPlanned > 360 && intervalMinute < 60) {
-                interval = 60;
-            }
-
-            long remainTime = (workPlanned + interval - workMinute
+            long remainTime = (workPlanned - workMinute
                 - MINUTES.between(clockins.get(clockins.size() - 1).getTime(),
                     LocalTime.now(ZoneId.of("GMT-3"))));
 
