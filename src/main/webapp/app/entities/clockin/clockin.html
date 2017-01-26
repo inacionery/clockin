@@ -78,8 +78,14 @@
                                                         -<timer countdown="workday.remainTime" max-time-unit="'hour'" interval="1000">{{hhours}}:{{mminutes}}:{{sseconds}}</timer>
                                                     </span>
                                                 </span>
-                                                <span ng-if="(workday.isToday && workday.clockinValues.length % 2 == 0)" class="md-headline">Saldo: <span class="font-lightPurple">{{vm.balanceHours(workday.workMinute)}}</span></span>
-                                                <span ng-if="(workday.workPlanned > 0 || workday.clockinValues.length > 0) && !workday.isClockinMissing && !workday.isToday && !workday.isAfterToday" class="md-headline">Saldo: <span ng-class="workday.workDone >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workDone)}}</span></span>
+                                                <span ng-if="(workday.isToday && workday.clockinValues.length % 2 == 0)" class="md-headline">
+                                                    Saldo:                                                    
+                                                    <span ng-class="workday.workPlanned - workday.workMinute >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workPlanned - workday.workMinute)}}</span>
+                                                </span>
+                                                <span ng-if="(workday.workPlanned > 0 || workday.clockinValues.length > 0) && !workday.isClockinMissing && !workday.isToday && !workday.isAfterToday" class="md-headline">
+                                                    Saldo:
+                                                    <span ng-class="workday.workDone >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workDone)}}</span>
+                                                </span>
                                             </md-card-title-text>
                                         </md-card-title>
                                     </md-card>
@@ -127,9 +133,11 @@
                                         <div>{{workday.date | date:"dd"}}</div>
                                     </div>
                                     <div layout="row" layout-align="end start">
-                                        <div ng-if="(workday.isToday && workday.clockinValues.length % 2 == 0)"><span class="font-lightPurple">{{vm.balanceHours(workday.workMinute)}}</span>
+                                        <div ng-if="(workday.isToday && workday.clockinValues.length % 2 == 0)">
+                                            <span ng-class="workday.workPlanned - workday.workMinute >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workPlanned - workday.workMinute)}}</span>
                                         </div>
-                                        <div ng-if="(workday.workPlanned > 0 || workday.clockinValues.length > 0) && !workday.isClockinMissing && !workday.isToday && !workday.isAfterToday"><span ng-class="workday.workDone >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workDone)}}</span>
+                                        <div ng-if="(workday.workPlanned > 0 || workday.clockinValues.length > 0) && !workday.isClockinMissing && !workday.isToday && !workday.isAfterToday">
+                                            <span ng-class="workday.workDone >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workDone)}}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -157,8 +165,14 @@
                                                         -<timer countdown="workday.remainTime" max-time-unit="'hour'" interval="1000">{{hhours}}:{{mminutes}}:{{sseconds}}</timer>
                                                     </span>
                                                 </span>
-                                                <span ng-if="(workday.isToday && workday.clockinValues.length % 2 == 0)" class="md-headline">Saldo: <span class="font-lightPurple">{{vm.balanceHours(workday.workMinute)}}</span></span>
-                                                <span ng-if="(workday.workPlanned > 0 || workday.clockinValues.length > 0) && !workday.isClockinMissing && !workday.isToday && !workday.isAfterToday" class="md-headline">Saldo: <span ng-class="workday.workDone >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workDone)}}</span></span>
+                                                <span ng-if="(workday.isToday && workday.clockinValues.length % 2 == 0)" class="md-headline">
+                                                    Saldo:
+                                                    <span ng-class="workday.workPlanned - workday.workMinute >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workPlanned - workday.workMinute)}}</span>
+                                                </span>
+                                                <span ng-if="(workday.workPlanned > 0 || workday.clockinValues.length > 0) && !workday.isClockinMissing && !workday.isToday && !workday.isAfterToday" class="md-headline">
+                                                    Saldo:
+                                                    <span ng-class="workday.workDone >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workDone)}}</span>
+                                                </span>
                                             </md-card-title-text>
                                         </md-card-title>
                                     </md-card>
