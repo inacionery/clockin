@@ -36,7 +36,7 @@
                                             <table>
                                                 <tbody>
                                                     <tr ng-repeat="(key, value) in employee.occurrence">
-                                                        <td>{{key}}: {{value}}</td>
+                                                        <td>{{key}}: {{value}} dia<span ng-if="value > 1">s</span></td>
                                                     </tr>
                                                 </tbody>
                                             </table>

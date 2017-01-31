@@ -14,13 +14,15 @@
         </div>
         <div class="form-group">
             <label translate="clockinApp.employee.user" for="field_user">User</label>
-            <select class="form-control" id="field_user" name="user" ng-model="vm.employee.user" ng-options="user as user.firstName + ' ' + user.lastName + ' - '  + user.email for user in vm.users track by user.id">
+            <select class="form-control" id="field_user" name="user" ng-model="vm.employee.user" ng-options="user as user.firstName + ' ' + user.lastName + ' - '  + user.email for user in vm.users  | orderBy:'[firstName,lastName]' track by user.id">
                 <option value=""></option>
             </select>
         </div>
         <div class="form-group">
             <label translate="clockinApp.employee.manager" for="field_manager">Manager</label>
-            <select class="form-control" id="field_manager" multiple name="manager" ng-model="vm.employee.managers" ng-options="user as user.firstName + ' ' + user.lastName + ' - '  + user.email for user in vm.manager track by user.id"></select>
+            <select class="form-control" id="field_manager" multiple name="manager" ng-model="vm.employee.managers" ng-options="user as user.firstName + ' ' + user.lastName + ' - '  + user.email for user in vm.manager  | orderBy:'[firstName,lastName]' track by user.id">
+                <option value=""></option>
+            </select>
         </div>
         <div class="form-group">
             <label class="control-label" translate="clockinApp.employee.hidden" for="field_hidden">Hidden</label>
