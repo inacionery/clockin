@@ -86,10 +86,6 @@ public class RequestResource {
 
         List<ReportDTO> reportDTOList = new ArrayList<>();
 
-        for (int month : months) {
-            getReportDTO(reportDTOList, LocalDate.of(year, month, 1));
-        }
-
         Optional<User> user = userRepository
             .findOneByLogin(SecurityUtils.getCurrentUserLogin());
         Employee employee = employeeService.findByUser(user.get());
@@ -104,23 +100,26 @@ public class RequestResource {
 
                 ReportDTO reportDTO = getReportDTO(reportDTOList, startDate);
                 EmployeeDTO employeeDTO = new EmployeeDTO(employee, 0L, 0L);
-
+                int d = 0;
                 for (Workday workday : workdayRepository
                     .findByEmployeeAndDateBetweenOrderByDate(employee,
                         startDate, endDate)) {
 
                     String justification = workday.getJustification();
                     if (justification != null && !justification.equals("")) {
-                        employeeDTO.putOccurrence("-",
-                            new Object[] { workday.getDate().getDayOfMonth(),
+
+                        employeeDTO.putOccurrence(d++,
+                            new Object[] { "O Dia",
+                                workday.getDate().getDayOfMonth(),
                                 workday.getJustification() });
                     }
 
                     for (Clockin clockin : clockinRepository
                         .findByWorkdayAndJustificationNotLikeOrderByTime(
                             workday, "")) {
-                        employeeDTO.putOccurrence(clockin.getTime(),
-                            new Object[] { workday.getDate().getDayOfMonth(),
+                        employeeDTO.putOccurrence(d++,
+                            new Object[] { clockin.getTime().toString(),
+                                workday.getDate().getDayOfMonth(),
                                 clockin.getJustification() });
                     }
                 }
