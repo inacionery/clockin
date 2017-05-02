@@ -34,7 +34,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="employee in vm.employees track by employee.id">
+                <tr ng-repeat="employee in vm.employees track by $index">
                     <td>{{employee.socialIdentificationNumber}}</td>
                     <td>
                         {{employee.user.firstName}} {{employee.user.lastName}} - {{employee.user.email}}
