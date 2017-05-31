@@ -134,7 +134,7 @@
                                     </div>
                                     <div layout="row" layout-align="end start">
                                         <div ng-if="(workday.isToday && workday.clockinValues.length % 2 == 0)">
-                                            <span ng-class="workday.workPlanned - workday.workMinute >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workPlanned - workday.workMinute)}}</span>
+                                            <span ng-class="workday.workMinute - workday.workPlanned >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workMinute - workday.workPlanned)}}</span>
                                         </div>
                                         <div ng-if="(workday.workPlanned > 0 || workday.clockinValues.length > 0) && !workday.isClockinMissing && !workday.isToday && !workday.isAfterToday">
                                             <span ng-class="workday.workDone >= 0 ? 'font-green' : 'font-red'">{{vm.balanceHours(workday.workDone)}}</span>
