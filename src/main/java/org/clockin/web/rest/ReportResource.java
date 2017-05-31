@@ -131,20 +131,31 @@ public class ReportResource {
         text = text.replace(EmailConstants.EMPLOYEE_LAST_NAME,
             user.getLastName());
 
-        int hours = employeeDTO.getHour().intValue() / 60;
-        int minutes = employeeDTO.getHour().intValue() % 60;
-        if (minutes < 0) {
-            minutes = minutes * -1;
+        int hour = employeeDTO.getHour().intValue();
+        String operator = hour > 0 ? "" : "-";
+
+        if (hour < 0) {
+            hour = hour * -1;
         }
+
+        int hours = hour / 60;
+        int minutes = hour % 60;
+
         text = text.replace(EmailConstants.EMPLOYEE_MONTH_HOURS,
-            String.format("%02d:%02d", hours, minutes));
-        hours = employeeDTO.getHourCumulative().intValue() / 60;
-        minutes = employeeDTO.getHourCumulative().intValue() % 60;
-        if (minutes < 0) {
-            minutes = minutes * -1;
+            operator + String.format("%02d:%02d", hours, minutes));
+
+        hour = employeeDTO.getHourCumulative().intValue();
+        operator = hour > 0 ? "" : "-";
+
+        if (hour < 0) {
+            hour = hour * -1;
         }
+
+        hours = hour / 60;
+        minutes = hour % 60;
+
         text = text.replace(EmailConstants.EMPLOYEE_TOTAL_HOURS,
-            String.format("%02d:%02d", hours, minutes));
+            operator + String.format("%02d:%02d", hours, minutes));
 
         return text;
 
