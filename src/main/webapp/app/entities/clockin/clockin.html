@@ -65,8 +65,15 @@
                                                         {{clockin.time | limitTo:5}}
                                                     </span>
                                                     <span ng-if="workday.isToday" ng-repeat="clockin in workday.predictions" class="tooltip-days-entry font-lightPurple">
-                                                        {{clockin.time | limitTo:5}}
+                                                        <span ng-hide="$last">{{clockin.time | limitTo:5}}</span>
                                                         <ng-if ng-if="workday.isToday && workday.predictions.length > 0  ? vm.notifyMe(clockin.time) : false"></ng-if>
+                                                        <span ng-show="$last" class="tooltip-days-entry font-black">
+                                                            (
+                                                            <a ng-show="$last" class="tooltip-days-entry font-lightPurple">{{clockin.time | limitTo:5}}</a>
+                                                            /
+                                                            <a ng-show="$last" class="tooltip-days-entry font-yellow">{{vm.zeroHoursPrediction(vm.months, workday.daysToEndOfMonth, workday.predictions)}}</a>
+                                                            )
+                                                        </span>
                                                     </span>
                                                 </md-content>
                                                 <span ng-if="(workday.isToday && workday.clockinValues.length % 2 != 0)" class="md-headline">
@@ -152,8 +159,15 @@
                                                         {{clockin.time | limitTo:5}}
                                                     </span>
                                                     <span ng-if="workday.isToday" ng-repeat="clockin in workday.predictions" class="tooltip-days-entry font-lightPurple">
-                                                        {{clockin.time | limitTo:5}}
+                                                        <span ng-hide="$last">{{clockin.time | limitTo:5}}</span>
                                                         <ng-if ng-if="workday.isToday && workday.predictions.length > 0  ? vm.notifyMe(clockin.time) : false"></ng-if>
+                                                        <span ng-show="$last" class="tooltip-days-entry font-black">
+                                                            (
+                                                            <a ng-show="$last" class="tooltip-days-entry font-lightPurple">{{clockin.time | limitTo:5}}</a>
+                                                            /
+                                                            <a ng-show="$last" class="tooltip-days-entry font-yellow">{{vm.zeroHoursPrediction(vm.months, workday.daysToEndOfMonth, workday.predictions)}}</a>
+                                                            )
+                                                        </span>
                                                     </span>
                                                 </md-content>
                                                 <span ng-if="(workday.isToday && workday.clockinValues.length % 2 != 0)" class="md-headline">

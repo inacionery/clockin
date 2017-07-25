@@ -41,6 +41,26 @@
             $scope.selectedIndex = vm.today.getMonth() - (6 * semester) + 1;
         }
 
+        vm.zeroHoursPrediction = function zeroHoursPrediction(months, remainingDays, predictions) {
+            var hours = 0;
+
+            for (var i in months) {
+                if (months[i].hours) {
+                    hours = hours + months[i].hours;
+                }
+            }
+
+            hours = Math.floor(hours / remainingDays);
+
+            if (predictions && predictions.length > 0) {
+                var prediction = predictions[predictions.length - 1].time;
+
+                hours = parseInt(prediction.split(":")[0] * 60) + parseInt(prediction.split(":")[1]) - hours;
+            }
+
+            return vm.balanceHours(hours);
+        }
+
         vm.semesterHours = function semesterHours(months) {
             var hours = 0;
 

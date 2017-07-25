@@ -6,11 +6,13 @@ package org.clockin.web.rest.dto;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
 
+import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -109,6 +111,26 @@ public class WorkDayDTO {
                 intervalMinute += minutes;
             }
         }
+    }
+
+    public long getDaysToEndOfMonth() {
+        LocalDate now = LocalDate.now();
+        LocalDate endDate = now.with(TemporalAdjusters.lastDayOfMonth());
+
+        int count = 0;
+
+        while (now.isBefore(endDate) || now.isEqual(endDate)) {
+            DayOfWeek dayOfWeek = now.getDayOfWeek();
+
+            if (dayOfWeek != DayOfWeek.SUNDAY
+                && dayOfWeek != DayOfWeek.SATURDAY) {
+                count++;
+            }
+
+            now = now.plusDays(1);
+        }
+
+        return count;
     }
 
     public List<Clockin> getPredictions() {
