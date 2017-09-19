@@ -55,13 +55,13 @@ liquibase:
     contexts: prod
 
 server:
-    port: 8181
+    port: 80
     compression:
         enabled: true
         mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
         min-response-size: 1024
     session:
-        timeout: 360000        
+        timeout: 360000
 
 # ===================================================================
 # JHipster specific properties
@@ -73,7 +73,7 @@ jhipster:
             timeToLiveInDays: 1461
     cache: # Hibernate 2nd level cache, used by CacheConfiguration
         ehcache:
-            maxBytesLocalHeap: 256M
+            maxBytesLocalHeap: 512m
     security:
         rememberMe:
             # security key (this key should be unique for your application, and kept secret)
