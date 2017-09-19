@@ -1,4 +1,4 @@
-# clockin
+# Clockin
 
 This application was generated using JHipster 3.10.0, you can find documentation and help at [https://jhipster.github.io/documentation-archive/v3.10.0](https://jhipster.github.io/documentation-archive/v3.10.0).
 
@@ -31,6 +31,11 @@ For further instructions on how to develop with JHipster, have a look at [Using 
 
 ## Building for production
 
+Configure your clientId and clientSecret in `src/main/resources/config/application.yml`.
+To see how create it, go to: https://developers.google.com/+/web/signin/server-side-flow#step_1_create_a_client_id_and_client_secret
+
+Configure your database connection in `src/main/resources/config/application-prod.yml`
+
 To optimize the clockin application for production, run:
 
     ./mvnw -Pprod clean package
@@ -38,9 +43,9 @@ To optimize the clockin application for production, run:
 This will concatenate and minify the client CSS and JavaScript files. It will also modify `index.html` so it references these new files.
 To ensure everything worked, run:
 
-    java -jar target/*.war
+    nohup ./target/clockin-0.0.1-SNAPSHOT.war --spring.profiles.active=prod &
 
-Then navigate to [http://localhost:8080](http://localhost:8080) in your browser.
+Then navigate to [http://localhost](http://localhost) in your browser.
 
 Refer to [Using JHipster in production][] for more details.
 
@@ -56,44 +61,14 @@ Unit tests are run by [Karma][] and written with [Jasmine][]. They're located in
 
     gulp test
 
-
-
 For more information, refer to the [Running tests page][].
-
-## Using Docker to simplify development (optional)
-
-You can use Docker to improve your JHipster development experience. A number of docker-compose configuration are available in the `src/main/docker` folder to launch required third party services.
-For example, to start a mysql database in a docker container, run:
-
-    docker-compose -f src/main/docker/mysql.yml up -d
-
-To stop it and remove the container, run:
-
-    docker-compose -f src/main/docker/mysql.yml down
-
-You can also fully dockerize your application and all the services that it depends on.
-To achieve this, first build a docker image of your app by running:
-
-    ./mvnw package -Pprod docker:build
-
-Then run:
-
-    docker-compose -f src/main/docker/app.yml up -d
-
-For more information refer to [Using Docker and Docker-Compose][], this page also contains information on the docker-compose sub-generator (`yo jhipster:docker-compose`), which is able to generate docker configurations for one or several JHipster applications.
-
-## Continuous Integration (optional)
-
-To set up a CI environment, consult the [Setting up Continuous Integration][] page.
 
 [JHipster Homepage and latest documentation]: https://jhipster.github.io
 [JHipster 3.10.0 archive]: https://jhipster.github.io/documentation-archive/v3.10.0
 
 [Using JHipster in development]: https://jhipster.github.io/documentation-archive/v3.10.0/development/
-[Using Docker and Docker-Compose]: https://jhipster.github.io/documentation-archive/v3.10.0/docker-compose
 [Using JHipster in production]: https://jhipster.github.io/documentation-archive/v3.10.0/production/
 [Running tests page]: https://jhipster.github.io/documentation-archive/v3.10.0/running-tests/
-[Setting up Continuous Integration]: https://jhipster.github.io/documentation-archive/v3.10.0/setting-up-ci/
 
 
 [Node.js]: https://nodejs.org/
