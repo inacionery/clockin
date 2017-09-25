@@ -15,14 +15,8 @@
     <changeSet author="Inácio Nery" id="1478218181650-5">
         <addForeignKeyConstraint baseColumnNames="employee_id" baseTableName="workday" constraintName="FK_k5yqcm96b1jvcboebivq0m3me" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="employee"/>
     </changeSet>
-    <changeSet author="Inácio Nery" id="1478218181650-6">
-        <addForeignKeyConstraint baseColumnNames="managers_id" baseTableName="employee_manager" constraintName="FK_m9p6ea79emuvqvu4w4d1l8ahh" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
-    </changeSet>
     <changeSet author="Inácio Nery" id="1478218181650-7">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="employee" constraintName="FK_mpps3d3r9pdvyjx3iqixi96fi" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
-    </changeSet>
-    <changeSet author="Inácio Nery" id="1478218181650-8">
-        <addForeignKeyConstraint baseColumnNames="employees_id" baseTableName="employee_manager" constraintName="FK_pavlvw5bxepxec49wtexywvs8" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="employee"/>
     </changeSet>
     <changeSet author="Inácio Nery" id="1478218181650-9">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="jhi_user_authority" constraintName="FK_pg0oaw6mr9pt3ibeihdc1jwof" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
