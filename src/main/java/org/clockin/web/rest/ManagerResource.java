@@ -141,6 +141,7 @@ public class ManagerResource {
                     Long hour = (Long) work[0];
 
                     int missing = 0;
+                    int missingWithoutJustification = 0;
 
                     for (Workday workday : workdayRepository
                         .findByEmployeeAndDateBetweenOrderByDate(employee,
@@ -149,11 +150,15 @@ public class ManagerResource {
                         int countByWorkday = clockinRepository
                             .countByWorkday(workday);
 
-                        if (countByWorkday % 2 != 0 || (countByWorkday == 0
-                            && workday.getWorkPlanned() > 0)
+                        if (countByWorkday == 0
+                            && workday.getWorkPlanned() > 0
                             && workday.getJustification().equals("")) {
-                            missing++;
-                            hour += workday.getWorkPlanned();
+                        		missingWithoutJustification++;
+                        }
+                        else if (countByWorkday % 2 != 0 
+	                        	&& workday.getJustification().equals("")) {
+	                        	missing++;
+	                        	hour += workday.getWorkPlanned();
                         }
                     }
 
@@ -171,8 +176,12 @@ public class ManagerResource {
                             occurrences[1]);
                     }
 
+                    if (missingWithoutJustification > 0) {
+                        employeeDTO.putOccurrence("Faltas sem justificativa", missingWithoutJustification);
+                    }
+                    
                     if (missing > 0) {
-                        employeeDTO.putOccurrence("Faltando batidas", missing);
+                        employeeDTO.putOccurrence("Dias com batidades em falta", missing);
                     }
 
                     reportDTO.addEmployee(employeeDTO);
