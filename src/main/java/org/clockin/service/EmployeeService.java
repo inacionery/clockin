@@ -43,6 +43,8 @@ public interface EmployeeService {
      * @return 
      */
     Employee delete(Long id);
+    
+    Employee deleteUser(User user);
 
     Employee findByUser(User user);
 

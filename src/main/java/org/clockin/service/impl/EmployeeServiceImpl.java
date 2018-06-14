@@ -1,6 +1,7 @@
 package org.clockin.service.impl;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -80,6 +81,31 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.delete(id);
         return employee;
     }
+    
+    @Override
+    public Employee deleteUser(User user) {
+        log.debug("Request to delete Employee : {}", user);
+        Employee employee = employeeRepository.findByUser(user);
+        if (employee != null) {
+        	employee.setUser(null);
+        	
+        	employeeRepository.save(employee);
+        }
+        
+        List<Employee> list = employeeRepository.findByManager(user);
+        for (Employee employee2 : list) {
+        	 if (employee2 != null) {
+        		 Set<User> managers = employee2.getManagers();
+        		 
+        		 managers.remove(user);
+        		 
+        		 employee2.setManagers(managers);
+             	
+             	employeeRepository.save(employee2);
+             }
+        }
+        return employee;
+    }
 
     @Override
     public Employee findByUser(User user) {
@@ -112,6 +138,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional(readOnly = true)
     public List<Employee> findByManager(User manage) {
         log.debug("Request to get all Employees by manager : {}", manage);
-        return employeeRepository.findByManager(manage);
-    }
+		return employeeRepository.findByManager(manage);
+	}
 }

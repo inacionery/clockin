@@ -38,6 +38,9 @@ public class UserService {
     private SocialService socialService;
 
     @Inject
+    private EmployeeService employeeService;
+
+    @Inject
     private PasswordEncoder passwordEncoder;
 
     @Inject
@@ -178,6 +181,7 @@ public class UserService {
     public void deleteUser(String login) {
         userRepository.findOneByLogin(login).ifPresent(u -> {
             socialService.deleteUserSocialConnection(u.getLogin());
+            employeeService.deleteUser(u);
             userRepository.delete(u);
             log.debug("Deleted User: {}", u);
         });

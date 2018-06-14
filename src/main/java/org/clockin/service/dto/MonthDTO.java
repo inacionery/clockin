@@ -2,7 +2,7 @@
  *
  */
 
-package org.clockin.web.rest.dto;
+package org.clockin.service.dto;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
